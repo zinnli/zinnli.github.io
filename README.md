@@ -1,45 +1,9 @@
 ---
+layout: page
+title: About
+permalink: /About/
 ---
 
-## Theme Monos
+## 안녕하세요!!
 
-> Simple and lightweight theme for Jekyll
-
-### Features
-
--    Responsive.
--    Syntax Highlight
--    Most optimized theme for tech blog.
--    Lightweight with minimum stylesheet.
--    Easy to customize.
--    Offers category menu.
-
-### \_config.yml
-
-> Code block will look like this.
-
-```yml
-highlighter-theme: monokai //you can change your syntax color scheme.
-date_format: "%Y-%M-%D" //and date format.
-```
-
-### Screenshots
-
-#### Page
-
-![alt text](/public/img/screenshot-1.png)
-
-#### Articles
-
-![alt text](/public/img/screenshot-2.png)
-
-#### Page - Mobile
-
-![alt text](/public/img/screenshot-m1.png)
-
-#### Page - Articles
-
-![alt text](/public/img/screenshot-m2.png)
-
-Page -- zinnli.github.io folder
-Post -- \_post - markdown
+한 번 시작하면 끝을 보는, 프론트엔드 지망생 이현진입니다.
