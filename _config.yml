@@ -8,7 +8,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 #
-# If you need help with YAML syntax, here are some quick references for you: 
+# If you need help with YAML syntax, here are some quick references for you:
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 #
@@ -18,24 +18,32 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Monos
-email: ejjoo7994@gmail.com
+locale: "ko-KR"
+title: 현징-로그
+email: hyunjin0376@naver.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Themed by ejjoo
-# baseurl: "/" # the subpath of your site, e.g. /blog
-# url: "http://ejjoo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-github_username: ejjoo
+     <br>작고 소소한 <br>현징's 개발 공부 로그
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://zinnli.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+github_username: zinnli
 highlighter: rouge
 svg:
-  optimize: true
+     optimize: true
 # Build settings
 # theme: minima
 highlighter-theme: monokai
 date_format: "%Y-%M-%D"
 plugins:
-  - jekyll-feed
+     - jekyll-feed
 category_dir: category/
+
 tag_dir: tag/
+
+paginate: 30
+subscribers: true
+google_analytics: #GA tracking identifier 입력 -- 방문기록 확인
+
+destination: ../[GitHubPage]/ #컴파일된 결과 생성 폴더
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -45,14 +53,14 @@ tag_dir: tag/
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
 #
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+exclude:
+     - .sass-cache/
+     - .jekyll-cache/
+     - gemfiles/
+     - Gemfile
+     - Gemfile.lock
+     - node_modules/
+     - vendor/bundle/
+     - vendor/cache/
+     - vendor/gems/
+     - vendor/ruby/
