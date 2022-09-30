@@ -332,6 +332,17 @@ footer {
      color: #ccc;
 }
 
+/* 현진추가 */
+
+.highlighter-rouge {
+     background-color: #ffc107;
+}
+
+.highlight {
+     padding: 3px 8px;
+     border-radius: 4px;
+}
+
 @media (max-width: 576px) {
      article {
           font-size: 0.9em;
