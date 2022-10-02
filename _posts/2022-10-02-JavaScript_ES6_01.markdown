@@ -1,7 +1,7 @@
 ---
 layout: post
 title: JS ES6 정리
-date: 2022-10-02 23:00:30 +0900
+date: 2022-10-02 14:00:30 +0900
 category: JavaScript
 ---
 
