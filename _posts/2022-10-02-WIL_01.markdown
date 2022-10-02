@@ -89,4 +89,4 @@ ES5 보다 간결해진 문법<br/>
 
 <br/>
 
-[JS ES6 나머지 정리 -> Click!](https://zinnli.github.io/javascript/2022/10/02/Javascript_ES6_01.html)
+[JS ES6 나머지 정리 -> Click!](https://zinnli.github.io/javascript/2022/10/02/JavaScript_ES6_01.html)
