@@ -170,9 +170,9 @@ console.log(age);
 <br/>
 
 참조 <br/>
-https://egas.tistory.com/71
-https://hanamon.kr/javascript-es6-%EB%AC%B8%EB%B2%95/
-https://wormwlrm.github.io/2018/10/03/What-is-the-difference-between-javascript-and-ecmascript.html
+<https://egas.tistory.com/71> <br/>
+<https://hanamon.kr/javascript-es6-%EB%AC%B8%EB%B2%95/> <br/>
+<https://wormwlrm.github.io/2018/10/03/What-is-the-difference-between-javascript-and-ecmascript.html> <br/>
 
 <br/>
 이해를 한 내용들 위주로 하여 작성하였으며, 추가로 변한 내용들은 이후에 이해하면 추가할 예정
