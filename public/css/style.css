@@ -226,7 +226,7 @@ article {
      padding: 0 5% 0;
      font-size: 17px;
      margin-bottom: 100px;
-     line-height: 1.9;
+     line-height: 1.5;
 }
 
 article.home div a,
@@ -286,7 +286,7 @@ article.home h4 a:hover {
 
 header.post-header {
      padding: 50px 0px 10px 0px;
-     margin-bottom: 30px;
+     margin-bottom: 24px;
      border-bottom: 1px solid #ccc;
      text-align: center;
 }
@@ -333,6 +333,36 @@ footer {
 }
 
 /* 현진추가 */
+
+.post-content h3 {
+     margin-top: 10px;
+}
+
+.post-list {
+     margin-bottom: 3%;
+}
+
+h3 a .name,
+h3 a .badge {
+     margin-left: 5px;
+}
+
+.post-content h3 a .name {
+     font-family: "Gelasio", "Nanum Myeongjo", serif;
+     color: #ff8c00;
+     font-size: 0.9em;
+     font-weight: bold;
+}
+.post-content h3 a .badge {
+     font-family: "Gelasio", "Nanum Myeongjo", serif;
+     color: #ff8c00;
+     font-size: 0.5em;
+     font-weight: bold;
+}
+
+h3 a.nav-item:hover {
+     color: #ff8c00;
+}
 
 .highlighter-rouge {
      background-color: #ffc107;

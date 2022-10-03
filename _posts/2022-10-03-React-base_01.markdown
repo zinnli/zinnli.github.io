@@ -1,0 +1,153 @@
+---
+layout: post
+title: React 기본 정리
+date: 2022-10-03 22:00:30 +0900
+category: React
+---
+
+# **React 기본적인 사용법 간단 정리**
+
+<br/>
+
+### React의 장점
+
+1. 모바일 앱으로 발행이 쉬움
+2. 앱처럼 뛰어난 UX
+3. 일반 웝사이트보다 비즈니스적 강점
+   <br/>
+
+### React 셋팅
+
+React를 이용하려면 라이브러리를 설치는 주로 npm으로 설치되기때문에 node.js 설치 필요<br/>
+순서 : node js 설치 -> `create-react-app 프로젝트명`
+<br/>
+
+### CRA 후 폴더 구조
+
+-    메인 페이지 : App.js<br/>
+     -> 메인페이지에 들어갈 JSX(html) 짜는 곳<br/>
+     -> 내용을 public의 index.html로 넣어달라고 index.js가 명령함<br/>
+
+-    실제 메인 페이지 : public < index.html<br/>
+     app.js 의 html 내용이 index.html에 집어넣음<br/>
+     (넣도록 명령하는 것 : index.js)
+
+-    node_modules : 구동하기 위한 라이프러리를 모음
+
+-    public : static 파일 보관함(정적인 부분)
+
+-    src : 소스코드 보관함
+     <br/>
+
+### React 특징
+
+1. 태그에 class를 주고 싶을 때 -> className으로 줘야함
+
+2. 데이터 바인딩이 쉬움 = 방법 : {변수명} / {함수명( )}<br/>
+   \*\*`데이터 바인딩`이란 : 서버에서 받아온 데이터를 html에 넣는것
+
+3. 이미지 import 하기 : import로 불러들이고 import 이미지 from '이미지 경로'
+   <br/>
+
+     ```
+      <img src = {이미지}/>
+     ```
+
+     형식으로 중괄호에 입력
+
+4. JSX 에서 style 넣기<br/>
+     ```
+     style={{color: 'blue', fontSize:10px;}}
+     ```
+     형태로 대괄호로 감싸고 넣어야함<br/>
+5. 띄어쓰기나 '-'로 입력이 아니라 camelCase 작명관습에 따라 띄어쓰는 부분의 첫글자는 대문자
+
+<br/>
+
+## **State**
+
+데이터는 `변수/state` 에 보관<br/>
+
+#### 리액트의 데이터 저장공간 state 만들기
+
+1. {useState} 상단에 첨부
+2. useState(데이터)
+   let [a,b] = useState('');
+
+a = state 데이터<br/>
+b = state 데이터 변경 함수(대체할 데이터)
+<br/>
+
+### State의 특징
+
+1. 변수 대신 쓰는 `데이터 저장공간` 2.` useState( )`를 이용해 만들어야함
+2. 문자, 숫자, array, object 다 저장가능
+   <br/>
+
+### State의 장점
+
+1. 웹이 app처럼 동작하게 만들고싶어서[웹(데이터)이 변경될 때]<br/>
+   -> HTML이 자동으로 재렌더링 됨(그냥 변수는 자동 재렌더링이 안됨) <br/>
+   --> 새로고침 없이 스무스하게 변경
+
+<br/>
+
+\*\* 자주 바뀌는, 중요한 데이터는 state 사용 추천
+
+-    onClick={클릭될 때 실행할 함수}
+-    onClick={( ) => {실행할 내용}} -- 화살표 함수
+
+-    onClick에 함수가 들어가는 경우<br/>
+     -> 함수( ) 형태로 들어가면 안됨<br/>
+     --> 함수명( )가 되면 바로 실행이 됨
+     <br/>
+
+### state 데이터 수정 테크닉
+
+1. 기존 state 카피본 만들기(원본 state 수정 X)
+2. 카피본에 수정사항 반영
+3. 변경함수( )에 집어넣기
+4. 일단 상단에 useState가 잘 import 되어있는지 확인
+5. useState만들 때 함께 만들어놨던 함수를 사용
+6. array 자료형인 경우(등호사용 X) 사본을 만들어서 변경
+7. 사본 만드는 법<br/>
+   : let newArray = [...기존state이름] <br/>
+   -> newArray를 수정<br/>
+   -> state 데이터 변경(newArray)<br/>
+   -> 제대로 state 변경이 가능
+
+\*\* 복사본을 만들어 수정하지 않으면 -- 값공유가 되어버림<br/>
+-> deep copy를 위해 별개의 복사본 만들어 수정해야함
+<br/>
+<br/>
+
+## **Component**
+
+HTML 한단어로 줄여서 쓸 수 있는 방법 : Component 사용
+<br/>
+
+### component 유의사항
+
+1. 이름은 대괄호
+2. return 안에 있는건 태그 하나로 묶어야함
+   <br/>
+
+### Component로 만들면 좋은 것들
+
+-    반복출현하는 HTML 덩어리들
+-    자주 변경되는 HTML UI들
+-    다른 페이지를 만들 때도
+     <br/>
+
+### 단점(component를 많이 만들때)
+
+-    state를 쓸 때 복잡해짐
+-    상위 컴포에서 만든 state를 쓰려면 props 문법을 사용해야함
+
+<br/>
+props 는 내일 중 추가 정리 예정
+<br/>
+<br/>
+<br/>
+
+(잘못된 부분이 있다면 메일로 연락주세요.)

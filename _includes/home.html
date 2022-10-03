@@ -1,27 +1,50 @@
 <article class="post">
-  <header class="post-header home">
-    <div class="post-title">Articles</div>
-  </header>
+     <header class="post-header home">
+          <div class="post-title">Articles</div>
+     </header>
 
-  <div class="post-content">
-      {%- if site.posts.size > 0 -%}
-    <ul class="post-list">
-      {%- for post in site.posts -%}
-      <li class="post-list-item">
-        <!-- {%- assign date_format = site.date_format | default: "%b %-d, %Y" -%} -->
-        {%- assign date_format = "%Y/%m/%d" -%}
-        <span class="post-date">{{ post.date | date: date_format }}</span>
-      	<a class="post-link" href="{{ post.url | relative_url }}">
-    	    {{ post.title | escape }}
-		</a>
-        {%- if site.show_excerpts -%}{{ post.excerpt }}{%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
-  {%- endif -%}
-  </div>
+     <div class="post-content">
+          {%- if site.posts.size > 0 -%} {% for category in site.categories %}
+          <h3>
+               <a
+                    class="nav-item"
+                    href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}"
+               >
+                    <span class="name">{{ category | first }}</span>
+                    <span class="badge">{{ category | last | size }}</span>
+               </a>
+          </h3>
+
+          <ul class="post-list">
+               {%- for post in site.posts -%}{% if post.category ==
+               category.first %}
+               <li class="post-list-item post-category-{{post.categories}}">
+                    <!-- {%- assign date_format = site.date_format | default: "%b %-d, %Y" -%} -->
+
+                    {%- assign date_format = "%Y/%m/%d" -%}
+                    <span class="post-date"
+                         >{{ post.date | date: date_format }}</span
+                    >
+                    <a class="post-link" href="{{ post.url | relative_url }}">
+                         {{ post.title | escape }}
+                    </a>
+                    {%- if site.show_excerpts -%}{{ post.excerpt }}{%- endif -%}
+                    {% endif %}
+               </li>
+               {%- endfor -%}
+          </ul>
+          {% endfor %} {%- endif -%}
+     </div>
 </article>
 
+<!-- 
+{% for category in site.categories %}
+	    <li>
+	    	<a class="nav-item" href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}">
+				<span class="name">{{ category | first }}</span>
+				<span class="badge">{{ category | last | size }}</span>
+	    	</a>
+ 		</li>
+	    {% endfor %}
 
-
-</div>
+       -->
