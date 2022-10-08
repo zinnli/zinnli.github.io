@@ -333,8 +333,8 @@ footer {
 }
 
 /* 현진추가 */
-.lead > p:nth-child(2) {
-     font-size: 13px;
+.lead:nth-child(2) {
+     font-size: 95%;
 }
 
 .post-content h3 {
