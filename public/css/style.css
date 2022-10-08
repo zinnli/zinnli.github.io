@@ -333,7 +333,7 @@ footer {
 }
 
 /* 현진추가 */
-.lead:nth-child(2) {
+.lead:last-child {
      font-size: 95%;
 }
 
