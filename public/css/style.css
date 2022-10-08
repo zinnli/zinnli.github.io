@@ -333,6 +333,9 @@ footer {
 }
 
 /* 현진추가 */
+.lead > p:nth-child(2) {
+     font-size: 13px;
+}
 
 .post-content h3 {
      margin-top: 10px;

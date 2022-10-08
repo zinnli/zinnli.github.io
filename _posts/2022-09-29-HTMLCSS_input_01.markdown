@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HTML input 정리
+title: HTML | input 정리
 date: 2022-09-29 23:30:30 +0900
 category: HTML/CSS
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: JS ES6 정리
+title: Java Script |  ES6 정리
 date: 2022-10-02 14:00:30 +0900
 category: JavaScript
 ---

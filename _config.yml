@@ -23,6 +23,12 @@ title: 현징-로그
 email: hyunjin0376@naver.com
 description: >- # this means to ignore newlines until "baseurl:"
      <br>작고 소소한 <br>현징's 개발 공부 로그
+
+description2: >- # this means to ignore newlines until "baseurl:"
+     <br><br><br>
+         문제가 있으면 <br>
+         hyunjin0376@naver.com<br>
+         으로 연락 부탁드립니다<br>
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://zinnli.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: zinnli

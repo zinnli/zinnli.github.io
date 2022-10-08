@@ -1,0 +1,262 @@
+---
+layout: post
+title: React | Redux (코드리뷰 형식)
+date: 2022-10-08 21:00:30 +0900
+category: React
+---
+
+# **Redux 기본 정리**
+
+<br/>
+
+이번에도 내가 이해할 수 있게 내 맘대로 정리~! <br/>
+
+##### 한꺼번에 적으면 복잡할 것 같아서 위에서부터 순서대로 정리했다. 주석이 달린 파일은 하단에 깃허브 주소 기록 예정. <br/>
+
+<br/>
+
+> ### react에서 리덕스로 <br/>` (dispatch) -> action -> reducer -> store -> 리덕스에서 리액트로 값 전달 (useSelector)`
+
+ <br/>
+
+위는 전체 진행 순서. 위를 먼저 파악하고 진행하면 조금 쉽게 이해할 수 있는 것 같다.
+
+<br/><br/>
+
+### **`App.js`**
+
+<br/>
+
+**Import List**
+
+<br/>
+
+```
+
+import React, { useState } from "react";
+import { ¹useSelector, ²useDispatch } from "react-redux";
+import { ³addNumber } from "./redux/modules/counter";
+
+```
+
+<br/>
+
+1. userSelector = 스토어 조회하는 역할
+2. useDispatch = 액션 객체를 리듀서로 보내주는 역할
+3. addNumber = counter.js 모듈에서 가져온 액션 함수
+
+<br/><br/>
+
+**dispatch 함수 / 초기값 설정 / onChange, onAdd 함수**
+
+<br/>
+
+```
+
+const App = () => {
+     ¹const dispatch = useDispatch();
+     // 액션 객체를 리듀서로 보내주는 역할을 함(dispatch 생성)
+     // dispatch 는 함수
+
+     ²const [number, setNumber] = useState(0);
+
+     const onChangeHandler = (e) => {
+          ³const inputValue = e.target.value; //중괄호 xxx
+          setNumber(+inputValue);
+     };
+
+     ⁴const onAddNumber = () => {
+          dispatch(addNumber(number));
+     };
+
+```
+
+<br/>
+
+1. useDispatch 는 dispatch 함수 생성으로 액션 객체를 리듀서로 보내주는 역할을 함
+2. onChangeHandler 에서 사용할 초기값
+3. 인풋값 추적
+4. onAddNumber 가 실행될 때 dispatch가 실행 -> 액션 객체가 리듀서로 전달
+
+<br/><br/>
+
+**redux에서 react로 값 전달**
+
+<br/>
+
+```
+
+방벙1
+     ¹const finalNumber = useSelector((state) => state.Counter.number);
+
+방법2(추천!)
+     ²const finalState = useSelector((state) => state.Counter);
+      const finalNumber = finalState.number;
+
+```
+
+<br/>
+
+#### useSelector = 스토어 조회
+
+1. counter.js라는 모듈 중 하나의 number 요소를 가져옴
+2. 방법 2의 경우 모듈과 요소가 많아지면 useSelector를 여러번 선언해야할 때 추천
+   <br/> -> 모듈하나를 따로 두고 추가 되는 부분들을 방법2의 두번째 줄처럼 연결시켜주는게 좋음
+
+<br/><br/>
+
+**return 값 출력**
+
+<br/>
+
+```
+
+return (
+          <div>
+               ¹<input onChange={onChangeHandler} />
+               ²<button onClick={onAddNumber}>더하기</button>
+               ³<p>{finalNumber}</p>
+          </div>
+     );
+};
+
+export default App;
+
+```
+
+<br/>
+
+1. 입력값 추적 + 출력
+2. 클릭하면 리듀서에서 dispatch에 해당하는 내용이 실행됨
+3. 기존의 값에서 onAddNumber 값이 추가된 결과값
+
+<br/><br/>
+
+<hr/>
+
+### **`src/redux/config/configStore.js`**
+
+**Store 저장소**
+
+<br/>
+
+```
+
+¹import { createStore } from "redux";
+import { combineReducers } from "redux";
+import counter from "../modules/counter";
+
+const rootReducer = combineReducers({
+     ²Counter: counter,
+});
+
+const store = createStore(rootReducer);
+
+export default store;
+
+```
+
+<br/>
+
+1. createStore에 취소선이 뜨지만 사용은 가능(툴킷에서 사용)
+2. Counter: counter ==> store : module (스토어와 모듈 연결)<br/>
+   모듈이 늘어나면 -> store : module 형태로 입력 ex) Feed : feed , ...
+
+<br/><br/>
+
+<hr/>
+
+### **`src/redux/modules/counter.js`**
+
+<br/>
+
+**액션 함수**
+
+<br/>
+
+```
+
+// 액션 생성 함수
+¹const ADD_NUMBER = "ADD_NUMBER";
+
+// 액션 함수
+²export const addNumber = (payload) => {
+     return {
+          ³type: ADD_NUMBER, // type : "ADD_NUMBER'
+          ⁴payload: payload,
+     };
+};
+
+```
+
+<br/>
+
+1. 액션 생성 함수
+2. 액션 함수의 export : addNumber()는 counter.js 밖으로 나가서 사용될 예정이기 때문에(app.js에서 사용함)
+3. type 사용 : 액션 객체를 리듀서로 보낼 때 -> 리뷰서는 객체 안의 type이라는 key로 수정할 부분을 정함
+4. payload : 전달값
+
+<br/>
+
+3번의 type : ADD_NUMBER 는 주석처럼 "ADD_NUMBER"로 사용 가능함
+
+하지만 액션 생성 함수를 사용하는 것을 지향함
+
+<br/>
+
+`액션 생성 함수 사용 이유` )
+
+1. 휴먼 에러 방지(오타) : 자동완성 등의 보조 기능을 통해 의도치 않은 오류를 없앨 수 있음
+2. 유지보수의 효율성 증가 : 해당 액션 객체를 여러 군데에서 사용했을 경우 -> 액션 생성 함수를 사용하면 하나의 수정으로 모든 수정이 가능
+3. 코드 가독성 : 해당 모듈이 가지고 있는 액션들을 한 눈에 보기 좋음(리스트업 효과)
+
+<br/>
+
+<br/>
+
+**reducer**
+
+<br/>
+
+```
+
+/// 초기값
+const initialState = {
+     number: 0,
+};
+
+// 리듀서(=함수)
+const counter = (state = initialState, action) => {
+     switch (action.type) {
+          ¹case ADD_NUMBER:
+               return {
+                    ²number: state.number + action.payload,
+               };
+          ³default:
+               return state;
+     }
+};
+
+export default counter;
+
+```
+
+<br/>
+
+1. dispatch로부터 전달받은 action(action.type)이 case에 해당하는 부분일 때 -> return이 실행됨
+2. state.number (기존의 nubmer)에 action.paylaod(유저가 더하길 원하는 값)을 더한다.
+3. ~~추가 확인 필요 정확한 내용 파악시 추가 업로드~~
+
+<br/>
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+
+이틀동안 이해를 제대로 못해서 큰일 났다 싶었는데 오늘 기술 매니저님의 전체적인 설명으로 대략 흐름은 알게 된 것 같다. <br/>뭔가 열심히 듣고 열심히 정리했는데 이게 맞는지는 잘 ㅎ.. 공부하면서 하나씩 추가+수정해나가야겠다.
+
+<br/>
+
+(잘못된 부분이 있다면 메일로 연락주세요.)

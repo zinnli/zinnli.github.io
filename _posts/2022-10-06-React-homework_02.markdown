@@ -1,6 +1,6 @@
 ---
 layout: post
-title: React TodoList 코드리뷰
+title: React | TodoList 코드리뷰
 date: 2022-10-06 16:00:30 +0900
 category: React
 ---
@@ -419,7 +419,7 @@ function ¹Todo({ todos, doList, setTodos }) {
 3. 취소/완료 버튼을 눌렀을 때 변경되는 버튼(+list에서의 위치)을 발생하는 코드
 4. doList의 isDone 값이 true 일 때 '취소', false 일때 '완료'
 
-     <br/>
+   <br/>
 
 \*\* **`주의하기`**
 

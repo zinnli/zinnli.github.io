@@ -1,6 +1,6 @@
 ---
 layout: post
-title: JS JSON 정리
+title: Java Script | JSON 정리
 date: 2022-10-07 14:00:30 +0900
 category: JavaScript
 ---
