@@ -34,7 +34,7 @@ Todo List 링크
 
 <br/>
 
-```
+```javascript
 
 import React from "react";
 import "./App.css";
@@ -70,7 +70,7 @@ export default App;
 
 <br/>
 
-```
+```react
 
 function TodoList() {
       ¹const [todos, setTodos] = useState([
@@ -96,7 +96,7 @@ function TodoList() {
 
 <br/>
 
-```
+```react
 
      return (
           ¹<Layout>
@@ -124,7 +124,7 @@ function TodoList() {
 
 <br/>
 
-```
+```react
 
 function Layout({ children }) {
       ¹return <div className="layout-container">{children}</div>;
@@ -146,7 +146,7 @@ function Layout({ children }) {
 
 <br/>
 
-```
+```react
 
 function Form({ ¹setTodos, todos }) {
      ²const initialState = {
@@ -169,7 +169,7 @@ function Form({ ¹setTodos, todos }) {
 
 <br/>
 
-```
+```react
 
      const onChangeHandler = ¹(e) => {
           ²const { name, value } = e.target;
@@ -190,7 +190,7 @@ function Form({ ¹setTodos, todos }) {
 
 <br/>
 
-```
+```react
 
 let number = 2;
 
@@ -216,7 +216,7 @@ let number = 2;
 
 <br/>
 
-```
+```react
 
      return (
           <form className="input-form" ³onSubmit={onSubmitHandler}>
@@ -265,7 +265,7 @@ let number = 2;
 
 <br/>
 
-```
+```react
 
 function List({ todos, setTodos }) {
      const workingList = ¹todos.filter((item) => item.isDone === false);
@@ -282,7 +282,7 @@ function List({ todos, setTodos }) {
    <br/>
    <br/>
 
-```
+```react
 
      return (
           <div className="list-container">
@@ -330,7 +330,7 @@ function List({ todos, setTodos }) {
 
 <br/>
 
-```
+```react
 
 function ¹Todo({ todos, doList, setTodos }) {
      const ²{ title, body } = doList;
@@ -344,7 +344,7 @@ function ¹Todo({ todos, doList, setTodos }) {
 
 <br/>
 
-```
+```react
 
      const onDelHandler = ¹(Id) => {
           const ²newTodos = todos.filter((item) => item.id !== Id);
@@ -364,7 +364,7 @@ function ¹Todo({ todos, doList, setTodos }) {
 
 <br/>
 
-```
+```react
 
      const onEditHandler = ¹(Id) => {
           const newTodos = todos.map((item) => {
@@ -390,7 +390,7 @@ function ¹Todo({ todos, doList, setTodos }) {
 
 <br/>
 
-```
+```react
 
      return (
           <div className="list-todo">
@@ -423,7 +423,7 @@ function ¹Todo({ todos, doList, setTodos }) {
 
 \*\* **`주의하기`**
 
-```
+```react
 // 1. 위 코드의 (2,3)번에서 사용한 함수
 onClick={()=> onDelHandler(doList.id)}
 

@@ -43,18 +43,18 @@ ES5 보다 간결해진 문법<br/>
 
 -    `ES5`: 더하기(+) 연산자 사용하여 문자열 연결함
 
-```
+```javascript
 // ES5
-var str = 'World!';
-var word = 'Hello'+ str;
+var str = "World!";
+var word = "Hello" + str;
 ```
 
 -    `ES6` : ``(back tick)으로 사용
      ${ } 중괄호 앞 달러 표시로 자바스크립트 표현식 사용 가능
 
-```
+```javascript
 // ES6
-let str = 'World!';
+let str = "World!";
 let word = `Hello ${str}`;
 ```
 
@@ -66,43 +66,45 @@ let word = `Hello ${str}`;
 
 -    속성명과 속성값의 변수명이 같다면, 하나만 기입가능
 
-```
+```javascript
 // ES5
-var name = 'jinn';
+var name = "jinn";
 var obj = {
-  age : '27',
-  name : name // 여기서 Name이라는 속성명(key값)의 값(value값)으로 변수 name을 지정
-}
+     age: "27",
+     name: name, // 여기서 Name이라는 속성명(key값)의 값(value값)으로 변수 name을 지정
+};
 ```
 
-```
+```javascript
 // ES6
-constname = 'jinn';
+constname = "jinn";
 const obj = {
-  age : '27',
-  name // 한번만 적어도 name:name 처럼 동작함
-}
+     age: "27",
+     name, // 한번만 적어도 name:name 처럼 동작함
+};
 ```
 
 -    메소드 속성을 정의할 때 function( ) 키워드 생략 가능
 
-```
+```javascript
 // ES5
 var obj = {
-  prop : "something",
-  method : function( ){ // 반드시 메서드일 경우 function() 키워드 필요
-    console.log("이것은 메소드입니다");
-  },
+     prop: "something",
+     method: function () {
+          // 반드시 메서드일 경우 function() 키워드 필요
+          console.log("이것은 메소드입니다");
+     },
 };
 ```
 
-```
+```javascript
 /// ES6
 const obj = {
-  porp : "somethind",
-  method( ) { // 바로 함수명 입력
-    console.log("이것은 메서드입니다.");
-  }
+     porp: "somethind",
+     method() {
+          // 바로 함수명 입력
+          console.log("이것은 메서드입니다.");
+     },
 };
 ```
 
@@ -110,10 +112,10 @@ const obj = {
 
 `ES5`
 
-```
+```javascript
 // ES5
 function plusFn(a, b) {
-  return a + b;
+     return a + b;
 }
 ```
 
@@ -126,21 +128,21 @@ function plusFn(a, b) {
 
 ++ map, filter, reduce 등의 내장 함수와 사용 가능
 
-```
+```javascript
 // ES6
-  // 함수 표현식 - 화살표 함수
-  const plusFn = (a, b) => {
-    return a + b;
-  }
-  // 함수 표현식 - 화살표 함수 (생략형)
-  const plusFn = (a, b) => a + b;
+// 함수 표현식 - 화살표 함수
+const plusFn = (a, b) => {
+     return a + b;
+};
+// 함수 표현식 - 화살표 함수 (생략형)
+const plusFn = (a, b) => a + b;
 ```
 
 ## **5. 구조 분해 할당**
 
 : 비구조화를 통해 배열/객체 값을 새 변수에 쉽게 할당할 수 있음
 
-```
+```javascript
 //ES5
 const contacts = {
   name : 'jinn'
@@ -151,7 +153,7 @@ let name = contacts.name;
 let age = contacts.age;
 ```
 
-```
+```javascript
 //ES6
 const contacts = {
   name : 'jinn'

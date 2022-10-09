@@ -10,11 +10,8 @@ category: HTML/CSS
 label : input 태그의 의미 정의를 위한 태그
 label 부분을 클릭했을 경우 해당 입력창/박스 등이 활성화 됨
 
-```
-
-<label for = 'a'> b </label>
-<input type = 'text' id='a' name='a'>
-
+```html
+<label for="a"> b </label> <input type="text" id="a" name="a" />
 ```
 
 → label 의 for= 'a' 와 input id = 'a'
@@ -48,15 +45,13 @@ hash marks 입력 방법
 
 -    input 에서 <list='x'>
 
-```
-
- -<input type='range' list='x'>
-  <datalist id='x'>
-	<option value='a'>
-	<option value='b'>
-	<option value='c'>
-  </datalist>
-
+```html
+-<input type="range" list="x" />
+<datalist id="x">
+     <option value="a"></option>
+     <option value="b"></option>
+     <option value="c"></option>
+</datalist>
 ```
 
 위처럼 입력하면 range 하단에 단위 막대 넣을 수 있음!

@@ -15,7 +15,10 @@ category: React
 
 <br/>
 
-> ### react에서 리덕스로 <br/>` (dispatch) -> action -> reducer -> store -> 리덕스에서 리액트로 값 전달 (useSelector)`
+> ### `react에서 리덕스로 (dispatch) -> action -> reducer -> store -> 리덕스에서 리액트로 값 전달 (useSelector)`
+
+(react redux -- dispatch / useSelector)
+(redux -- action / reducer / store)
 
  <br/>
 
@@ -31,7 +34,7 @@ category: React
 
 <br/>
 
-```
+```react
 
 import React, { useState } from "react";
 import { ¹useSelector, ²useDispatch } from "react-redux";
@@ -51,7 +54,7 @@ import { ³addNumber } from "./redux/modules/counter";
 
 <br/>
 
-```
+```react
 
 const App = () => {
      ¹const dispatch = useDispatch();
@@ -84,7 +87,7 @@ const App = () => {
 
 <br/>
 
-```
+```react
 
 방벙1
      ¹const finalNumber = useSelector((state) => state.Counter.number);
@@ -109,7 +112,7 @@ const App = () => {
 
 <br/>
 
-```
+```react
 
 return (
           <div>
@@ -140,7 +143,7 @@ export default App;
 
 <br/>
 
-```
+```react
 
 ¹import { createStore } from "redux";
 import { combineReducers } from "redux";
@@ -174,7 +177,7 @@ export default store;
 
 <br/>
 
-```
+```react
 
 // 액션 생성 함수
 ¹const ADD_NUMBER = "ADD_NUMBER";
@@ -193,7 +196,7 @@ export default store;
 
 1. 액션 생성 함수
 2. 액션 함수의 export : addNumber()는 counter.js 밖으로 나가서 사용될 예정이기 때문에(app.js에서 사용함)
-3. type 사용 : 액션 객체를 리듀서로 보낼 때 -> 리뷰서는 객체 안의 type이라는 key로 수정할 부분을 정함
+3. type 사용 : 액션 객체를 리듀서로 보낼 때 -> 리듀서는 객체 안의 type이라는 key로 수정할 부분을 정함
 4. payload : 전달값
 
 <br/>
@@ -218,7 +221,7 @@ export default store;
 
 <br/>
 
-```
+```react
 
 /// 초기값
 const initialState = {
@@ -244,7 +247,7 @@ export default counter;
 <br/>
 
 1. dispatch로부터 전달받은 action(action.type)이 case에 해당하는 부분일 때 -> return이 실행됨
-2. state.number (기존의 nubmer)에 action.paylaod(유저가 더하길 원하는 값)을 더한다.
+2. state.number (기존의 number)에 action.payload(유저가 더하길 원하는 값)을 더한다.
 3. ~~추가 확인 필요 정확한 내용 파악시 추가 업로드~~
 
 <br/>
