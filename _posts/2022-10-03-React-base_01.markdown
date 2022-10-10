@@ -17,7 +17,7 @@ category: React
 2. 앱처럼 뛰어난 UX
 3. 일반 웝사이트보다 비즈니스적 강점
 
-     <br/>
+   <br/>
 
 ### React 셋팅
 
@@ -78,10 +78,10 @@ HTML 한단어로 줄여서 쓸 수 있는 방법 : Component 사용
 
 ### component 유의사항
 
-1. 이름은 대괄호
+1. 이름은 대문자
 2. return 안에 있는건 태그 하나로 묶어야함
 
-   <br/>
+     <br/>
 
 ### Component로 만들면 좋은 것들
 
@@ -119,7 +119,7 @@ b = state 데이터 변경 함수(대체할 데이터)
 2. ` useState( )`를 이용해 만들어야함
 3. 문자, 숫자, array, object 다 저장가능
 
-   <br/>
+     <br/>
 
 ### State의 장점
 
