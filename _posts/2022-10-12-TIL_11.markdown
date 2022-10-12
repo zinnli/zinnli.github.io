@@ -36,7 +36,7 @@ category: TIL
 
 <br/>
 
-```javascript
+```react
 방법1)
 const todoIndex = Number(id) - 1; // 원래 적었던 선언
 <h1>{Todos[todoIndex].title}</h1>
