@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 221010_TIL
+title: 221010_TIL | redux id값 입력 오류 + 해결
 date: 2022-10-10 23:30:30 +0900
 category: TIL
 ---

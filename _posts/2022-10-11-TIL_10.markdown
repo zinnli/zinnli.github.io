@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 221011_TIL
+title: 221011_TIL | redux 완성 - 상세페이지 오류
 date: 2022-10-11 23:30:30 +0900
 category: TIL
 ---
@@ -32,21 +32,23 @@ category: TIL
 
 <br/>
 
-![redux_finish_fir](https://user-images.githubusercontent.com/102575747/195161119-88a66626-32d7-46cb-af12-217e3552514e.gif)
+![redux_final_sec](https://user-images.githubusercontent.com/102575747/195405915-6321444d-b249-49d8-8509-050601ae8215.gif)
 
 이거는 성공한 gif ~~(는 오류 찾음)~~
 
 <br/>
 <br/>
 
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/102575747/195163077-7be99420-bd0b-4d4e-8238-d0f6abc3eeea.gif)
+![error_test_sec](https://user-images.githubusercontent.com/102575747/195405670-9289f68a-8aef-411d-9db6-cc00eb901588.gif)
 
 이거는 오류 발생한 gif
 <br/>
--> todo를 삭제했을 때 id 값이 땡겨가는건지.. 오류가 뜬다 내일 다시 테스트해보고 할 수 있는데까지는 구현해보는게 목표
+-> todo를 삭제했을 때 다른 상세페이지를 클릭하면 빈페이지 오류가 뜬다 내일 다시 테스트해보고 할 수 있는데까지는 구현해보는게 목표
 <br/>
 
+<br/>
 <hr>
+<br/>
 <br/>
 
 1. 일단 여기저기 물어보면서 완성은 했다. 진짜 내가 아는 잘하는 사람들 모두의 도움을 받아서 완성한듯.. 진짜 짱이다 항해인덜.. 👍🏻
