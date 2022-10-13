@@ -1,6 +1,6 @@
 ---
 layout: post
-title: React | Redux (코드리뷰 형식)
+title: React | Redux 기본 코드리뷰
 date: 2022-10-08 21:00:30 +0900
 category: React
 ---
@@ -173,6 +173,42 @@ export default store;
 
 <br/>
 
+**모듈 전체 함수**
+
+```
+// 액션 생성 함수
+const ADD_NUMBER = "ADD_NUMBER";
+
+// 액션 함수
+export const AddNumber = (payload) => {
+     return {
+          type: ADD_NUMBER,
+          payload: payload,
+     };
+};
+
+/// 초기값
+const initialState = {
+     number: 0,
+};
+
+// 리듀서(=함수)
+const counter = (state = initialState, action) => {
+     switch (action.type) {
+          case ADD_NUMBER:
+               return {
+                    number: state.number + action.payload,
+               };
+          default:
+               return state;
+     }
+};
+
+export default counter;
+```
+
+<br/>
+
 **액션 함수**
 
 <br/>
@@ -248,7 +284,7 @@ export default counter;
 
 1. dispatch로부터 전달받은 action(action.type)이 case에 해당하는 부분일 때 -> return이 실행됨
 2. state.number (기존의 number)에 action.payload(유저가 더하길 원하는 값)을 더한다.
-3. ~~추가 확인 필요 정확한 내용 파악시 추가 업로드~~
+3. default 상태일 때 기존의 state 값이 반환됨
 
 <br/>
 <br/>
@@ -262,7 +298,3 @@ export default counter;
 <br/><br/>
 
 이틀동안 이해를 제대로 못해서 큰일 났다 싶었는데 오늘 기술 매니저님의 전체적인 설명으로 대략 흐름은 알게 된 것 같다. <br/>막상 한 번 더 공부한 부분을 정리하면서 적다보니 생각보다 다 이해한 게 아니구나 하는 생각이 많이 든다. 추가 공부하면서 하나씩 추가+수정해나가야겠다.
-
-<br/>
-
-(잘못된 부분이 있다면 메일로 연락주세요.)
