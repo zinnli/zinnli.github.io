@@ -75,4 +75,4 @@ category: TIL
 
 <br/>
 
-[Lifecycle, Hooks 자세한 정리 -> Click!](https://zinnli.github.io/react/2022/10/16/React-life_hooks_01.html)
+[Lifecycle, Hooks 자세한 정리 -> Click!](https://zinnli.github.io/react/2022/10/16/React-life_hooks.html)

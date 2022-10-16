@@ -95,16 +95,16 @@ category: React
 
 #### 지원하는 Hooks
 
--    useState : 컴포넌트의 state 관리(상태에 따라 다른 화면 출력)
--    useEffect : 렌더링 이후에 실행할 코드를 만들 수 있음 → 변수가 변경될때마다 특정기능이 작동하도록 할 수 있음
--    useContext : 부모 컴포넌트와 자식 컴포넌트 간의 변수와 함수를 전역적으로 정의
--    useReducer : state 업데이트 로직을 reducer 함수에 따로 분리할 수 있음
--    useRef : 컴포넌트나 HTML 요소를 레퍼런스로 관리 가능
--    forwardRef : useRef로 만든 레퍼런스를 상위 컴포넌트로 전달가능
--    useImperativeHandle : useRef로 만든 레퍼런스 상태에 따라 실행할 함수를 정의할 수 있음
--    useMeomo, useCallback : 의존성 배열에 적힌 값이 변할 때만 값, 함수를 다시 정의할 수 있음(재렌더링시 x)
--    useLayoutEffect : 모든 DOM 변경 후 브라우저가 화면을 그리기 전에 실행되는 기능을 정할 수 있음
--    useDebugValue : 사용자 정의 Hook의 디버깅을 도와줌
+-    `useState` : 컴포넌트의 state 관리(상태에 따라 다른 화면 출력)
+-    `useEffect` : 렌더링 이후에 실행할 코드를 만들 수 있음 → 변수가 변경될때마다 특정기능이 작동하도록 할 수 있음
+-    `useContext` : 부모 컴포넌트와 자식 컴포넌트 간의 변수와 함수를 전역적으로 정의
+-    `useReducer` : state 업데이트 로직을 reducer 함수에 따로 분리할 수 있음
+-    `useRef` : 컴포넌트나 HTML 요소를 레퍼런스로 관리 가능
+-    `forwardRef` : useRef로 만든 레퍼런스를 상위 컴포넌트로 전달가능
+-    `useImperativeHandle` : useRef로 만든 레퍼런스 상태에 따라 실행할 함수를 정의할 수 있음
+-    `useMeomo`, `useCallback` : 의존성 배열에 적힌 값이 변할 때만 값, 함수를 다시 정의할 수 있음(재렌더링시 x)
+-    `useLayoutEffect` : 모든 DOM 변경 후 브라우저가 화면을 그리기 전에 실행되는 기능을 정할 수 있음
+-    `useDebugValue` : 사용자 정의 Hook의 디버깅을 도와줌
 
 <br/>
 <br/>
