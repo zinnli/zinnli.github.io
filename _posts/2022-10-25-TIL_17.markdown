@@ -1,0 +1,91 @@
+---
+layout: post
+title: 221024_TIL | 전역 style 관리, 이미지 import 하기
+date: 2022-10-24 21:50:30 +0900
+category: TIL
+---
+
+<br/>
+
+## 오늘한 일
+
+-    [항해 99] 전체적인 style 2차 수정
+-    [항해 99] 전역 style 적용
+-    [항해 99] JWT 토큰 공부
+
+<br/>
+
+## 내일 할 일
+
+-    [항해 99] 로그인 구현 완료하기..
+
+<br/>
+
+**오늘의 배운 점**
+
+1.   오늘의 오류<br/><br/>
+
+     ![오류2](https://user-images.githubusercontent.com/102575747/197565423-e9fe070b-0f34-442b-9a5b-ebdc3405d373.PNG)
+
+     항해 99에서 진행중인 미니 프로젝트 헤더 부분인데, 여기에서 제목학원 부분을 png로 이미지를 넣어뒀지만 detail 페이지에서 id값에 따라 페이지가 나타나게 되면 이미지가 뜨지않는 문제가 생겼다.<br/>
+
+     -> 해당 부분은<br/>
+
+     ```react
+         import titleImg from "../주소"
+
+         <img src={titleImg}>
+
+     //오류났던 코드
+         <img src="../이미지주소">
+     ```
+
+     위의 형태로 입력을 해주면 오류가 생기지 않았다. 처음엔 img src에서 바로 주소를 줬는데 import로 먼저 변수 선언을 하고 입력을 하니 문제 없이 진행되었다.<br/><br/>
+
+2.   style 전역 관리<br/><br/>
+
+     ```react
+     //src/styles/GlobalStyles.js
+
+     import { createGlobalStyle } from "styled-components";
+     const GlobalStyles = createGlobalStyle`
+     html {
+         --color-darktext: #274472; //Dark Blue
+         --color-background: #B1D4E0; //Baby Blue
+         --color-primary: #5885AF; // Grey Blue
+         --color-midtone : #41729F; //Midnight Blue
+     }
+     `;
+     export default GlobalStyles;
+
+     //파일을 생성해주고, 필요한 부분 최상단에 GlobalStyles를 넣어줌
+
+     //src/styles/GlobalStyles.js
+     import GlobalStyles from "../../styles/GlobalStyles";
+
+     function Layout({ children }) {
+     return (
+         <STLayout>
+         <GlobalStyles />
+         {children}
+         </STLayout>
+     );
+     }
+     export default Layout;
+
+     //위의 형식처럼 GlobalStyles를 넣어줌
+     ```
+
+     <br/> 최상단에 넣어야한다고 해서 여기에 넣었는데 여기가 옳은 위치인지는 잘.. 근데 적용은 잘되서 확실한 부분은 좀 더 찾아봐야할 것 같다.<br/>
+
+     위처럼 전역style을 사용한 이유는 아직 확실하게 컨셉을 잡은 상태가 아니다보니 유사한 버튼들끼리는 컬러를 비슷하게 사용할 것 같아 임의로 먼저 저렇게 넣어 진행했다.<br/>
+
+<br/>
+
+<br/>
+<hr>
+<br/>
+오늘 중엔 백엔팀 배포를 받을거라고 예상했지만,, 12시 가까이 되서야 전달받았다.<br/>
+그 전에 소소한 css부분과 오류들을 소소하게 해결했다.<br/><br/>
+
+오늘 배포받은 부분만 확인하고 내일을 위해,, 빠르게 숙면해야지..!
