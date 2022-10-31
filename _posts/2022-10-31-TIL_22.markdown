@@ -1,0 +1,127 @@
+---
+layout: post
+title: 221031_TIL | 3번째 로그인 진행중
+date: 2022-10-31 21:50:30 +0900
+category: TIL
+---
+
+<br/>
+
+## 오늘한 일
+
+-    [항해 99] 오늘도 주구장창 로그인...(스근하게 해보고 싶다.. 내코드들..힘내..)
+
+<br/>
+
+## 내일 할 일
+
+-    [항해 99] 소켓 공부하기..333
+-    [항해 99] 검색 관련 공부하기
+
+<br/>
+
+**오늘의 배운 점**
+<br/>
+
+1.   모달을 띄었을 때 background를 어둡게 적용한 부분에서 position:absolute를 준 부분들이 위에 뜨는 부분 <br/>
+     모달이 제일 위(z-index:3) 백이 2번째(z-index:2) 안보여야하는 부분(z-index:1) 순서로 레이어 쌓는 느낌으로 생각해서 z-index를 추가해주면 된다<br/><br/>
+
+     ++ 추가로 이렇게 z-index로 줘야하는 부분들이 늘어나는 경우 해당 파일을 따로 만들어서 상수 형태로 저장해뒀다가 꺼내쓰면 좋다고 한다(아래 형태 참고)<br/><br/>
+
+          ```react
+          ex)
+          export const BACKGROUND = 10;
+          export const MIDDLE = 50;
+          ```
+
+     <br/>
+
+2.   email 중복확인에서 오류나던 부분<br/>
+     ![221031_오류1](https://user-images.githubusercontent.com/102575747/199067609-30d058ac-d173-4215-aacc-e9f626a5036d.PNG)<br/><br/>
+
+     사실 내 실력 이슈때문에 내가 잘못한 줄 알고 3시간 가까이 이것저것 다 해봤는데 오류가 나서 친한 타 팀원분한테 여쭤보니.. 서버쪽 문제일수도 있다고 하셔서 ㅎ.. 해보니 서버 쪽에서 제대로 배포가 되지 않아 생긴 이슈였다. 404는 서버오류 메모메모..<br/><br/>
+
+3.   연결 해결 후 중복확인 오류 사항<br/>
+     우리쪽의 중복확인 부분의 경우 API 명세서를 참고하면 response에서 나오는 부분 중 success의 부분으로 구별하면 될 것 같아 extrareducer에서 if문으로 success가 true인지 false인지로 구별해주었다. 아래 코드 참고<br/><br/>
+
+     근데 다른 팀이 전에 했던 방법 throw로 강제 catch(error)로 보내서 reject에 가도록 하는 형식을 사용해보고 싶었는데 똑같이 적용했는데 내 코드에서는 적용되지않아서.. 조금 더 해봐야할 것 같다. 일단 성공은 했고 마감일은 정해져 있어서 마무리하고 나서 안됐던 부분들을 공부해야할 것 같다.<br/><br/>
+
+     ```react
+     1) throw로 catch(error)로 던지려고 함 (error 남)
+     //이메일 중복확인
+          export const _postEmailCheck = createAsyncThunk(
+               "emailCheck",
+               async (payload, thunkAPI) => {
+                    try {
+                         console.log(payload);
+                         const res = await axiosInstance.post(
+                              "/api/member/duplication/email",
+                              payload
+                         );
+                         if (!res.data.success) {
+                              // false 확인하고 , false throw 강제
+                              throw res;
+                         }
+                         console.log(res);
+                         return thunkAPI.fulfillWithValue(res);
+                    } catch (error) {
+                         return thunkAPI.fulfillWithValue(error);
+                    }
+               }
+          );
+
+          [_postEmailCheck.fulfilled]: (state, action) => {
+               state.isLoading = false;
+               console.log(action.payload.data); //action.payload ==>
+               state.isEmailCheck = true;
+               alert("사용하슈");
+          },
+          [_postEmailCheck.rejected]: (state, action) => {
+               state.isLoading = false;
+               // action.payload = false;
+               state.isEmailCheck = false;
+               alert("다시하슈");
+          },
+
+
+     2) extrareducer에서 if문 사용 (성공)
+          //이메일 중복확인
+          export const _postEmailCheck = createAsyncThunk(
+               "emailCheck",
+               async (payload, thunkAPI) => {
+                    try {
+                         console.log(payload);
+                         const res = await axiosInstance.post(
+                              "/api/member/duplication/email",
+                              payload
+                         );
+                         return thunkAPI.fulfillWithValue(res);
+                    } catch (error) {
+                         return thunkAPI.fulfillWithValue(error);
+                    }
+               }
+          );
+
+          [_postEmailCheck.fulfilled]: (state, action) => {
+               state.isLoading = false;
+               console.log(action.payload.data); //action.payload ==>
+               if (action.payload.data.success === true) {
+                    state.isEmailCheck = true;
+                    alert("중복된 이메일이 존재하지 않습니다.”");
+               }
+               if (!action.payload.data.success) {
+                    state.isEmailCheck = false;
+                    alert("중복된 이메일이 존재합니다.");
+               }
+          },
+     ```
+
+<br/>
+
+<hr>
+
+<br/>
+지난주에 했던 내용들의 연장선이라고 생각해서 금방 끝날 줄 알았지만 어림도 없었다.. 중복확인이나 유효성 검사 등이 지난번과 조금 달라지고 api 명세서 형태도 조금 다르다보니 적용하는데 어려움을 많이 겪었다. <br/>최대한 고민해볼 수 있는데까지 고민해보고 물어보는게 도움이 될 것 같아서 진짜 최종최종까지 해보고 정 안되면 물어보는 형식으로 진행했다. 시간은 많이 들었지만.. 조원한테도 조금 미안하지만.. 뭘 우선해야할 지 아직 잘 모르겠다.<br/>
+<br/>
+그래도 아직 포기하지 않은 나에게 치얼스를 외치며.. 내일도 또 해보자고~~~!
+<br/>
