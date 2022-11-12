@@ -1,11 +1,11 @@
 ---
 layout: post
-title: 221109_Algorithm | 약수의 합(Lv.1)
-date: 2022-11-09 21:30:30 +0900
+title: 221109_Algorithm | 하샤드 수(Lv.1)
+date: 2022-11-10 21:30:30 +0900
 category: Algorithm
 ---
 
-# 푸드파이트 대회 Algorithm(Lv.1)
+# 하샤드 수(Lv.1)
 
 <br/>
 
