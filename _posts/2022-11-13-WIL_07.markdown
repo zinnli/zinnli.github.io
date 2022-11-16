@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 221113_WIL | 실전프로젝트 진행중
+title: 221113_WIL | 실전프로젝트 진행중(1주차)
 date: 2022-11-13 21:30:30 +0900
 category: TIL
 ---
