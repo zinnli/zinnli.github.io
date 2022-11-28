@@ -1,0 +1,60 @@
+---
+layout: post
+title: 221127_WIL | 실전프로젝트 진행중(3주차)
+date: 2022-11-27 21:30:30 +0900
+category: TIL
+---
+
+# 221127_WIL
+
+<br/>
+
+## **오늘한 일**
+
+-    [항해 99] https 오류 해결
+
+<br/>
+
+## **이번주 한 일**
+
+-    [항해 99] 실전프로젝트 상세1 필터&마이페이지 구현 진행중
+
+<br/>
+
+**오늘의 배운 점**
+<br/>
+
+백엔드 팀에서 https로 배포를 성공했지만 그 이후 프론트엔드 쪽 부분을 작업하려고 하니 404 오류가 났다.
+
+-    `문제상황`
+
+     1. "https://배포된 주소/api/위치"의 형태일 때 JSON 로그 형태로 DB데이터가 나오지만, "https://배포된 주소"로 입력하면 404 오류가 난다 <br/> 그렇다면 문제는 FE쪽에 있을 가능성이 높다. DB 데이터는 정상적으로 들어오고 있기 때문
+     2. 팀원과 이야기해 본 결과 해당 부분은 프론트엔드 쪽에서 aws에서 추가 설정이 필요하다는 부분을 확인했다.(+구글링 결과 ssl 인증서를 추가해줘야한다고 함)
+     3. 하지만 현재 당장 급하게 aws에서 추가 설치를 해줘야하는지에 대한 의문이 생김
+     4. .env에서 주소를 새로 받은 주소로 바꿈
+     5. 개발환경(localhost)에서도 404에러가 계속되는 상태
+     6. localhost에서도 `https 처리`를 해야한다는 사실을 확인함<br/><br/>
+
+-    `해결방안` : `mkcert로 localhost SSL 인증서 생성하기`(mkcert는 개발환경에 SSL 인증서를 만들어주는 라이브러리)
+
+     1. `chocolatey 설치` 필요(윈도우의 경우 -- choco로 mkcert를 설치해주기 때문 +맥은 brew)
+     2. window의 경우 : `choco install mkcert` <br/> mac의 경우 : `brew install mkcert`
+     3. 나의 경우 위 내용을 입력한 뒤 바로 DB데이터들이 화면에 나타났다.(야호!)<br/><br/>
+
+-    `chocolatey 설치 방법`<br/>(이 부분의 경우 과거에 설치했던 chocolatey 때문에 오류가 났다. 당시 상태로는 설치가 되어있으나 choco를 검색하면 사용할 수 없다고 떠서 삭제를 진행했으나 로컬 환경에서 삭제가 되지 않아 cmd를 사용하여 삭제를 끝냈다.)
+
+     1. `powershell` 오픈(chocolatey는 powershell에서 설치해야한다고 함. cmd 환경일 때 다른 내용을 입력함)
+     2. Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')) 입력
+     3. choco를 입력하면 버전이 나오는지 확인
+
+<br/>
+
+<hr>
+<br/>
+생각했던 대로 코드가 진행되지 않고 지저분한 코드들이 보기 싫어서 자꾸 작업을 미루게 된다. 모두 나에게서 나온 산물이건만.. 이렇게 손이 안갈수가..<br/>
+그리고 담당했던 페이지에서 기능이 두 가지 정도 빠지게 되었는데 이렇게 빠지고 나니 담당하는 부분이 너무 적어져서 불안하다. 아마 개인공부를 하면서 추가적으로 이미지를 압축하는 방법 등을 공부하는 게 조금 더 도움이 될 것 같다. 뭔가 데이터를 효과적으로 관리하는 방법을 공부하고 작업해보고 싶은데 담당 받은 부분엔 그런 내용들이 없어서 무척 아쉽다. 욕심은 많은데 실력이 안되서 더 손이 안가는 것도 있지않을까 싶다. 최대한 이번달 안에(3일남음 ㅎ) 담당 받은 부분들을 1차적으로라도 표현을 해내고 싶은데 필터 칩부분이 아직도 뒷통수를 잡고 안놔준다. 필터 칩을 어떻게 해야 효과적으로 관리할 수 있을지 고민을 이어봐야겠다.<br/><br/>
+
++최근 이후 면접을 대비해서 틈틈히 이론 공부를 하고 있는데 확실히 개념이 잡히면서 도움이 많이 되는 것 같다. 이때까지 얼마나 내가 대충 작업을 해왔는지 알게되는 것 같다. 목표는 두번 반복하기. TypeScript도 꼭 써봐야할 것 같다.<br/><br/>
+
+출처:<br/>
+[mkcert](https://github.com/FiloSottile/mkcert#windows)

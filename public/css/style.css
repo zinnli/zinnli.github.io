@@ -380,19 +380,28 @@ summary a.nav-item:hover {
 }
 
 .highlight {
-     padding: 3px 8px;
+     padding: 3px 22px 3px 10px;
      border-radius: 4px;
 }
-table {
-     width: 70%;
+article table {
+     width: 80%;
      border: 1px solid #444444;
      border-collapse: collapse;
+     font-family: "Roboto", "Nanum Gothic";
 }
+tr,
 th,
 td {
      border: 1px solid #444444;
      padding: 5px 10px;
      box-sizing: border-box;
+     font-family: "Roboto", "Nanum Gothic";
+}
+.language-java,
+.language-javascript,
+.language-react {
+     width: fit-content;
+     min-width: 45vh;
 }
 
 @media (max-width: 576px) {
