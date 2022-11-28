@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Study | JS 데이터 타입과 타입 변환 및 단축평가
-date: 2022-11-26 17:30:30 +0900
+date: 2022-11-28 17:30:30 +0900
 category: Study
 ---
 
