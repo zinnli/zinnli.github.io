@@ -399,7 +399,9 @@ td {
 }
 .language-java,
 .language-javascript,
-.language-react {
+.language-react,
+.language-cpp {
+     margin-top: 10px;
      width: fit-content;
      min-width: 45vh;
 }
