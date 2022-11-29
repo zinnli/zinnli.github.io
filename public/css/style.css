@@ -401,7 +401,7 @@ td {
 .language-javascript,
 .language-react,
 .language-cpp {
-     margin-top: 10px;
+     margin: 10px 0;
      width: fit-content;
      min-width: 45vh;
 }
