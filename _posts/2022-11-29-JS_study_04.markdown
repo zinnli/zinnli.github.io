@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Study | JS 스코프
+title: Study | JS Scope
 date: 2022-11-29 17:30:30 +0900
 category: Study
 ---

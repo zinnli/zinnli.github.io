@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Study | JS 실행 컨텍스트
+title: Study | JS Execution Context
 date: 2022-12-02 12:30:30 +0900
 category: Study
 ---
@@ -9,7 +9,7 @@ category: Study
 
 > #### 목차 <br/>
 >
-> #### 실행 컨텍스트 🔥
+> #### 실행 컨텍스트
 >
 > 실행 컨텍스트에 대해 말해보세요
 
@@ -17,7 +17,7 @@ category: Study
 
 ## 실행 컨텍스트<br/>
 
-### 실행 컨텍스트에 대해 말해보세요
+### 실행 컨텍스트에 대해 말해보세요<br/>
 
 **실행 컨텍스트** : 자바스크립트 코드가 실행되는 환경
 

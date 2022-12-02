@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Study | JS 프로토 타입
+title: Study | JS Prototype
 date: 2022-11-30 17:30:30 +0900
 category: Study
 ---
