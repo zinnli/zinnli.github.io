@@ -87,11 +87,15 @@ category: Study
      - 스코프와 식별자 관리
           - environmentRecord
           - outer-EnvironmentReference<br/><br/>
-3. **`ThisBinding`** : this 식별자가 바라보고 있는 대상 객체
-     - 기본 바인딩
-     - 암시적 바인딩
-     - 명시적 바인딩
-     - new 연산자 바인딩
+3. **`ThisBinding`** : this 식별자가 바라보고 있는 대상 객체<br/>
+
+     - 바인딩 : 프로그램에서 변수들이 갖는 속성이나 값이 결정되는 것<br/>
+     - JS에서의 this : 상황에 따라 바라보는 대상이 달라지며 어디서든 사용할 수 있음<br/><br/>
+
+     - 기본 바인딩 : 함수 선언식을 사용하면 this 는 전역객체와 바인딩이 됨(엄격모드에서는 에러 발생)
+     - 암시적 바인딩 : 함수 호출 시 객체의 프로퍼티로 접근해 실행
+     - 명시적 바인딩 : call, apply, bind 내장 함수를 이용해 명시적으로 바인딩 할 컨텍스트를 정해줌
+     - new 연산자 바인딩 : 생성자 함수 내에서 정의한 this가 인스턴스에 바인딩이 되도록 만들어줌
 
 -    **EnvironmentRecord** : 컨텍스트와 관련된 코드의 식별자 정보들이 저장됨
 -    **Outer-EnvironmentReference** : 호출된 함수가 선언될 당시의 Lexical Environment를 참조하는 포인터로 `스코프 체인`을 가능하게 함<br/><br/>
@@ -121,8 +125,8 @@ category: Study
 
 #### 6. Outer-EnvironmentReference(혹은 outer)
 
--    현재 호출된 함수가 선언되는 시점에서의 LexicalEnvironment를 참조하는 포인터
--    연결리스트의 형태를 띄며 '선언 시점의 LexicalEnvironment(=해당 함수가 속한 상위 스코프의 범위)'를 찾아 올라감
+-    현재 실행 컨텍스트의 외부(outer) lexical environment에 대해 접근하는 것
+-    현재 lexical environment에서 변수를 찾지 못한다면 외부환경(outer environment)에서 찾을 수 있음을 의미함
 
      ```javascript
      var outerWrap = function () {
@@ -133,11 +137,11 @@ category: Study
 
                var inner = function () {
                     console.log(a, b); // inner의 LexicalEnvironment에는 a와 b가 없지만 스코프 체인을 통해 값에 접근한다.
-                    console.dir(inner);
+                    console.dir(inner); //f inner
                };
 
                inner();
-               console.log(a); // outer의 LexicalEnvironment에는 a가 없지만 스코프 체인을 통해 값에 접근한다.
+               console.log(a); // 1 outer의 LexicalEnvironment에는 a가 없지만 스코프 체인을 통해 값에 접근한다.
           };
 
           outer();
@@ -156,7 +160,7 @@ category: Study
 
 **실행 컨텍스트에 대해 말해보세요**
 
--    자바스크립트에서 실행 컨텍스트란, **`코드를 실행하기 위해 필요한 정보들을 가진 범위`**를 객체 형태로 나타낸 것
+-    자바스크립트에서 실행 컨텍스트란, **`코드를 실행하기 위해 필요한 정보들을 가진 범위를 객체 형태로`** 나타낸 것
 -    실행 컨텍스트를 구성하는 LexicalEnvironment는 현재의 실행 컨텍스트가 실행되기 위한 여러 정보를 담고 있음
 -    LexicalEnvironment는 식별자들에 대한 정보를 담은 EnvironmentRecord와, 상위 LexicalEnvironment를 참조해 스코프 체인을 가능하게 하는 OuterEnvironmentReference 정보로 구성
 -    EnvironmentRecord는 식별자 바인딩을 관리하고, binding object라 불리는 특정 객체의 속성으로 선언된 식별자들을 관리함
@@ -171,3 +175,5 @@ category: Study
 
 [실행 컨텍스트 추가 - 이해를 위해 읽어보세요.](https://velog.io/@ggong/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%9D%98-%EC%8B%A4%ED%96%89-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8-execution-context)<br/>
 [실행 컨텍스트 - 먼저 읽어보세요.](https://velog.io/@edie_ko/js-execution-context)<br/>
+[실행 컨텍스트 - 바인딩](https://jeonghwan-kim.github.io/2017/10/22/js-context-binding.html)<br/>
+[실행 컨텍스트 - 암시적 바인딩 이해](https://191125.tistory.com/59)
