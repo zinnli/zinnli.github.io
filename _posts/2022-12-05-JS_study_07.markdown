@@ -100,6 +100,8 @@ category: Study
 
      -    문법적으로는 같아보일 수 있으나 정반대의 기능을 수행함
      -    스프레드 연산자는 인수에 사용 / Rest 파라미터는 매개 변수(변수 선언)에 사용
+     -    **요소를 하나씩 모두 전개 시킬 때 : Spread**
+     -    **나머지 요소를 묶을 때 : rest**
 
           ```javascript
           Math.max(...numbers); // 스프레드 연산자 : 함수 호출의 인수
@@ -119,6 +121,30 @@ category: Study
      const newObj = { ...obj1, name: "Alice" }; // { name: 'Alice', age: '20', flag: 'true', foo: 'bar' }
 
      console.log(obj1 === newObj); // false
+     ```
+
+-    함수 호출문의 인수 목록 : 요소들의 목록을 함수의 인수로 전달하고 싶은 경우
+
+     ```javascript
+     var arr = [1, 2, 3];
+
+     //기존
+     var max = Math.max.apply(null, arr); //3
+     //스프레드 문법
+     var max = Math.max(...arr); // 3
+     ```
+
+-    배열 리터럴의 요소 목록 : 배열 병합, 배열 복사, 이터러블을 배열로 변환(사용 예시 참고)
+-    객체 리터럴의 프로퍼티 목록 : Object.assign 메서드를 사용하여 여러 개의 객체를 병합하거나 특정 프로퍼티를 변경 또는 추가 <br/> -> 스프레드 문법을 활용하면 간단하게 해결됨
+
+     ```javascript
+     //Object.assign
+     const merged = Object.assign({}, { x: 1, y: 2 }, { y: 10, z: 3 });
+     console.log(merged); // {x:1, y:10, z:3};
+
+     //스프레드 문법
+     const merged = { ...{ x: 1, y: 2 }, ...{ y: 10, z: 3 } };
+     console.log(merged); // {x:1, y:10, z:3};
      ```
 
      <br/>
