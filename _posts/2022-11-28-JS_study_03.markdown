@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Study | JS 데이터 타입과 타입 변환 및 단축평가
+title: Java Script | JS 데이터 타입과 타입 변환 및 단축평가
 date: 2022-11-28 17:30:30 +0900
-category: Study
+category: JavaScript
 ---
 
 # HTTP
@@ -11,18 +11,18 @@ category: Study
 >
 > #### 데이터 타입
 >
-> 1.   데이터 타입의 종류는 어떤 것들이 있나요?
-> 2.   심벌 타입은 뭐죠?
-> 3.   데이터 타입은 왜 필요할까요?
-> 4.   정적 타이핑이 뭔가요?
-> 5.   동적 타이핑이 뭔가요?
+> 1.  데이터 타입의 종류는 어떤 것들이 있나요?
+> 2.  심벌 타입은 뭐죠?
+> 3.  데이터 타입은 왜 필요할까요?
+> 4.  정적 타이핑이 뭔가요?
+> 5.  동적 타이핑이 뭔가요?
 >
 > #### 타입변환과 단축 평가
 >
-> 1.   명시적 타입 변환이 뭔가요?
-> 2.   명시적 타입 변환 함수를 예를 들어볼 수 있나요?
-> 3.   암묵적 타입 변환이 뭔가요?
-> 4.   truthy / falsy 한 값이 뭔가요?
+> 1.  명시적 타입 변환이 뭔가요?
+> 2.  명시적 타입 변환 함수를 예를 들어볼 수 있나요?
+> 3.  암묵적 타입 변환이 뭔가요?
+> 4.  truthy / falsy 한 값이 뭔가요?
 
 <br/><br/>
 
@@ -34,13 +34,13 @@ JS의 언어타입은 원시값과 객체로 나눠짐
 
 1. `원시값`(변경할 수 없는 값으로 불변데이터를 의미함 == 객체를 제외한 모든 타입)
 
-     - `boolean` 타입 : true / false
-     - `null` 타입 : 의도적으로 <u>변수에 값이 없다는 것</u>을 명시할 때 사용
-     - `undefined` 타입 : <u>값을 할당하지 않은 변수</u>, 존재하지 않는 객체 프로퍼티
-     - `number` 타입 : 숫자형(64비트 이진 형식의 값)
-     - `bigInt` 타입 : 숫자형(임의 정밀도로 정수를 타나낼 수 있는 숫자 원시값) -- 주로 number 사용
-     - `string` 타입 : 텍스트 데이터
-     - `symbol` 타입 : 고유하고 변경 불가능한 원시값(프로그램 언어 = 아톰)<br/><br/>
+   - `boolean` 타입 : true / false
+   - `null` 타입 : 의도적으로 <u>변수에 값이 없다는 것</u>을 명시할 때 사용
+   - `undefined` 타입 : <u>값을 할당하지 않은 변수</u>, 존재하지 않는 객체 프로퍼티
+   - `number` 타입 : 숫자형(64비트 이진 형식의 값)
+   - `bigInt` 타입 : 숫자형(임의 정밀도로 정수를 타나낼 수 있는 숫자 원시값) -- 주로 number 사용
+   - `string` 타입 : 텍스트 데이터
+   - `symbol` 타입 : 고유하고 변경 불가능한 원시값(프로그램 언어 = 아톰)<br/><br/>
 
 2. `객체`(속성의 컬렉션) : 식별자로 참조할 수 있는 메모리 상의 값<br/>
    원시 값을 제외한 나머지 값(함수, 배열, 정규 표현식 등)은 모두 객체<br/>
@@ -80,111 +80,111 @@ console.log(Number.isSafeInteger(++max)); // false
 
 **\*\*\*\*bigInt 사용법<br/>**
 
-1.   정수 리터럴 뒤에 n붙이기<br/>
+1.  정수 리터럴 뒤에 n붙이기<br/>
 
-     ```javascript
-     let x = 3;
-     console.log(typeof x); // number
-     x = 3n;
-     console.log(typeof x); // bigint
-     ```
+    ```javascript
+    let x = 3;
+    console.log(typeof x); // number
+    x = 3n;
+    console.log(typeof x); // bigint
+    ```
 
-     <br/>
+    <br/>
 
-2.   BigInt() 생성자 함수 사용<br/>
+2.  BigInt() 생성자 함수 사용<br/>
 
-     ```javascript
-     let x = 3;
-     console.log(typeof x); // number
+    ```javascript
+    let x = 3;
+    console.log(typeof x); // number
 
-     x = BigInt(x);
-     console.log(typeof x); // bigint
-     ```
+    x = BigInt(x);
+    console.log(typeof x); // bigint
+    ```
 
-     <br/>
+    <br/>
 
 ### 2. 심볼 타입은 뭐죠?<br/>
 
--    **symbol** : `변경 불가능한 원시 타입`의 값(= 다른 값과 중복되지 않는 고유한 값)
+- **symbol** : `변경 불가능한 원시 타입`의 값(= 다른 값과 중복되지 않는 고유한 값)
 
-     -    심볼 값은 충돌 위험이 없는 오브젝트의 유일한 프로퍼티 키를 만들기 위해 사용할 수 있음
-     -    ex) 하위 호환성을 유지하며 표준 확장 / 고유한 상수값 만들기<br/>
+  - 심볼 값은 충돌 위험이 없는 오브젝트의 유일한 프로퍼티 키를 만들기 위해 사용할 수 있음
+  - ex) 하위 호환성을 유지하며 표준 확장 / 고유한 상수값 만들기<br/>
 
-          ```javascript
-          const symbolA = Symbol("symbol");
-          const symbolB = Symbol("symbol");
+    ```javascript
+    const symbolA = Symbol("symbol");
+    const symbolB = Symbol("symbol");
 
-          console.log(symbolA === symbolB); // false -- 유일한 프로퍼티 값
-          ```
+    console.log(symbolA === symbolB); // false -- 유일한 프로퍼티 값
+    ```
 
-          <br/>
+    <br/>
 
--    **Symbol 함수** : JS 런타임 환경에서 symbol 함수에 의해 동적으로 생성되며 다른 값과 중복되지않는 고유한 값
+- **Symbol 함수** : JS 런타임 환경에서 symbol 함수에 의해 동적으로 생성되며 다른 값과 중복되지않는 고유한 값
 
-     -    생성된 심볼의 값은 외부로 노출되지 않아 확인할 수 없음
-     -    Symbol 함수에 들어가는 문자열 인자는 심볼 값에 대한 description(설명)으로서 선택적으로 넣을 수 있음(이 문자열은 디버깅 용도로만 사용되며 심볼 값 생성에 영향 x)
-     -    심볼 값은 문자열이나 숫자 타입으로 변환 불가능 but. 불리언 타입으로는 타입 변환 가능<br/>
+  - 생성된 심볼의 값은 외부로 노출되지 않아 확인할 수 없음
+  - Symbol 함수에 들어가는 문자열 인자는 심볼 값에 대한 description(설명)으로서 선택적으로 넣을 수 있음(이 문자열은 디버깅 용도로만 사용되며 심볼 값 생성에 영향 x)
+  - 심볼 값은 문자열이나 숫자 타입으로 변환 불가능 but. 불리언 타입으로는 타입 변환 가능<br/>
 
-          ```javascript
-          const a = Symbol("a");
-          a.description; // "a"
-          a.toString(); // "Symbol(a)"
-          !a; // false
-          a + "hi"; // Uncaught TypeError
-          ```
+    ```javascript
+    const a = Symbol("a");
+    a.description; // "a"
+    a.toString(); // "Symbol(a)"
+    !a; // false
+    a + "hi"; // Uncaught TypeError
+    ```
 
-          <br/>
+    <br/>
 
--    **symbol 실무**
+- **symbol 실무**
 
-     ```javascript
-     class Counter {
-          count = 0;
+  ```javascript
+  class Counter {
+       count = 0;
 
-          add() {
-               return this.count++;
-          }
-          get() {
-               return this.count;
-          }
-     }
+       add() {
+            return this.count++;
+       }
+       get() {
+            return this.count;
+       }
+  }
 
-     class BetterCounter extends Counter {
-          count = function() { ... }; // conflict !!!!!!!!!!!!!!!!!
-     ...
-     }
-     ```
+  class BetterCounter extends Counter {
+       count = function() { ... }; // conflict !!!!!!!!!!!!!!!!!
+  ...
+  }
+  ```
 
-     -    counter라는 문자열 키 값을 사용 할 때 -> 라이브러리로 외부에 배포했다고 가정 <br/> 다른 프로그래머가 이 Counter 라이브러리를 받아 상속을 통해 기능을 확장해서 사용하려고 할 때 -> 일반적으로 내부의 코드를 알 수 없기 때문에 내부 변수를 따로 선언할 가능성이 높음<br/> -> `그런데 그 이름이 count 라면??`<br/>
+  - counter라는 문자열 키 값을 사용 할 때 -> 라이브러리로 외부에 배포했다고 가정 <br/> 다른 프로그래머가 이 Counter 라이브러리를 받아 상속을 통해 기능을 확장해서 사용하려고 할 때 -> 일반적으로 내부의 코드를 알 수 없기 때문에 내부 변수를 따로 선언할 가능성이 높음<br/> -> `그런데 그 이름이 count 라면??`<br/>
 
-     -    로직 상으로는 문제가 없어보이지만 코드의 동작이 올바르게 돌아가지 않음 , - 부모클래스 인스턴스 count변수가 덮어씌워져 있기 때문!
-     -    이러한 문제를 해결하기 위해 symbol을 사용하여 `'숨김처리'`를 해줌(심볼을 이용해 내부 변수를 선언했다면 중복되는 걱정을 할 필요가 없음)<br/><br/>
+  - 로직 상으로는 문제가 없어보이지만 코드의 동작이 올바르게 돌아가지 않음 , - 부모클래스 인스턴스 count변수가 덮어씌워져 있기 때문!
+  - 이러한 문제를 해결하기 위해 symbol을 사용하여 `'숨김처리'`를 해줌(심볼을 이용해 내부 변수를 선언했다면 중복되는 걱정을 할 필요가 없음)<br/><br/>
 
-     ```javascript
-     //symbol 적용
-     const count = Symbol();
+  ```javascript
+  //symbol 적용
+  const count = Symbol();
 
-     class Counter {
-          [count] = 0;
+  class Counter {
+    [count] = 0;
 
-          add() {
-               this[count] += 1;
-               return this;
-          }
+    add() {
+      this[count] += 1;
+      return this;
+    }
 
-          get() {
-               return this[count];
-          }
-     }
+    get() {
+      return this[count];
+    }
+  }
 
-     const counter = new Counter();
-     console.log(counter.get()); // 0
+  const counter = new Counter();
+  console.log(counter.get()); // 0
 
-     counter.add().add().add();
-     console.log(counter.get()); //3
-     ```
+  counter.add().add().add();
+  console.log(counter.get()); //3
+  ```
 
-     -    위처럼 심볼 처리를 해주었을 때 <br/> --> **심볼을 선언하는 순간 이건 private 필드라고 프로그래머에게 가독성을 높여줄 뿐만 아니라, 인스턴스 중복을 피할 수 있음**<br/><br/>
+  - 위처럼 심볼 처리를 해주었을 때 <br/> --> **심볼을 선언하는 순간 이건 private 필드라고 프로그래머에게 가독성을 높여줄 뿐만 아니라, 인스턴스 중복을 피할 수 있음**<br/><br/>
 
 ### 3. 데이터 타입은 왜 필요할까요?
 
@@ -250,78 +250,78 @@ console.log(typeof str); // string
 
 ### 2. 명시적 타입 변환 함수를 예를 들어볼 수 있나요?
 
-1.   **문자열 타입(String)**
+1.  **문자열 타입(String)**
 
-     ```javascript
-     // 1. String 생성자 함수를 new 연산자 없이 호출
-     String(1); // '1'
-     String(true); // 'true'
-     String(NaN)(
-          // 'NaN'
+    ```javascript
+    // 1. String 생성자 함수를 new 연산자 없이 호출
+    String(1); // '1'
+    String(true); // 'true'
+    String(NaN)(
+      // 'NaN'
 
-          // 2. Object.prototype.toString 메서드를 사용
-          1
-     ).toString(); // '1'
-     NaN.toString(); // 'NaN'
-     true.toString(); // 'true'
+      // 2. Object.prototype.toString 메서드를 사용
+      1
+    ).toString(); // '1'
+    NaN.toString(); // 'NaN'
+    true.toString(); // 'true'
 
-     // 암묵적 타입 변환 활용 : 문자열 연결 연산자
-     // 숫자 타입 -> 문자열
-     1 + ""; // '1'
-     true + ""; // 'true
-     ```
+    // 암묵적 타입 변환 활용 : 문자열 연결 연산자
+    // 숫자 타입 -> 문자열
+    1 + ""; // '1'
+    true + ""; // 'true
+    ```
 
-     <br/>
+    <br/>
 
-2.   **숫자 타입(Number)**
+2.  **숫자 타입(Number)**
 
-     ```javascript
-     // 1. Number 생성자 함수 사용
-     Number("0"); // 0
-     Number(true); // 1
-     Number(false); // 0
+    ```javascript
+    // 1. Number 생성자 함수 사용
+    Number("0"); // 0
+    Number(true); // 1
+    Number(false); // 0
 
-     // 2. parseInt, parseFloat 함수 사용
-     parseInt("0"); // 0
-     parseFloat("10.53") + // 10.53
-          // 암묵적 타입 변환 활용 : +단항 산술 연산자 사용
-          "0" + // 0
-          true + // 1
-          false; // 0
+    // 2. parseInt, parseFloat 함수 사용
+    parseInt("0"); // 0
+    parseFloat("10.53") + // 10.53
+      // 암묵적 타입 변환 활용 : +단항 산술 연산자 사용
+      "0" + // 0
+      true + // 1
+      false; // 0
 
-     // 암묵적 타입 변환 활용 : *산술 연산자 사용
-     "0" * 1; // 0
-     true * 1; // 1
-     false * 1; // 0
-     ```
+    // 암묵적 타입 변환 활용 : *산술 연산자 사용
+    "0" * 1; // 0
+    true * 1; // 1
+    false * 1; // 0
+    ```
 
-     <br/>
+    <br/>
 
-3.   **불리언 타입(Boolean)**
+3.  **불리언 타입(Boolean)**
 
-     ```javascript
-     // 1. Boolean 생성자 함수
-     Boolean("x"); // true
-     Boolean(""); //false
-     Boolean("false"); // true
+    ```javascript
+    // 1. Boolean 생성자 함수
+    Boolean("x"); // true
+    Boolean(""); //false
+    Boolean("false"); // true
 
-     Boolean(0); // false
-     Boolean(1); // true
+    Boolean(0); // false
+    Boolean(1); // true
 
-     Boolean({}); // true
-     Boolean([]); // true
+    Boolean({}); // true
+    Boolean([]); // true
 
-     // 2. ! 부정 논리 연산자를 두 번 사용하는 방법
-     !!"x"; // true
-     !!""; // false
-     !!"false"; // true
-     !!0; // false
-     !!1; // true
-     !!{}; // true
-     !![]; // true
-     ```
+    // 2. ! 부정 논리 연산자를 두 번 사용하는 방법
+    !!"x"; // true
+    !!""; // false
+    !!"false"; // true
+    !!0; // false
+    !!1; // true
+    !!{}; // true
+    !![]; // true
+    ```
 
-       <br/>
+      <br/>
 
 ### 3. 암묵적 타입 변환이 뭔가요?
 
@@ -345,39 +345,39 @@ console.log(x); // 10
 
 ### 4. truthy / falsy 한 값이 뭔가요?
 
--    **truthy** : Boolean 문맥에서 true로 평가되는 값(falsy값으로 정의된 값이 아니면 모두 truthy로 평가됨)<br/>
+- **truthy** : Boolean 문맥에서 true로 평가되는 값(falsy값으로 정의된 값이 아니면 모두 truthy로 평가됨)<br/>
 
-     ```javascript
-     if (true)
-     if ({})
-     if ([])
-     if (42)
-     if ("0")
-     if ("false")
-     if (new Date())
-     if (-42)
-     if (12n)
-     if (3.14)
-     if (-3.14)
-     if (Infinity)
-     if (-Infinity)
-     ```
+  ```javascript
+  if (true)
+  if ({})
+  if ([])
+  if (42)
+  if ("0")
+  if ("false")
+  if (new Date())
+  if (-42)
+  if (12n)
+  if (3.14)
+  if (-3.14)
+  if (Infinity)
+  if (-Infinity)
+  ```
 
-     <br/>
+  <br/>
 
--    **falsy** : Boolean 문맥에서 false로 평가되는 값<br/>
+- **falsy** : Boolean 문맥에서 false로 평가되는 값<br/>
 
-     | falsy 값     | 설명                  |
-     | ------------ | --------------------- |
-     | false        | 키워드 false          |
-     | 0            | Number zero           |
-     | -0           | Number negative zero  |
-     | 0n           | BigInt zero           |
-     | "", '', ``   | 빈 문자열 값          |
-     | null         | 어떠한 값도 없는 상태 |
-     | undefined    | 할당되지 않은 값      |
-     | NaN          | Not a Number          |
-     | document.all | ?                     |
+  | falsy 값     | 설명                  |
+  | ------------ | --------------------- |
+  | false        | 키워드 false          |
+  | 0            | Number zero           |
+  | -0           | Number negative zero  |
+  | 0n           | BigInt zero           |
+  | "", '', ``   | 빈 문자열 값          |
+  | null         | 어떠한 값도 없는 상태 |
+  | undefined    | 할당되지 않은 값      |
+  | NaN          | Not a Number          |
+  | document.all | ?                     |
 
 <br/><br/>
 
@@ -390,19 +390,19 @@ console.log(x); // 10
 **1. 데이터 타입의 종류는 어떤 것들이 있나요?**
 
 1. 원시값(변경할 수 없는 값으로 불변데이터를 의미함 == 객체를 제외한 모든 타입)
-     - boolean 타입 : true / false
-     - null 타입 : 의도적으로 변수에 값이 없다는 것을 명시할 때 사용
-     - undefined 타입 : 값을 할당하지 않은 변수, 존재하지 않는 객체 프로퍼티
-     - number 타입 : 숫자형(64비트 이진 형식의 값)
-     - bigInt 타입 : 숫자형(임의 정밀도로 정수를 타나낼 수 있는 숫자 원시값) – 주로 number 사용
-     - string 타입 : 텍스트 데이터
-     - symbol 타입 : 고유하고 변경 불가능한 원시값(프로그램 언어 = 아톰)
+   - boolean 타입 : true / false
+   - null 타입 : 의도적으로 변수에 값이 없다는 것을 명시할 때 사용
+   - undefined 타입 : 값을 할당하지 않은 변수, 존재하지 않는 객체 프로퍼티
+   - number 타입 : 숫자형(64비트 이진 형식의 값)
+   - bigInt 타입 : 숫자형(임의 정밀도로 정수를 타나낼 수 있는 숫자 원시값) – 주로 number 사용
+   - string 타입 : 텍스트 데이터
+   - symbol 타입 : 고유하고 변경 불가능한 원시값(프로그램 언어 = 아톰)
 2. 객체(속성의 컬렉션) : 원시 값을 제외한 나머지 값(함수, 배열, 정규 표현식 등)
 
 **2. 심벌 타입은 뭐죠?**
 
--    변경 불가능한 원시 타입의 값(= 다른 값과 중복되지 않는 고유한 값)
--    심볼 값은 충돌 위험이 없는 오브젝트의 유일한 프로퍼티 키를 만들기 위해 사용할 수 있음
+- 변경 불가능한 원시 타입의 값(= 다른 값과 중복되지 않는 고유한 값)
+- 심볼 값은 충돌 위험이 없는 오브젝트의 유일한 프로퍼티 키를 만들기 위해 사용할 수 있음
 
 **3. 데이터 타입은 왜 필요할까요?**
 
@@ -412,30 +412,30 @@ console.log(x); // 10
 
 **4. 정적 타이핑이 뭔가요?**
 
--    변수를 선언할 때 타입을 함께 써줌
+- 변수를 선언할 때 타입을 함께 써줌
 
 **5. 동적 타이핑이 뭔가요?**
 
--    코딩할 때 데이터 타입을 직접적으로 선언하지 않고 ‘런타임’에 타입 지정이 실행됨
+- 코딩할 때 데이터 타입을 직접적으로 선언하지 않고 ‘런타임’에 타입 지정이 실행됨
 
 ### **타입변환과 단축 평가**
 
 **1. 명시적 타입 변환이 뭔가요?**
 
--    개발자에 의해 의도적으로 값의 타입을 변환하는 것
+- 개발자에 의해 의도적으로 값의 타입을 변환하는 것
 
 **2. 명시적 타입 변환 함수를 예를 들어볼 수 있나요?**
 
--    타입에 따라 주로 문자 타입은 String, 숫자 타입은 Number, 불리언 타입은 Boolean을 생성자 함수로 사용함
+- 타입에 따라 주로 문자 타입은 String, 숫자 타입은 Number, 불리언 타입은 Boolean을 생성자 함수로 사용함
 
 **3. 암묵적 타입 변환이 뭔가요?**
 
--    개발자의 의도와 상관없이 JS 엔진에 의해 암묵적으로 타입이 자동 변환
+- 개발자의 의도와 상관없이 JS 엔진에 의해 암묵적으로 타입이 자동 변환
 
 **4. truthy / falsy 한 값이 뭔가요?**
 
--    truthy : Boolean 문맥에서 true로 평가되는 값(falsy값으로 정의된 값이 아니면 모두 truthy로 평가됨)
--    falsy : Boolean 문맥에서 false로 평가되는 값
+- truthy : Boolean 문맥에서 true로 평가되는 값(falsy값으로 정의된 값이 아니면 모두 truthy로 평가됨)
+- falsy : Boolean 문맥에서 false로 평가되는 값
 
 <br/><br/>
 
