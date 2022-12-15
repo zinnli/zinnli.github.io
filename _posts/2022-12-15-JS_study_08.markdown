@@ -9,7 +9,7 @@ category: JavaScript
 
 > #### 목차 <br/>
 >
-> #### DOM 🔥
+> #### DOM
 >
 > 1. DOM이 뭔가요?
 > 2. DOM을 구성하는 건 뭐가 있나요?
@@ -30,7 +30,7 @@ category: JavaScript
     \*트리자료구조 : 노드들의 계층 구조로 이루어짐<br/><br/>
     \*\*DOM과 HTML의 차이
 
-    - **HTML** : 화면에 보이고자 하는 모양과 구조를 문서로 만든 것으로 단순 텍스트로 구성되어 있음 (최초에 화면을 그릴때 사용하는 설계도)
+    - **HTML** : 화면에 보이고자 하는 모양과 구조를 문서로 만든 것으로 단순 텍스트로 구성(최초에 화면을 그릴때 사용하는 설계도)
     - **DOM** : HTML 문서의 내용과 구조가 객체 모델로 변화되어 다양한 프로그램에서 사용될 수 있음 (설계도를 이용하여 실제로 화면에 나타내지는 인터페이스)<br/><br/>
 
     ```html
@@ -54,7 +54,10 @@ category: JavaScript
 
 2.  DOM의 정적 생성과 동적 생성
 
-    - **정적 생성** : 이미 HTML 파일에 적혀있는 코드를 위에서부터 아래로 읽어내려가며 생성하는 과정만 의미함 <br/> HTML 문서에 직접 태그로 작성한 것
+    - **정적 생성** : 이미 HTML 파일에 적혀있는 코드를 위에서부터 아래로 읽어내려가며 생성하는 과정만 의미함
+
+      - HTML 문서에 직접 태그로 작성한 것
+        <br/>
 
       ```html
       <!DOCTYPE html>
@@ -71,7 +74,12 @@ category: JavaScript
       </html>
       ```
 
-    - **동적 생성** : HTML 문서에 없는 노드를 만들어 이어 붙여 웹페이지에 렌더링되게 만드는 모든 과정 <br/> 자바스크립트를 이용해 있던 노드에 없는 노드를 만들어 이어 붙임
+      <br/>
+
+    - **동적 생성** : HTML 문서에 없는 노드를 만들어 이어 붙여 웹페이지에 렌더링되게 만드는 모든 과정
+
+      - 자바스크립트를 이용해 있던 노드에 없는 노드를 만들어 이어 붙임
+        <br/>
 
       ```html
       <!DOCTYPE html>
@@ -89,6 +97,8 @@ category: JavaScript
       </body>
       </html>
       ```
+
+      <br/>
 
     - 두번째 코드처럼 스크립트 태그를 달아 외부의 자바스크립트 파일을 연결하고, 일련의 작업을 하게된다면 이것은 동적으로 노드를 생성한다고 봄
 
@@ -138,3 +148,4 @@ category: JavaScript
 [문서 객체 모델](https://www.codestates.com/blog/content/dom-javascript)<br/>
 [DOM과 HTML](https://usefultoknow.tistory.com/entry/DOM-%EC%9D%B4%EB%9E%80-%EC%9B%B9-%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B0%80-%EB%A7%8C%EB%93%A4%EC%96%B4%EC%A7%80%EB%8A%94-%EB%B0%A9%EB%B2%95)<br/>
 [DOM의 구성요소](https://cheonmro.github.io/2018/09/13/what-is-dom/)<br/>
+[DOM API 자세한 설명](https://dh2note.tistory.com/117)
