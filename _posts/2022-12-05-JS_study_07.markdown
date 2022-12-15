@@ -5,7 +5,7 @@ date: 2022-12-05 12:30:30 +0900
 category: JavaScript
 ---
 
-# HTTP
+# Spread 문법
 
 > #### 목차 <br/>
 >
