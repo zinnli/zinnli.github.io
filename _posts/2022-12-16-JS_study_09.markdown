@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java Script | JS 비동기 프로그래밍
-date: 2022-12-15 12:30:30 +0900
+date: 2022-12-16 12:30:30 +0900
 category: JavaScript
 ---
 
@@ -29,7 +29,7 @@ category: JavaScript
 
 ### 1.동기와 비동기의 차이점에 대해서 설명해줄 수 있나요?<br/>
 
-1. 동기(synchronous)
+1. 동기(Synchronous)
 
    - 요청과 결과가 한 자리에서 동시에 일어남
    - 설계가 매우 간단하고 직관적
