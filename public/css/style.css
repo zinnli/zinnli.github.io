@@ -2,6 +2,21 @@
 @import url("https://fonts.googleapis.com/css?family=Gelasio|Kulim+Park|Nanum+Myeongjo|Nanum+Gothic|Noto+Sans|Noto+Sans+KR|Roboto&display=swap");
 @import url(syntax/monokai.css);
 
+@font-face {
+  font-family: "SeoulNamsanM";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SeoulNamsanM.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GangwonEduSaeeum_OTFMediumA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -29,7 +44,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Roboto", "Nanum Gothic";
+  --font-family-sans-serif: "GangwonEduSaeeum_OTFMediumA";
   --font-family-serif: "Nanum Myeongjo";
 }
 
@@ -58,7 +73,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Gelasio", "Nanum Myeongjo", serif;
+  font-family: var(--font-family-sans-serif);
   color: #2c3e50;
 }
 
@@ -82,8 +97,8 @@ pre {
 }
 
 code {
-  font-family: "Menlo", "Consolas", monospace;
-  font-size: 0.8em;
+  font-family: var(--font-family-sans-serif);
+  font-size: 0.9em;
   margin: 0px;
 }
 
@@ -121,20 +136,20 @@ code {
 }
 
 .sidebar-brand > a {
-  font-size: 200%;
-  font-family: "Gelasio";
+  font-size: 370%;
+  font-family: var(--font-family-sans-serif);
   color: #fff;
   margin-top: 50px;
 }
 
 .lead {
-  font-size: 110%;
+  font-size: 150%;
   margin: 0 5px;
   color: #aaa;
 }
 
 .sidebar-header {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .sidebar-nav {
@@ -142,22 +157,22 @@ code {
 }
 
 .nav-title {
-  font-size: 115%;
-  font-family: "Noto Sans";
+  font-size: 210%;
+  font-family: var(--font-family-sans-serif);
   text-transform: uppercase;
   border-bottom: 1px solid gray;
   margin-bottom: 5px;
 }
 
 a.nav-item {
-  font-size: 120%;
-  font-family: "Noto Sans";
+  font-size: 170%;
+  font-family: var(--font-family-sans-serif);
   text-transform: capitalize;
   color: #aaa;
 }
 
 a.nav-item:hover {
-  color: #777;
+  color: #5581ca;
 }
 
 .badge {
@@ -175,7 +190,7 @@ a.nav-item:hover {
 
 .post-link {
   margin-left: 10px;
-  font-size: 110%;
+  font-size: 115%;
   color: #333;
 }
 
@@ -210,21 +225,21 @@ article .share .twitter:hover {
 
 article .share .facebook:hover {
   color: #43609c;
-  border-color: #43609c;
+  border-color: #0e273b;
 }
 article .share .gplus:hover {
-  color: #c13929;
-  border-color: #c13929;
+  color: #5581ca;
+  border-color: #0e273b;
 }
 
 .page-header {
-  color: #e74c3c;
+  color: #5581ca;
   text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
 article {
   padding: 0 5% 0;
-  font-size: 17px;
+  font-size: 22px;
   margin-bottom: 100px;
   line-height: 1.5;
 }
@@ -255,10 +270,10 @@ p {
   margin-bottom: 0;
 }
 article p {
-  font-family: "Roboto", "Nanum Gothic";
+  font-family: var(--font-family-sans-serif);
 }
 article li {
-  font-family: "Roboto", "Nanum Gothic";
+  font-family: var(--font-family-sans-serif);
 }
 article h1,
 article h2,
@@ -275,13 +290,13 @@ article.home h1 a,
 article.home h2 a,
 article.home h3 a,
 article.home h4 a {
-  color: #f2756a;
+  color: #5581ca;
 }
 article.home h1 a:hover,
 article.home h2 a:hover,
 article.home h3 a:hover,
 article.home h4 a:hover {
-  color: #e74c3c;
+  color: #5581ca;
 }
 
 header.post-header {
@@ -296,7 +311,7 @@ header.home {
 }
 
 .post-title {
-  font-size: 1.5em;
+  font-size: 1.7em;
   color: #111;
   font-weight: bold;
 }
@@ -305,7 +320,7 @@ header.home {
   text-transform: uppercase;
   color: #555;
   letter-spacing: 1px;
-  font-size: 0.8em;
+  font-size: 0.9em;
   display: inline-block;
   width: 80px;
 }
@@ -317,14 +332,14 @@ header.home {
 
 footer {
   padding-top: 15px;
-  font-family: "Ubuntu";
+  font-family: var(--font-family-sans-serif);
 }
 
 .sidebar-footer {
-  margin-top: 100px;
-  font-size: 0.75em;
+  margin-top: 50px;
+  font-size: 1.5em;
   font-weight: lighter;
-  font-family: "Roboto";
+  font-family: var(--font-family-sans-serif);
   line-height: 1.5;
 }
 
@@ -334,7 +349,7 @@ footer {
 
 /* 현진추가 */
 .lead:last-child {
-  font-size: 95%;
+  font-size: 115%;
 }
 
 .post-content h3 {
@@ -347,36 +362,36 @@ footer {
 .post-lit-deco {
   list-style-type: none;
   margin-left: -10px;
-  font-size: 15px;
+  font-size: 18px;
 }
 summary a .name,
 summary a .badge {
   margin-left: 5px;
 }
 summary::marker {
-  font-family: "Gelasio", "Nanum Myeongjo", serif;
+  font-family: var(--font-family-sans-serif);
   color: #555555;
-  font-size: 15px;
+  font-size: 18px;
 }
 .post-content summary a .name {
-  font-family: "Gelasio", "Nanum Myeongjo", serif;
+  font-family: var(--font-family-sans-serif);
   color: #111;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: bold;
 }
 .post-content summary a .badge {
-  font-family: "Gelasio", "Nanum Myeongjo", serif;
+  font-family: var(--font-family-sans-serif);
   color: #555;
-  font-size: 0.5em;
+  font-size: 0.6em;
   font-weight: bold;
 }
 
 summary a.nav-item:hover {
-  color: #ff8c00;
+  color: #5581ca;
 }
 
 .highlighter-rouge {
-  background-color: #ffc107;
+  background-color: #afeeee;
 }
 
 .highlight {
@@ -387,7 +402,7 @@ article table {
   width: 80%;
   border: 1px solid #444444;
   border-collapse: collapse;
-  font-family: "Roboto", "Nanum Gothic";
+  font-family: var(--font-family-sans-serif);
 }
 tr,
 th,
@@ -395,7 +410,7 @@ td {
   border: 1px solid #444444;
   padding: 5px 10px;
   box-sizing: border-box;
-  font-family: "Roboto", "Nanum Gothic";
+  font-family: var(--font-family-sans-serif);
 }
 .language-java,
 .language-javascript,
@@ -408,13 +423,30 @@ td {
 }
 
 a {
-  color: #ff8c00;
+  color: #5581ca;
 }
 
 .content {
   /*margin-left: 180px;*/
   flex: 1 1 auto;
   padding: 0px 50px;
+}
+
+.mypage-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1%;
+  gap: 5%;
+  box-sizing: border-box;
+}
+.mypage-image {
+  width: 28%;
+  height: fit-content;
+}
+.mypage-text {
+  width: 70%;
+  height: 100%;
 }
 
 @media (max-width: 576px) {
@@ -453,5 +485,24 @@ a {
     flex: 0 0 0px;
     visibility: hidden;
     display: none;
+  }
+  .mypage-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    gap: 5%;
+    box-sizing: border-box;
+  }
+  .mypage-image {
+    width: 100%;
+    height: fit-content;
+  }
+  .mypage-text {
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
   }
 }
