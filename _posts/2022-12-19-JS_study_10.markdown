@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java Script | JS Promise
-date: 2022-12-17 12:30:30 +0900
+date: 2022-12-19 12:30:30 +0900
 category: JavaScript
 ---
 
@@ -43,31 +43,6 @@ category: JavaScript
   ```
 
   callback을 통해서 어떠한 비동기 로직이 끝났을 때 callback 함수를 실행시킴으로써 비동기 작업이 완료되었을 때 callback에서 작성한 어떠한 행동을 실행할 수 있게 함<br/><br/>
-
-  +++callback이 없다면?<br/>
-
-  ```javascript
-  function async(callback) {
-    setTimeout(() => {
-      console.log("2초 후 실행(console)");
-    }, 2000);
-
-    setTimeout(() => {
-      callback("1초 후 실행");
-    }, 1000);
-    setTimeout(() => {
-      console.log("2초 후 실행");
-    }, 2000);
-  }
-
-  async(function (msg) {
-    console.log(msg);
-  });
-
-  //1초 후 실행
-  //2초 후 실행(console)
-  //2초 후 실행
-  ```
 
 <br/><br/>
 
