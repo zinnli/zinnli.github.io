@@ -104,3 +104,4 @@ category: JavaScript
 [동기와 비동기](https://private.tistory.com/24)<br/>
 [이벤트 루프와 데스크 큐](https://code-designer.tistory.com/67)<br/>
 [비동기 프로그래밍](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EB%B9%84%EB%8F%99%EA%B8%B0-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)<br/>
+[큐의 진행](https://velog.io/@titu/JavaScript-Task-Queue%EB%A7%90%EA%B3%A0-%EB%8B%A4%EB%A5%B8-%ED%81%90%EA%B0%80-%EB%8D%94-%EC%9E%88%EB%8B%A4%EA%B3%A0-MicroTask-Queue-Animation-Frames-Render-Queue)
