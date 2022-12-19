@@ -1,0 +1,262 @@
+---
+layout: post
+title: Java Script | JS Promise
+date: 2022-12-17 12:30:30 +0900
+category: JavaScript
+---
+
+# Promise
+
+> #### 목차 <br/>
+>
+> #### Promise
+>
+> 1. **콜백이란 뭐라고 생각하나요?** 🌟<br/> -어떤 일을 다른 객체에게 시키고, 그 일이 끝나는 것은 기다리지 않고 끝나고 부를 때까지 다른 일을 하는 비동기 함수
+> 2. **프로미스가 뭔가요?** 🌟 <br/> - 자바스크립트 비동기 처리에 사용되는 객체
+> 3. **프로미스 생성 방법** <br/> - new Promise로 객체로 생성하여 사용함 resolve와 reject 함수를 인자로 전달 받을 수 있도록 비동기 처리 유무에 따라 설정해줘야함
+> 4. **프로미스의 상태를 나타내는 것은 어떤 것들이 있나요?** 🌟 <br/> - Pending(대기) : 비동기 처리 로직이 아직 완료되지 않은 상태 <br/> - Fulfilled(이행, 완료) : 비동기 처리가 완료되어 프로미스가 결과 값을 반환해준 상태 <br/> - Rejected(실패) : 비동기 처리가 실패하거나 오류가 발생한 상태
+> 5. **프로미스 빌트인 객체가 제공하는 정적 메서드에 대해 알고 있나요?** 🌟 <br/> 1. Promise.resolve / Promise.reject <br/> 2. Promise.all <br/> 3. Promise.race <br/> 4. Promise.allSettled
+
+<br/><br/>
+
+## Promise<br/>
+
+### 1. 콜백이란 뭐라고 생각하나요?<br/>
+
+- 다른 함수의 매개변수로 함수를 전달하고, 어떠한 이벤트가 발생한 후 매개변수로 전달한 함수가 다시 호출<br/>(= 어떤 일을 다른 객체에게 시키고, 그 일이 끝나는 것은 기다리지 않고 끝나고 부를 때까지 다른 일을 하는 것)
+
+- 비동기적으로 처리되는 함수
+
+  ```javascript
+  function async(callback) {
+    setTimeout(() => {
+      callback("1초 후 실행");
+    }, 1000);
+  }
+
+  async(function (msg) {
+    console.log(msg);
+  });
+
+  //undefined
+  //1초 후 실행
+  ```
+
+  callback을 통해서 어떠한 비동기 로직이 끝났을 때 callback 함수를 실행시킴으로써 비동기 작업이 완료되었을 때 callback에서 작성한 어떠한 행동을 실행할 수 있게 함<br/><br/>
+
+  +++callback이 없다면?<br/>
+
+  ```javascript
+  function async(callback) {
+    setTimeout(() => {
+      console.log("2초 후 실행(console)");
+    }, 2000);
+
+    setTimeout(() => {
+      callback("1초 후 실행");
+    }, 1000);
+    setTimeout(() => {
+      console.log("2초 후 실행");
+    }, 2000);
+  }
+
+  async(function (msg) {
+    console.log(msg);
+  });
+
+  //1초 후 실행
+  //2초 후 실행(console)
+  //2초 후 실행
+  ```
+
+<br/><br/>
+
+### 2. 프로미스가 뭔가요?<br/>
+
+- 자바스크립트 비동기 처리에 사용되는 객체
+- 서버에서 받아온 데이터를 화면에 표시할 때 주로 사용
+- 비동기 로직의 결과가 다음 비동기로 전달해서 실행해야 할 때<br/> -> callback은 점점 깊어져서 가독성이 매우 안좋아지고, 코드를 작성할 때 힘듬(콜백지옥)<br/> -> Promise는 .then을 통해 코드의 깊이가 깊어지지 않고 이해하기 쉬움
+
+<details>
+<summary>callback vs Promise</summary>
+<div markdown="1">
+
+```javascript
+//callback
+function async(result, callback) {
+  setTimeout(() => {
+    callback(result, function (result) {
+      console.log(result);
+    });
+  }, 1000);
+}
+
+async(0, function (res, callback) {
+  callback(res);
+  async(res + 1, function (res, callback) {
+    callback(res);
+    async(res + 1, function (res, callback) {
+      callback(res);
+    });
+  });
+});
+
+// 0
+// 1
+// 2
+
+//Promise
+function async(result) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(result);
+      resolve(result); //데이터를 받으면 resolve 호출
+    }, 1000);
+  });
+}
+
+async(0)
+  .then((res) => {
+    return async(res + 1);
+  })
+  .then((res) => {
+    return async(res + 1);
+  });
+
+// 0
+// 1
+// 2
+```
+
+</div>
+</details>
+
+<br/><br/>
+
+### 3. 프로미스 생성 방법<br/>
+
+```javascript
+const promise = new Promise((resolve, reject) => {
+  if (/* 비동기 처리 성공 */) {
+    resolve('result');
+  } else { /* 비동기 처리 실패 */
+    reject('failure reason');
+  }
+});
+```
+
+- Promise 생성자 함수는 비동기 처리를 수행할 콜백 함수를 인수로 전달받는데 이 콜백 함수는 resolve와 reject 함수를 인자로 전달받음
+- Promise 생성자 함수가 인수로 전달받은 콜백 함수 내부에서 비동기 처리를 수행
+- 이때 비동기 처리가 성공하면 resolve를, 실패하면 reject를 호출
+
+![image](https://user-images.githubusercontent.com/102575747/208430520-bba1e755-dc89-4893-ae83-0d15a7503324.png) <br/>
+사진출처 --- https://ko.javascript.info/promise-basics
+{: .small}
+
+<br/><br/>
+
+### 4. 프로미스의 상태를 나타내는 것은 어떤 것들이 있나요?<br/>
+
+- **Pending**(대기) : 비동기 처리 로직이 아직 완료되지 않은 상태
+
+  - new Promise() 메소드 호출하면 대기 상태(이때 콜백 함수 선언 / 콜백 함수의 인자는 resolve,reject)<br/><br/>
+
+- **Fulfilled**(이행, 완료) : 비동기 처리가 완료되어 프로미스가 결과 값을 반환해준 상태
+
+  ```javascript
+  function getData() {
+    return new Promise(function (resolve, reject) {
+      var data = 100;
+      resolve(data);
+    });
+  }
+
+  // resolve()의 결과 값 data를 resolvedData로 받음
+  getData().then(function (resolvedData) {
+    console.log(resolvedData); // 100
+  });
+  ```
+
+  <br/>
+
+- **Rejected**(실패) : 비동기 처리가 실패하거나 오류가 발생한 상태
+
+  ```javascript
+  function getData() {
+    return new Promise(function (resolve, reject) {
+      reject(new Error("Request is failed"));
+    });
+  }
+
+  // reject()의 결과 값 Error를 err에 받음
+  getData()
+    .then()
+    .catch(function (err) {
+      console.log(err); // Error: Request is failed
+    });
+  ```
+
+  <br/>
+
+<details>
+<summary>전체 진행 상황</summary>
+<div markdown="1">
+
+```javascript
+function getData() {
+  return new Promise(function (resolve, reject) {
+    $.get("url 주소/products/1", function (response) {
+      if (response) {
+        resolve(response);
+      }
+      reject(new Error("Request is failed"));
+    });
+  });
+}
+// 위 $.get() 호출 결과에 따라 'response' 또는 'Error' 출력
+getData()
+  .then(function (data) {
+    console.log(data); // response 값 출력
+  })
+  .catch(function (err) {
+    console.error(err); // Error 출력
+  });
+```
+
+</div>
+</details>
+<br/>
+
+![image](https://joshua1988.github.io/images/posts/web/javascript/promise.svg)
+
+<br/><br/>
+
+### 5. 프로미스 빌트인 객체가 제공하는 정적 메서드에 대해 알고 있나요?<br/>
+
+- Promise는 표준 빌트인 객체에 해당함(ECMAScript 사양에 정의된 객체 / 애플리케이션 전역의 공통기능을 제공)
+
+  1.  Promise.resolve / Promise.reject
+      - 이미 존재하는 값을 래핑하여 프로미스를 생성하기 위해 사용
+  2.  Promise.all
+      - 여러 개의 비동기 처리를 모두 병령처리할 때 사용
+  3.  Promise.race
+      - Promise.all 메서드와 동일하게 프로미스를 요소로 갖는 배열 등의 이터러블을 인수로 전달
+      - 가장 먼저 fulfilled 상태가 된 프로미스의 처리 결과를 resolve하는 새로운 프로미스를 반환
+  4.  Promise.allSettled
+      - 프로미스를 요소로 갖는 배열 등의 이터러블을 인수로 전달
+      - settled 상태(비동기 처리가 수행된 상태, fulfilled / rejected 상태)가 되면 처리 결과를 배열로 반환
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[callback & promise + 강의](https://jcon.tistory.com/189)<br/>
+[Promise](https://joshua1988.github.io/web-development/javascript/promise-for-beginners/)<br/>
+[callback & promise](https://danbom425.tistory.com/34)<br/>
+[callback & promise 전체](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EB%B9%84%EB%8F%99%EA%B8%B0-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)<br/>
+[promise 생성](https://learnjs.vlpt.us/async/01-promise.html)<br/>
+[promsie](https://ko.javascript.info/promise-basics)<br/>
+[정적메소드](https://velog.io/@eunjin/JavaScript-%ED%94%84%EB%A1%9C%EB%AF%B8%EC%8A%A4-%EC%B2%B4%EC%9D%B4%EB%8B%9D-%EC%A0%95%EC%A0%81-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%A0%95%EB%A6%AC)
