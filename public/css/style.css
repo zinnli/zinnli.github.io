@@ -173,6 +173,7 @@ a.nav-item {
 
 a.nav-item:hover {
   color: #5581ca;
+  text-decoration: none;
 }
 
 .badge {
@@ -241,7 +242,7 @@ article {
   padding: 0 5% 0;
   font-size: 22px;
   margin-bottom: 100px;
-  line-height: 1.5;
+  line-height: 1.1;
 }
 
 article.home div a,
@@ -364,9 +365,8 @@ footer {
   margin-left: -10px;
   font-size: 18px;
 }
-summary a .name,
-summary a .badge {
-  margin-left: 5px;
+summary {
+  height: fit-content;
 }
 summary::marker {
   font-family: var(--font-family-sans-serif);
@@ -382,12 +382,16 @@ summary::marker {
 .post-content summary a .badge {
   font-family: var(--font-family-sans-serif);
   color: #555;
-  font-size: 0.6em;
+  font-size: 0.5em;
   font-weight: bold;
 }
 
 summary a.nav-item:hover {
   color: #5581ca;
+}
+
+details ul li {
+  font-size: 1.2em;
 }
 
 .highlighter-rouge {

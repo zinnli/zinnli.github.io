@@ -1,0 +1,72 @@
+---
+layout: post
+title: React | 리액트 사용 이유 virtual DOM
+date: 2022-12-20 12:00:30 +0900
+category: React
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **리액트를 사용하는 이유** 🌊🌊 <br/> 1. SPA의 사용 <br/> 2. 컴포넌트 기반의 화면 구성 <br/> 3. Virtual DOM으로 인한 충분히 빠른 속도
+> 2. **virtual DOM에 대해서 아나요?** 🌊🌊<br/> : Virtual DOM은 DOM을 직접 조작하지 않고 변경사항을 하나의 가상 돔에 모았다가 DOM에 한 번에 보내는 기술
+
+<br/><br/>
+
+### 1. **리액트를 사용하는 이유**<br/>
+
+1. Single Page Application(SPA)
+
+   - 새로고침 없이 부드럽게 사용하고 싶을 때
+   - JS로도 사용 가능하지만 JS로 코드를 짰을 때 코드가 길어지고 복잡해짐
+
+2. 컴포넌트 기반의 화면구성
+
+   - 리액트는 화면의 한 부분을 컴포넌트 단위로 나눌 수 있으며 독립적으로 관리 가능
+   - 대규모 웹 애플리케이션에서 컴포넌트는 역할과 기능에 따라 따로 관리하기 용이함
+   - 반복되는 부분을 대체할 수 있게 해주어서 코드 재사용성을 높여줌
+   - 컴포넌트 기반으로 화면을 구성할 경우 컴포넌트를 쌓아서 빠르고 효율적으로 화면을 구성할 수 있음
+
+3. Virtual DOM으로 인한 충분히 빠른 속도
+
+   - 기존의 DOM은 매번 DOM 전체를 직접 접근하여 변화를 주면 HTML, CSS, JS 파일 전체를 다시 리렌더링하기 때문에 느려질 수 밖에 없음<br/> -> 리액트는 가상 DOM을 이용해서 실제 DOM을 조작하는 횟수를 줄여 성능을 빠르게 개선함
+   - 애플리케이션의 규모가 크고 데이터의 변경이 많을수록 더 큰 이점이 됨
+
+4. 같은 문법으로 앱개발 가능
+
+### 2. **virtual DOM에 대해서 아나요?**<br/>
+
+- 실제 DOM과 같은 내용을 담고 있는 복사본(실제 DOM이 아닌 JS 객체 형태로 메모리 안에 저장되어 있음)
+- Virtual DOM은 실제 DOM의 복사본이기 때문에, 실제 DOM의 모든 element과 속성을 공유
+- 브라우저에 있는 문서에 직접적으로 접근할 수 없음 → 화면에 보여지는 내용을 직접 수정할 수 없음
+- 리액트는 state가 변경될 때마다 리렌더링 발생 → 이때마다 새로운 내용이 담긴 가상돔을 생성함
+- 진행 순서 : 데이터 변경 → 가상 DOM 리렌더링 → 이전 가상 DOM과 비교 → 변경된 부분 실제 DOM에 적용
+
+  ![image](https://miro.medium.com/max/720/1*JCrDk-N-wpPnE9j0GObItg.webp)
+
+  - Diffing : 렌더링 이전에 화면의 내용을 담고있는 첫번째 가상돔과 업데이트 이후에 발생할 두번째 가상돔을 비교해 정확히 어떤 Element가 변했는지를 비교
+  - Reconciliation(재조정) : Diffing은 효율적인 알고리즘을 사용해 진행되기 때문에 어떤 Element에 차이가 있는지를 매우 신속하게 파악 → 차이가 발생한 부분만을 (브라우저상의) 실제 DOM에 적용
+
+\*\*virtual DOM 사용시 무조건적으로 빠르다고 생각할수도 있지만 그렇지 않음
+
+- Virtual DOM 사용은 virtual DOM을 먼저 조작 후 DOM을 조작하기 때문에 DOM만 조작하는 것보다 느림
+- 하지만 DOM의 조작이 빈번하게 일어나는 경우 → virtual DOM을 이용하여 업데이트를 모아서 한번에 DOM에 보내는게 효율적임
+
+![image](https://miro.medium.com/max/700/1*9qxpti_syV842LTK9nsXtA.png)
+
+TTL(Time to Interactive) : 페이지가 사용자가 입력을 받을 준비가 된 때(초 단위 - 낮을수록 좋음)
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[React를 사용하는 이유 + 영상](https://wooder2050.medium.com/%EB%A6%AC%EC%95%A1%ED%8A%B8-react-%EB%8A%94-%EC%99%9C-%EC%93%B0%EB%8A%94-%EA%B1%B4%EB%8D%B0-8e0da30f60df)<br/>
+[virtual DOM](https://callmedevmomo.medium.com/virtual-dom-react-%ED%95%B5%EC%8B%AC%EC%A0%95%EB%A6%AC-bfbfcecc4fbb)<br/>
+[virtual DOM 추가 설명1](https://github.com/junh0328/prepare_frontend_interview/blob/main/react.md)<br/>
+[virtual DOM 추가 설명2 - 탄생](https://velog.io/@woohm402/virtual-dom-and-react)<br/>
+[virtual DOM과 React의 속도](https://velopert.com/3236)<br/>
+[virtual DOM 단점 - 이미지](https://levelup.gitconnected.com/a-solid-realworld-demo-comparison-8c3363448fd8)
