@@ -22,25 +22,27 @@ locale: "ko-KR"
 title: 현징-로그
 email: hyunjin0376@naver.com
 description: >- # this means to ignore newlines until "baseurl:"
-     <br>작고 소소한 <br>현징's 개발 공부 로그
+  <br>작고 소소한 <br>현징's 개발 공부 로그
 
 description2: >- # this means to ignore newlines until "baseurl:"
-     <br>
-         문제가 있으면 <br>
-         hyunjin0376@naver.com<br>
-         으로 연락 부탁드립니다<br>
+  <br>
+      문제가 있으면 <br>
+      hyunjin0376@naver.com<br>
+      으로 연락 부탁드립니다<br>
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://zinnli.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: zinnli
 highlighter: rouge
 svg:
-     optimize: true
+  optimize: true
 # Build settings
 # theme: minima
 highlighter-theme: monokai
 date_format: "%Y-%M-%D"
 plugins:
-     - jekyll-feed
+  - jekyll-admin
+  - jekyll-sitemap
+  - jekyll-feed
 category_dir: category/
 
 tag_dir: tag/
@@ -60,13 +62,13 @@ destination: ../[GitHubPage]/ #컴파일된 결과 생성 폴더
 # their entries' file path in the `include:` list.
 #
 exclude:
-     - .sass-cache/
-     - .jekyll-cache/
-     - gemfiles/
-     - Gemfile
-     - Gemfile.lock
-     - node_modules/
-     - vendor/bundle/
-     - vendor/cache/
-     - vendor/gems/
-     - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
