@@ -1,0 +1,75 @@
+---
+layout: post
+title: React | React Redux
+date: 2022-12-22 12:00:30 +0900
+category: React
+---
+
+# React - Redux
+
+> #### 목차 <br/>
+>
+> 1. **리덕스에 대해서 아나요?** 🌊🌊 <br/>JavaScript(자바스트립트) 상태관리 라이브러리
+> 2. **리덕스의 기본 원칙은?** 🌊🌊 <br/> 1. 앱 전체상태는 단일 스토어로 관리 <br/> 2. 상태(state)는 읽기 전용 <br/> 3. 순수 함수에 의해서 변경되어야 함
+> 3. **React에서 state의 불변성을 유지하라는 말이 있는데 이에 대해 설명해달라** 🌊 <br/>기존 state의 불변성을 지켜주어야만, 리액트 컴포넌트에서 상태가 업데이트가 됐음을 감지 할 수 있고 이에 따라 필요한 리렌더링이 진행되기 때문에 불변성 유지가 필요함
+
+<br/><br/>
+
+### 1. **리덕스에 대해서 아나요?**
+
+1.  **Redux란**
+
+    - JavaScript(자바스트립트) 상태관리 라이브러리
+    - 모든 컴포넌트들이 state를 쉽게 공유할 수 있게 해주는 방식
+    - 순수 HTML, JavaScript 내에서도 사용이 가능함
+
+2.  **Redux의 구성요소**
+
+    - **Action(액션)** : 앱에서 스토어에 운반할 데이터 (주문서)
+      - 자바스크립트 객체 형식
+    - **Reducer(리듀서)** : state에 변화를 일으키는 함수
+      - 액션을 리듀서에 전달(dispatch() 메소드 사용) → 리듀서가 주문을 보고 스토어의 상태를 업데이트함
+    - **Store(스토어)** : State 를 수시로 확인해 View 한테 변경된 사항을 알려줌(상태가 관리되는 오직 하나의 공간)
+
+3.  **Redux의 진행 순서**
+
+    <img src="https://velog.velcdn.com/images/hailey99/post/a75af92c-bc51-4f00-b2d2-fe83df701efe/react-redux-overview-1024x731.png" alt="reducer" width="500"/><br/>
+
+    - Action 객체가 dispatch() 메소드에 전달됨 → dispatch(액션)를 통해 Reducer 호출 → Reducer는 새로운 Store 생성
+
+  <br/>
+
+### 2. **리덕스의 기본 원칙은?**
+
+1. `Single source of truth`
+   - 앱 전체상태는 단일스토어로 관리
+   - 디버깅이나 개발자도구를 쉽게 사용할 수 있게 함
+2. `State is read-only` (상태는 읽기 전용)
+   - 리액트에서는 setState 메소드를 활용해야만 상태 변경이 가능
+   - 리덕스에서도 액션이라는 객체를 통해서만 상태를 변경할 수 있음
+3. `Changes are made with pure functions` (순수 함수에 의해서 변경되어야 함)
+
+   - 변경은 순수함수로만 가능
+   - 리듀서와 연관되는 개념
+
+   \* 순수함수 : 순수함수란 어떤 함수에 동일한 파라미터를 주었을때 항상 같은 값을 리턴하고, 외부의 상태를 변경하지 않는 함수
+
+### 3. **React에서 state의 불변성을 유지하라는 말이 있는데 이에 대해 설명해달라**
+
+- 기존 state의 불변성을 지켜주어야만, 리액트 컴포넌트에서 상태가 업데이트가 됐음을 감지 할 수 있고 이에 따라 필요한 리렌더링이 진행되기 때문
+- 불변성을 지켜줘야하는 이유
+  1.  얕은 비교를 통해 상태 변화를 감지하기 때문 : 참조 값 안의 요소가 수정되면 얕은 비교로 참조 값이 동일하기 때문에 업데이트된 부분을 비교할 수 없어 리렌더링도 발생하지 않음
+  2.  컴포넌트 성능 최적화 작업을 위함 : 불변성이 지켜지지 않으면 객체 내부의 값이 새로워져도 바뀐것을 감지하지 못하기 때문에 React.memo에서 서로 비교하여 최적화 하는것이 불가능
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[Redux란?](https://hanamon.kr/redux%EB%9E%80-%EB%A6%AC%EB%8D%95%EC%8A%A4-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/)<br/>
+[Redux 진행순서](https://velog.io/@hailey99/whatisreact)<br/>
+[Redux 기본 원칙](https://abangpa1ace.tistory.com/86)<br/>
+[불변성](https://velog.io/@ellie12/React-state-%EB%B6%88%EB%B3%80%EC%84%B1)<br/>
+[Redux 전체 참고](https://github.com/junh0328/prepare_frontend_interview/blob/main/react.md#%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%95%84%EB%82%98%EC%9A%94)
