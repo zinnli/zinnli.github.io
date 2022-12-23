@@ -153,6 +153,7 @@ category: React
 출처<br/>
 
 [setState 동작원리](https://velog.io/@hey880/setState-polling)<br/>
+[batch](https://velog.io/@zuzokim/React-setState%EA%B0%80-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%9D%B8-%EC%9D%B4%EC%9C%A0)<br/>
 [setState와 비동기](https://velog.io/@yhnb3/setState%EB%8A%94-%EC%99%9C-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8F%99%EC%9E%91%ED%95%A0%EA%B9%8C)<br/>
 [브라우저 로딩과정](https://junilhwang.github.io/TIL/Javascript/Design/Vanilla-JS-Virtual-DOM/#_1-%E1%84%91%E1%85%A1%E1%84%89%E1%85%B5%E1%86%BC)<br/>
 [useEffect와 useLayoutEffect](https://medium.com/@jnso5072/react-useeffect-%EC%99%80-uselayouteffect-%EC%9D%98-%EC%B0%A8%EC%9D%B4%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C-e1a13adf1cd5)<br/>
