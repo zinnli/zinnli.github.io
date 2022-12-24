@@ -391,7 +391,7 @@ summary a.nav-item:hover {
 }
 
 details ul li {
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .highlighter-rouge {
@@ -422,8 +422,7 @@ td {
 .language-cpp,
 .language-html {
   margin: 10px 0;
-  width: fit-content;
-  min-width: 55vh;
+  width: 100%;
 }
 
 a {
@@ -433,7 +432,6 @@ a {
 .content {
   /*margin-left: 180px;*/
   flex: 1 1 auto;
-  padding: 0px 50px;
 }
 
 .mypage-flex {
@@ -455,7 +453,7 @@ a {
 
 @media (max-width: 576px) {
   article {
-    font-size: 0.9em;
+    font-size: 1.2em;
     line-height: 1.5;
   }
 
