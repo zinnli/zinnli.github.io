@@ -417,6 +417,7 @@ td {
   font-family: var(--font-family-sans-serif);
 }
 .language-java,
+.language-css,
 .language-javascript,
 .language-react,
 .language-cpp,

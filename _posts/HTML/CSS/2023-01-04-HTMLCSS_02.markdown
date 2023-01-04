@@ -1,0 +1,78 @@
+---
+layout: post
+title: HTML | flexbox
+date: 2023-01-04 13:30:30 +0900
+category: HTML/CSS
+---
+
+# flexbox
+
+> #### 목차 <br/>
+>
+> 1. **flex**
+> 2. **grid**
+
+<br/>
+
+1.  **flex**
+
+    1. flex란?
+
+       - flex는 `레이아웃을 좀 더 편하게` 잡기 위해서 만들어진 css 속성
+       - `한 방향 레이아웃 시스템(1차원)`
+       - 기존의 float와 inline-block의 한계를 해결하기 위해 나타남
+       - flex container(=부모 요소)와 flex item(=자식 요소)로 구성됨
+
+    2. flex 컨테이너에 적용하는 속성
+
+       - 배치 방향(flex-direction) : 아이템들이 배치되는 축의 방향을 결정
+       - 줄넘김 처리(flex-wrap) : 아이템의 줄바꿈에 대하여 결정
+       - flex-flow : '배치 방향 + 줄넘김 처리'를 한줄에 작성함
+       - 메인축 방향(justify-content) : 메인축 방향으로 아이템들을 정리함
+       - 수직축 방향(align-items) : justify-content와 수직방향의 정렬
+       - 여러 행 정렬(align-content) : 아이템의 행이 2줄 이상일 경우 → 수직축 방향 정렬을 결정함
+
+    3. flex 아이템에 적용하는 속성
+       - 유연한 박스의 기본 영역(flex-basis) : flex 아이템의 기본 크기 설정(flex-direction에 따라 다름)
+       - 유연하게 늘리기(flex-grow) : 아이템이 flex-basis의 값보다 커질 수 있는지 결정(기본값 = 0)
+       - 유연하게 줄이기(flex-shrink) : 아이템이 flex-basis의 값보다 작아질 수 있는지 결정(기본값 = 1)
+       - flex : flex-grow, flex-shrink, flex-basis를 한 번에 쓸 수 있는 축약형 속성
+         ```css
+         .item {
+           flex: 1;
+           /* flex-grow: 1; flex-shrink: 1; flex-basis: 0%; */
+           flex: 1 500px;
+           /* flex-grow: 1; flex-shrink: 1; flex-basis: 500px; */
+         }
+         ```
+       - 수직축 아이템 정렬(align-self) : 해당 아이템의 수직축 방향 정렬
+       - 배치 순서(order) : 시각적 나열 순서를 결정
+       - z축 정렬(z-index) : z축 정렬, 숫자가 클수록 위로 올라옴<br/><br/>
+
+2.  **grid**
+
+    1.  `grid` 란?
+
+        - `두 방향(가로-세로) 레이아웃 시스템(2차원)`
+        - flex보다 `복잡한 레이아웃 표현`이 가능함
+
+    2.  용어 정리
+
+        - 그리드 컨테이너(grid container) : grid의 전체 영역
+        - 그리드 아이템(grid item) : grid 컨테이너의 자식 요소
+        - 그리드 트랙(grid track) : grid의 행 또는 열
+        - 그리드 셀(grid cell) : grid의 한 칸을 의미
+        - 그리드 라인(grid line) : grid 셀을 구분하는 선
+        - 그리드 번호(grid number) : grid 라인의 각 번호
+        - 그리드 갭(grid gap) : grid 셀 사이의 간격
+        - 그리드 영역(grid area) : grid 셀의 집합
+
+          <br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[flex 1](https://studiomeal.com/archives/197)<br/>
+[flex 2](https://github.com/junh0328/prepare_frontend_interview/blob/main/html_css.md#Flexbox%EB%82%98-Grid-%EA%B0%81%EA%B0%81%EC%9D%98-%ED%8A%B9%EC%A7%95)<br/>

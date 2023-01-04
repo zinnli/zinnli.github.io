@@ -1,0 +1,54 @@
+---
+layout: post
+title: HTML | position, margin, padding, display
+date: 2023-01-04 13:30:30 +0900
+category: HTML/CSS
+---
+
+# position, margin, padding, display
+
+> #### 목차 <br/>
+>
+> 1. **Position**
+> 2. **margin과 padding**
+> 3. **display**
+
+<br/>
+
+1.  **Position**
+
+    - `static`(기본값) : 위치를 지정하지 않을 때 사용
+    - `relative` : 원래 배치되어야 할 위치에서 지정한 값 만큼 떨어진 곳에 요소를 배치함
+    - `fixed` : 웹 브라우저 화면 전체를 기준으로 배치함 스크롤을 하더라도 위치가 고정됨
+    - `absolute` : 가장 가까운 상위 요소의 위치를 기준으로 지정한 값 만큼 떨어진 곳에 요소를 배치함
+    - `sticky` : 스크롤 위치가 임계점에 이르면 position: fixed와 같이 박스를 화면에 고정할 수 있는 속성으로 스크롤 영역 기준으로 배치함<br/><br/>
+
+2.  **margin과 padding**
+
+    - `padding` : content와 border 사이의 영역
+    - `border` : 테두리 영역
+    - `margin` : border 주변의 영역<br/><br/>
+
+3.  **display**
+
+    - `block` : 항상 새로운 라인에 요소가 시작되고 화면 크기의 전체 가로폭을 영역으로 차지함 width 속성 값을 부여해주면 그 너비만큼 영역을 차지함
+    - `inline` : 새로운 라인에서 시작되지 않으며 다른 요소들과 같은 줄에 배치될 수 있고 content 너비만큼의 영역을 차지함(width, height, margin-top, margin-bottom 속성이 적용이 되지 않음)
+    - `inline-block` : block 레벨 요소와 inline 레벨 요소의 특징을 모두 가지고 있음.
+      - 한 줄에서 inline 레벨 요소들과 같이 배치될 수 있으며 width와 height 속성으로 영역의 크기를 지정할 수 있음
+    - `none` : 아예 사라지게 하는것. 보이지도 않고 해당 공간도 존재하지 않게 됨
+    - display : none 과 visibility : hidden의 차이점
+
+      |                     |                                  차이점                                  |
+      | :-----------------: | :----------------------------------------------------------------------: |
+      |   display : none    |                     보이지 않고 공간도 존재하지 않음                     |
+      | visibility : hidden | 보이지만 않고 해당 공간은 존재(width와 height 값이 있다면 공간은 존재함) |
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[position 1](https://github.com/junh0328/prepare_frontend_interview/blob/main/html_css.md#Flexbox%EB%82%98-Grid-%EA%B0%81%EA%B0%81%EC%9D%98-%ED%8A%B9%EC%A7%95)<br/>
+[position 2](https://velog.io/@hoje15v/CSSposition-%EC%86%8D%EC%84%B1-relative-absolute-fixed%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90)
