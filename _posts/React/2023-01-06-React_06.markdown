@@ -81,7 +81,7 @@ category: React
   });
   ```
 
-\* 얕은 비교 : PureComponent는 shouldComponentUpdate() 라이프 사이클에서 얕은 비교를 통해 업데이트 여부를 결정
+\* `얕은 비교` : PureComponent는 shouldComponentUpdate() 라이프 사이클에서 얕은 비교를 통해 업데이트 여부를 결정
 
 - 변수와 문자열에서는 값을 비교
 - 객체에서는 reference 값을 비교
@@ -89,14 +89,14 @@ category: React
 \*\* 함수 컴포넌트는 React.memo 사용(PureComponent와 유사한 역할)
 : 기존의 컴포넌트 전체를 memo()로 감싸주기
 
-```react
-const React = require('react');
-const { memo } = React;
+    ```react
+    const React = require('react');
+    const { memo } = React;
 
-const HoJangMan = memo(() => {
-    return ();
-})
-```
+    const HoJangMan = memo(() => {
+        return ();
+    })
+    ```
 
 <br/>
 
@@ -107,4 +107,5 @@ const HoJangMan = memo(() => {
 
 [엘리먼트와 컴포넌트의 차이점](https://velog.io/@codns1223/Element%EC%99%80-Component%EC%9D%98-%EC%B0%A8%EC%9D%B4)<br/>
 [리액트에서 컴포넌트 생성법](https://velog.io/@younoah/React-component)<br/>
+[제어, 비제어 컴포넌트](https://zinnli.github.io/react/2023/01/06/React_06.html)<br/>
 [Pure Compoenent](https://ryublock.tistory.com/38)
