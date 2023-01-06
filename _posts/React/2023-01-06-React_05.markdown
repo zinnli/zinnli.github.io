@@ -1,0 +1,98 @@
+---
+layout: post
+title: React | 클래스형 Compoent, 함수 Component
+date: 2023-01-06 12:00:30 +0900
+category: React
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **클래스형 Component 함수 Component** 🌊 <br/>
+>    1. 클래스형 컴포넌트 : render() 메소드와 Component 상속 필수 / state, props 사용이 불편하고, 많은 메모리 사용한다는 단점<br/>
+>    2. 함수 컴포넌트 : 간편한 컴포넌트 선언 및 프로그래밍 가능 React Hook을 사용 / state와 생명주기(Life Cycle) 메소드를 별도로 구현해야 함<br/>
+> 2. **함수 컴포넌트에서 클래스형 컴포넌트의 라이프사이클 메소드를 비슷하게 사용하는 방법**<br/>
+>    state와 생명주기(Life Cycle) 메소드를 별도로 구현해야 함 => useState, useEffect 사용<br/>
+
+<br/>
+
+### 1. **클래스형 Component 함수형 Component**
+
+1. `클래스형 컴포넌트`
+
+   - class 키워드로 시작
+   - Component로 상속 받음
+   - render() 함수를 사용해서 JSX를 반환
+   - props를 조회할 때 this 키워드 사용
+
+     ```javascript
+     import React, { Component } from "react";
+
+     class Hello extends Component {
+       render() {
+         const { color, name, isSpecial } = this.props;
+         return (
+           <div style={{ color }}>
+             {isSpecial && <b>*</b>}
+             안녕하세요 {name}
+           </div>
+         );
+       }
+     }
+
+     export default Hello;
+     ```
+
+2. `함수 컴포넌트`
+
+   - JSX를 return문을 사용해서 반환
+   - state를 사용할 수 없음
+   - 생명 주기 함수 작성 불가
+
+     ```javascript
+     import React from "react";
+
+     function Hello({ color, name, isSpecial }) {
+       return (
+         <div style={{ color }}>
+           {isSpecial && <b>*</b>}
+           안녕하세요 {name}
+         </div>
+       );
+     }
+
+     export default Hello;
+     ```
+
+### 2. **함수 컴포넌트에서 클래스형 컴포넌트의 라이프사이클 메소드를 비슷하게 사용하는 방법**
+
+- 함수 컴포넌트는 클래스 컴포넌트의 장점인 state 사용이나 lifecycle을 직접 다루는 등의 기능을 사용하지 못함<br/>
+  → Hook 등장(함수 컴포넌트가 클래스형 컴포넌트의 기능을 사용할 수 있도록 해주는 기능)
+- useState와 useEffect를 사용하여 특징적으로 state와 lifecycle과 같은 기능을 사용 가능하게 해줌
+
+  - `useState` : 상태를 관리함. [state이름, setter이름] 순으로 반환 받아서 사용
+
+    ```react
+    const [state, setState] = useState(initialState);
+    ```
+
+  - `useEffect` : 화면에 렌더링이 완료된 후에 수행되며 componentDidMount와 componentDidUpdate, componentWillUnmount가 합쳐진 것
+
+    ```react
+    useEffect(() => {}); // 렌더링 결과가 실제 돔에 반영된 후마다 호출
+    useEffect(() => {}, []); // 컴포넌트가 처음 나타날때 한 번 호출
+    useEffect(() => {}, [의존성1, 의존성2, ..]); // 조건부 effect 발생, 의존성 중 하나가 변경된다면 effect는 항상 재생성됨
+    ```
+
+    <br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[클래스형 Component 함수형 Component](https://velog.io/@seong-dodo/React-%ED%81%B4%EB%9E%98%EC%8A%A4%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-vs-%ED%95%A8%EC%88%98%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)<br/>
+[함수형 컴포넌트에서 클래스형 컴포넌트의 라이프사이클 메소드를 비슷하게 사용하는 방법 1](https://ryurim.tistory.com/53)<br/>
+[함수형 컴포넌트에서 클래스형 컴포넌트의 라이프사이클 메소드를 비슷하게 사용하는 방법 2](https://velog.io/@minbr0ther/React.js-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4life-cycle-%EC%88%9C%EC%84%9C-%EC%97%AD%ED%95%A0)<br/>
+[함수형 컴포넌트 X](https://github.com/junh0328/prepare_frontend_interview/blob/main/react.md#%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-%ED%95%A8%EC%88%98%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EB%9D%BC%EA%B3%A0-%EB%B6%80%EB%A5%B4%EC%A7%80-%EC%95%8A%EA%B3%A0-%ED%95%A8%EC%88%98-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EB%9D%BC%EA%B3%A0-%EB%B6%80%EB%A5%B4%EB%8A%94-%EC%9D%B4%EC%9C%A0%EA%B0%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%EC%9A%94)

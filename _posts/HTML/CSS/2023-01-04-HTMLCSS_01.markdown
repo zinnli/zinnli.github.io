@@ -103,4 +103,5 @@ category: HTML/CSS
 
 [상대 길이단위](https://velog.io/@jhur98/CSS%EC%97%90%EC%84%9C-px-em-rem-vh-vw-%EB%8B%A8%EC%9C%84%EB%93%A4%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)<br/>
 [모바일 우선 반응형 웹 디자인](https://velog.io/@aiden/%EB%AA%A8%EB%B0%94%EC%9D%BC-%EC%9A%B0%EC%84%A0-%EB%B0%98%EC%9D%91%ED%98%95-%EC%9B%B9-%EB%94%94%EC%9E%90%EC%9D%B8)<br/>
-[미디어 쿼리](https://uxkm.io/publishing/css/03-cssMiddleclass/09-css_media_part2#gsc.tab=0)
+[미디어 쿼리](https://uxkm.io/publishing/css/03-cssMiddleclass/09-css_media_part2#gsc.tab=0)<br/>
+[적응형과 반응형](https://uxkm.io/publishing/css/03-cssMiddleclass/09-css_media_part2#gsc.tab=0)

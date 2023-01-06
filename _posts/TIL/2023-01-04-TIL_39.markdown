@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 230103_TIL | 새로운 스터디
+title: 230104_TIL | 새로운 스터디
 date: 2023-01-04 21:50:30 +0900
 category: TIL
 ---

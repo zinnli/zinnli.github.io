@@ -1,0 +1,110 @@
+---
+layout: post
+title: React | Component
+date: 2023-01-06 12:00:30 +0900
+category: React
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **엘리먼트와 컴포넌트의 차이점**
+> 2. **리액트에서 컴포넌트 생성법**
+> 3. **제어컴포넌트와 비제어 컴포넌트**
+> 4. **Pure 컴포넌트란?**
+
+<br/>
+
+### 1. **엘리먼트와 컴포넌트의 차이점**
+
+1. Element
+   - element는 component를 이루는 작은 단위
+   - 엘리먼트는 인스턴스가 아님(immutable한 plain object : 엘리먼트가 생성되면, 절대로 변화되지 않음)
+   - 엘리먼트는 컴포넌트 인스턴스나 DOM 노드에 관한 정보를 묘사함
+   - Element는 바로 사용되지는 않으며, Component에서 리턴받아서 사용됨
+   - 엘리먼트는 타입(type)과 속성(props) 2가지 필드로 구성
+2. Component
+   - 함수 컴포넌트는 데이터를 가진 props 객체인자를 받아 element를 반환함
+   - UI를 재사용 가능한 개별적인 여러 조각으로 나눈 것
+   - 컴포넌트는 엘리먼트 트리를 캡슐화함<br/>
+
+→ 우리는 일일이 인스턴스를 만들고, 업데이트하고, 삭제할 필요가 없음 그냥 무엇을 화면에 나타내고 싶은지 컴포넌트들로 나타내면(=엘리먼트로 설명해주면) 리액트는 인스턴스를 알아서 관리함<br/><br/>
+
+### 2. **리액트에서 컴포넌트 생성법**
+
+1. 리액트 컴포넌트의 종류
+
+   - 클래스 컴포넌트 : 컴포넌트에 상태가 존재하고 그 상태에 따라 컴포넌트가 주기적으로 업데이트 되어야 할 때
+
+     - React.Component : 일반적으로 state와 render함수를 이용
+     - React.PureComponent : 컴포넌트의 상태나 props에 변화가 없다면 render함수가 호출되지 않게 해줌(참조값이 변하지 않으면 render가 되지않음)<br/><br/>
+
+   - 함수 컴포넌트 : 컴포넌트에 상태가 없고 항상 정적으로 데이터가 표기 될 때
+
+     - function : 컴포넌트에 상태가 없고 항상 정적으로 데이터가 표기가 될 때 사용(매번 실행되기 때문에 반복해서 생성됨)
+     - memo(function) : 컴포넌트의 상태나 props에 변화가 없다면 render함수가 호출되지 않게 해줌(pure.Component와 비슷한 역할)
+     - React Hook : 리액트 훅은 기존의 함수형 컴포넌트에서 state와 라이프사이클 메서드를 잘 이용할 수 있도록 도와줌
+       - useState() : 클래스 컴포넌트에서 state와 setState()
+       - useRef : 클래스 컴포넌트에서 React.createRef()
+       - useCallback : 콜백함수를 기억하기 위해 사용, 콜백함수가 매번 실행되어 렌더링이 되는 사이드 이펙트를 막기 위해 사용함
+       - useEffect(callBack, state) : 컴포넌트가 마운트 되었을 때 혹은 업데이트가 될 때 마다 호출되는데 특정 state가 변경되었을 때만 호출 되도록 하고싶으면 두번째 인자로 전달해줌
+
+### 3. **제어컴포넌트와 비제어 컴포넌트**
+
+1. 제어 컴포넌트 : 제어 컴포넌트는 사용자의 입력을 기반으로 자신의 state를 관리하고 업데이트함
+   - React에서는 변경할 수 있는 state가 일반적으로 컴포넌트의 state 속성에 유지되며 setState()에 의해 업데이트됨
+   - 제어 컴포넌트는 사용자가 입력한 값과 저장되는 값이 실시간으로 동기화됨
+   - 사용자가 입력을 하는 액션을 취할때마다 리렌더링을 발생
+   - 제어 컴포넌트의 값은 항상 최신값을 유지
+   - 단점
+     - 필요한 리렌더링, 불필요한 api요청으로 인한 자원 낭비 문제
+2. 비제어 컴포넌트 : 폼을 제출할때 (submit button)을 클릭할 때 요소 내부의 값을 얻어오는 Vanila JS와 유사한 동작 방식
+   - 제어 컴포넌트 방식에서 사용한 setState()를 쓰지 않고 ref를 사용해서 값을 얻음
+   - 값이 실시간으로 동기화 되지 않음
+   - 사용자가 직접 트리거 하기 전까지는 리렌더링을 발생시키지도 않고 값을 동기화 시키지도 않음<br/>
+
+→ 즉각적으로, 실시간으로 값에 대한 피드백이 필요하다 : 제어 컴포넌트 사용<br/>
+→ 즉각적인 피드백이 불필요하고 제출시에만 값이 필요하다, 불필요한 렌더링과 값 동기화가 싫다 : 비제어 컴포넌트 사용<br/><br/>
+
+### 4. **Pure 컴포넌트란?**
+
+: React.PureComponent는 React.Component에 shouldComponentUpdate()가 적용된 버전(shouldComponentUpdate()안에 얕은비교가 적용된 버전) -렌더링 낭비를 줄이기 위해 사용
+
+- 현재와 과거의 state, props를 비교해서 렌더링 유무를 판별함(Class기반 컴포넌트인 경우)
+- 객체나 배열처럼 참조를 이용하는 state/props들은 변경유무를 ===로 확인하기 때문에 값을 변경 시키고자 할때는 새로운 객체나 배열을 생성, 대입해줘야 함(참조를 변경시켜야함)
+
+  ```react
+  // 배열에 요소 추가하는 경우
+  this.setState({
+      arr: [...arr, 1] //끝에 요소 추가
+  });
+  ```
+
+\* 얕은 비교 : PureComponent는 shouldComponentUpdate() 라이프 사이클에서 얕은 비교를 통해 업데이트 여부를 결정
+
+- 변수와 문자열에서는 값을 비교
+- 객체에서는 reference 값을 비교
+
+\*\* 함수 컴포넌트는 React.memo 사용(PureComponent와 유사한 역할)
+: 기존의 컴포넌트 전체를 memo()로 감싸주기
+
+```react
+const React = require('react');
+const { memo } = React;
+
+const HoJangMan = memo(() => {
+    return ();
+})
+```
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[엘리먼트와 컴포넌트의 차이점](https://velog.io/@codns1223/Element%EC%99%80-Component%EC%9D%98-%EC%B0%A8%EC%9D%B4)<br/>
+[리액트에서 컴포넌트 생성법](https://velog.io/@younoah/React-component)<br/>
+[Pure Compoenent](https://ryublock.tistory.com/38)

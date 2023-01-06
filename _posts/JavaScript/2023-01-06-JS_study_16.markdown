@@ -1,0 +1,81 @@
+---
+layout: post
+title: Java Script | JS Callback
+date: 2023-01-06 12:30:30 +0900
+category: JavaScript
+---
+
+# Callback
+
+> #### 목차 <br/>
+>
+> 1. **콜백이란 뭐라고 생각하나요?** 🌊<br/> - 어떤 일을 다른 객체에게 시키고, 그 일이 끝나는 것은 기다리지 않고 끝나고 부를 때까지 다른 일을 하는 것
+> 2. **콜백지옥과 해결방법** <br/> async나 Promise 사용을 통해 해결
+
+<br/><br/>
+
+## Callback<br/>
+
+### 1. 콜백이란 뭐라고 생각하나요?<br/>
+
+- 함수 안에서 실행하는 또 다른 함수
+- 다른 함수의 매개변수로 함수를 전달하고, 어떠한 이벤트가 발생한 후 매개변수로 전달한 함수가 다시 호출<br/>(= 어떤 일을 다른 객체에게 시키고, 그 일이 끝나는 것은 기다리지 않고 끝나고 부를 때까지 다른 일을 하는 것)
+
+- 비동기적으로 처리되는 함수
+
+  ```javascript
+  function async(callback) {
+    setTimeout(() => {
+      callback("1초 후 실행");
+    }, 1000);
+  }
+
+  async(function (msg) {
+    console.log(msg);
+  });
+
+  //undefined
+  //1초 후 실행
+  ```
+
+  callback을 통해서 어떠한 비동기 로직이 끝났을 때 callback 함수를 실행시킴으로써 비동기 작업이 완료되었을 때 callback에서 작성한 어떠한 행동을 실행할 수 있게 함<br/>
+
+### 2. 콜백지옥과 해결방법<br/>
+
+- 콜백지옥(Callback hell) : 비동기 처리 로직을 위해 콜백 함수를 연속해서 사용할 때 발생하는 문제
+
+```javascript
+$.get("url", function (response) {
+  parseValue(response, function (id) {
+    auth(id, function (result) {
+      display(result, function (text) {
+        console.log(text);
+      });
+    });
+  });
+});
+```
+
+- 위처럼 여러가지 과정을 비동기로 처리해야할 때 콜백 안에 콜백이 계속 무는 형식으로 코딩을 하게 됨
+- 이러한 코드 구조는 가독성이 떨어지고 로직을 변경하기 어려움
+  <br/>
+  => Promise 나 Async를 사용
+  - Promise : .then()을 이용하여 순차적으로 실행(에러도 catch를 통해 한번에 처리 가능)
+  - async : await를 통해 처리
+
+<br/>
+
+<hr/>
+
+<br/>
+
+\* 230105 Promise와 분리
+
+<br/> <br/>
+출처<br/>
+
+[callback & promise + 강의](https://jcon.tistory.com/189)<br/>
+[Promise](https://joshua1988.github.io/web-development/javascript/promise-for-beginners/)<br/>
+[callback & promise](https://danbom425.tistory.com/34)<br/>
+[callback & promise 전체](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EB%B9%84%EB%8F%99%EA%B8%B0-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)<br/>
+[callback hell](https://backback.tistory.com/319)
