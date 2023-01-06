@@ -21,7 +21,7 @@ category: HTML/CSS
        - flex는 `레이아웃을 좀 더 편하게` 잡기 위해서 만들어진 css 속성
        - `한 방향 레이아웃 시스템(1차원)`
        - 기존의 float와 inline-block의 한계를 해결하기 위해 나타남
-       - flex container(=부모 요소)와 flex item(=자식 요소)로 구성됨
+       - flex container(=부모 요소)와 flex item(=자식 요소)로 구성됨<br/><br/>
 
     2. flex 컨테이너에 적용하는 속성
 
@@ -30,7 +30,7 @@ category: HTML/CSS
        - flex-flow : '배치 방향 + 줄넘김 처리'를 한줄에 작성함
        - 메인축 방향(justify-content) : 메인축 방향으로 아이템들을 정리함
        - 수직축 방향(align-items) : justify-content와 수직방향의 정렬
-       - 여러 행 정렬(align-content) : 아이템의 행이 2줄 이상일 경우 → 수직축 방향 정렬을 결정함
+       - 여러 행 정렬(align-content) : 아이템의 행이 2줄 이상일 경우 → 수직축 방향 정렬을 결정함<br/><br/>
 
     3. flex 아이템에 적용하는 속성
        - 유연한 박스의 기본 영역(flex-basis) : flex 아이템의 기본 크기 설정(flex-direction에 따라 다름)
@@ -54,7 +54,7 @@ category: HTML/CSS
     1.  `grid` 란?
 
         - `두 방향(가로-세로) 레이아웃 시스템(2차원)`
-        - flex보다 `복잡한 레이아웃 표현`이 가능함
+        - flex보다 `복잡한 레이아웃 표현`이 가능함<br/><br/>
 
     2.  용어 정리
 

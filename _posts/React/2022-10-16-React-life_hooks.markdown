@@ -23,7 +23,7 @@ category: React
 
 <br/>
 
-<img src="https://user-images.githubusercontent.com/102575747/196040931-4af0c622-7740-4686-a765-7814b240d015.png" alt='cycle' width="300"/>
+<img src="https://user-images.githubusercontent.com/102575747/196040931-4af0c622-7740-4686-a765-7814b240d015.png" alt='cycle'/>
 
 <br/>
 
@@ -44,9 +44,7 @@ category: React
 
 3.  **제거할 때(언마운트)** : DOM에서 제거됨
 
-<br/>
-
-#### Class Component Lifecycle
+#### 2. Class Component Lifecycle
 
 1.  **생성될 때(마운트)**
 
