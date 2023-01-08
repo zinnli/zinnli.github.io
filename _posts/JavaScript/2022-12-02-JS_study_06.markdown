@@ -9,9 +9,15 @@ category: JavaScript
 
 > #### 목차 <br/>
 >
-> #### 실행 컨텍스트
+> #### **실행 컨텍스트**🌊
 >
-> 실행 컨텍스트에 대해 말해보세요
+> **실행 컨텍스트에 대해 말해보세요**🌊🌊
+>
+> - 자바스크립트에서 실행 컨텍스트란, **`코드를 실행하기 위해 필요한 정보들을 가진 범위를 객체 형태로`** 나타낸 것
+> - 실행 컨텍스트를 구성하는 LexicalEnvironment는 현재의 실행 컨텍스트가 실행되기 위한 여러 정보를 담고 있음
+> - LexicalEnvironment는 식별자들에 대한 정보를 담은 EnvironmentRecord와, 상위 LexicalEnvironment를 참조해 스코프 체인을 가능하게 하는 OuterEnvironmentReference 정보로 구성
+> - EnvironmentRecord는 식별자 바인딩을 관리하고, binding object라 불리는 특정 객체의 속성으로 선언된 식별자들을 관리함
+> - OuterEnvironmentReference는 현재의 실행 컨텍스트를 구성한 함수가 선언되는 시점에서의 상위 LexicalEnvironment를 참조하기 때문에 식별자의 유효 범위를 상위로 거슬러 올라가 찾게 되는 스코프 체인이 가능
 
 <br/><br/>
 
@@ -78,36 +84,31 @@ category: JavaScript
 
 #### 4. 실행 컨텍스트의 구성
 
-1. **`VariableEnvironment`** : 현재 컨텍스트 내의 식별자들에 대한 정보 + 외부 환경 정보 => 변수의 참조들을 기억하는 환경
+1. **`VariableEnvironment`**(VE) : 현재 컨텍스트 내의 식별자들에 대한 정보 + 외부 환경 정보 => 변수의 참조들을 기억하는 환경
    - 선언 시점의 LexicalEnvironment의 스냅샷 유지 -> 변경사항 저장 X
    - 실행 컨텍스트를 생성할 때 VariableEnvironment에 정보를 먼저 담은 다음, 이를 복사하여 LexicalEnvironment를 만듬
      - environmentRecord(snapshot)
      - outer-EnvironmentReference(snapshot)<br/><br/>
-2. **`LexicalEnvironment`** : 처음에는 VariableEnvironment와 같지만 변경 사항이 실시간으로 반영됨 => 변수의 참조들을 기억하는 환경
-   - 스코프와 식별자 관리
+2. **`LexicalEnvironment`**(LE) : 처음에는 VariableEnvironment와 같지만 변경 사항이 실시간으로 반영됨 => 변수의 참조들을 기억하는 환경
+   - 스코프를 생성하여 식별자를 키로 등록하고 식별자에 바인딩된 값을 관리함
      - environmentRecord
      - outer-EnvironmentReference<br/><br/>
-3. **`ThisBinding`** : this 식별자가 바라보고 있는 대상 객체<br/>
+3. ~~ThisBinding : this 식별자가 바라보고 있는 대상 객체~~ **ES2015 이후부터는 ER에서 this에 대한 정보를 저장함**(기초부터 완성까지, 프론트엔드 - 도서 출처)<br/>
 
-   - 바인딩 : 프로그램에서 변수들이 갖는 속성이나 값이 결정되는 것<br/>
-   - JS에서의 this : 상황에 따라 바라보는 대상이 달라지며 어디서든 사용할 수 있음<br/><br/>
-
-   - 기본 바인딩 : 함수 선언식을 사용하면 this 는 전역객체와 바인딩이 됨(엄격모드에서는 에러 발생)
-   - 암시적 바인딩 : 함수 호출 시 객체의 프로퍼티로 접근해 실행
-   - 명시적 바인딩 : call, apply, bind 내장 함수를 이용해 명시적으로 바인딩 할 컨텍스트를 정해줌
-   - new 연산자 바인딩 : 생성자 함수 내에서 정의한 this가 인스턴스에 바인딩이 되도록 만들어줌
-
-- **EnvironmentRecord** : 컨텍스트와 관련된 코드의 식별자 정보들이 저장됨
+- **EnvironmentRecord**(ER) : 컨텍스트와 관련된 코드의 식별자 정보들이 저장됨
 - **Outer-EnvironmentReference** : 호출된 함수가 선언될 당시의 Lexical Environment를 참조하는 포인터로 `스코프 체인`을 가능하게 함<br/><br/>
 
-  \*\*스코프 체인 : 변수의 유효 범위를 검색할 때 안에서부터 바깥으로 찾아나감(전역 스코프에서 선언된 변수들은 어느 곳에나 접근 가능)
+  ![image](https://velog.velcdn.com/images%2Fggong%2Fpost%2F9199d986-67ea-497b-9259-0351b10b3a7c%2F%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-06-01%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2010.18.29.png){: width="800"} <br/>
 
-  ![image](https://velog.velcdn.com/images%2Fggong%2Fpost%2F9199d986-67ea-497b-9259-0351b10b3a7c%2F%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-06-01%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2010.18.29.png){: width="800"} <br/><br/>
+  \*\*스코프 체인(현재는 lexical mesting structure) : 해당 코드 레벨에 참조값이 없다면 상위 레벨의 스코프로 참조 값을 찾아 나가는 현상(식별자를 찾아내는 즉시 중단되며 참조값이 없다면 null 반환)
+
+  <br/>
 
 #### 5. EnvironmentRecord의 구성
 
 - 현재 컨텍스트와 관련된 코드의 `식별자 정보들이 저장`됨
 - 코드가 실행되기 이전에 자바스크립트 엔진은 이미 해당 환경에 속한 코드의 변수명 등을 모두 알고 있게 됨(= `호이스팅`)
+- var 키워드로 선언된 변수의 바인딩 - VE를 통해 찾음(이외의 식별자들은 LE를 통해 찾음)
 
   ```javascript
   function a(x) {
@@ -152,28 +153,19 @@ category: JavaScript
 
   <br/><br/>
 
-## 총 정리
+<hr/>
 
 <br/>
 
-### **실행 컨텍스트**
+\*230109 this 바인딩, 스코프 체인 수정<br/>
 
-**실행 컨텍스트에 대해 말해보세요**
-
-- 자바스크립트에서 실행 컨텍스트란, **`코드를 실행하기 위해 필요한 정보들을 가진 범위를 객체 형태로`** 나타낸 것
-- 실행 컨텍스트를 구성하는 LexicalEnvironment는 현재의 실행 컨텍스트가 실행되기 위한 여러 정보를 담고 있음
-- LexicalEnvironment는 식별자들에 대한 정보를 담은 EnvironmentRecord와, 상위 LexicalEnvironment를 참조해 스코프 체인을 가능하게 하는 OuterEnvironmentReference 정보로 구성
-- EnvironmentRecord는 식별자 바인딩을 관리하고, binding object라 불리는 특정 객체의 속성으로 선언된 식별자들을 관리함
-- OuterEnvironmentReference는 현재의 실행 컨텍스트를 구성한 함수가 선언되는 시점에서의 상위 LexicalEnvironment를 참조하기 때문에 식별자의 유효 범위를 상위로 거슬러 올라가 찾게 되는 스코프 체인이 가능
-
-<br/><br/>
-
-<hr/>
-
-<br/><br/>
+<br/>
 출처<br/>
 
 [실행 컨텍스트 추가 - 이해를 위해 읽어보세요.](https://velog.io/@ggong/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%9D%98-%EC%8B%A4%ED%96%89-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8-execution-context)<br/>
 [실행 컨텍스트 - 먼저 읽어보세요.](https://velog.io/@edie_ko/js-execution-context)<br/>
 [실행 컨텍스트 - 바인딩](https://jeonghwan-kim.github.io/2017/10/22/js-context-binding.html)<br/>
 [실행 컨텍스트 - 암시적 바인딩 이해](https://191125.tistory.com/59)
+[실행 컨텍스트](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EC%8B%A4%ED%96%89-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8)<br/>
+[실행 컨텍스트 - 스코프 체인(예시 굿)](https://velog.io/@oneook/%EC%8A%A4%EC%BD%94%ED%94%84%EC%99%80-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%B2%B4%EC%9D%B8-JavaScript-Basics)><br/>
+도서 기초부터 완성까지, 프론트엔드(170p ~)

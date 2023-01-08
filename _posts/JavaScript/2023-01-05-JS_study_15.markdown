@@ -15,7 +15,7 @@ category: JavaScript
 
 ### async await
 
-1.  **async await란?**
+#### 1. async await란?
 
     - 간단하고 가독성 좋게 `비동기 처리를 동기 처리처럼 동작하도록 구현`할 수 있는 async/await가 도입
     - 프로미스의 후속 처리 메서드 없이 마치 동기 처리처럼 프로미스가 처리 결과를 반환하도록 구현할 수 있음
@@ -39,7 +39,8 @@ category: JavaScript
       f();
       ```
 
-2.  **promise와 async await**
+#### 2. promise와 async await
+
     - `에러 핸들링`
       - Promise 를 활용할 시에는 .catch() 문을 통해 에러 핸들링을 해야 하지만,
       - async/await 은 try / catch를 통해 에러를 처리할 수 있다
