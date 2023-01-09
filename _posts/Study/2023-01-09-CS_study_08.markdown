@@ -1,0 +1,56 @@
+---
+layout: post
+title: Study | CS base64 인코딩
+date: 2023-01-09 12:30:30 +0900
+category: Study
+---
+
+# CS base64 인코딩
+
+> #### 목차 <br/>
+>
+> **base64 인코딩**
+>
+> 1. base64 인코딩
+> 2. 변환과정
+> 3. 사용이유
+
+<br/>
+
+### 1. base64 인코딩
+
+- Binary Data(이진 데이터)를 ASCII 문자로만 이루어진 Text로 변환시키는 인코딩
+- 바이너리 데이터를 텍스트로 다루고 싶을 때 보편적으로 사용할 수 있는 방식
+- 신뢰할 수 없는 통신 채널을 통해 바이너리 데이터를 안전하게 전송할 수 있도록 사용하는 경우도 있음
+- 통신과정에서 바이너리 데이터의 손실을 막기 위해 사용하기도 함
+
+  \* 인코딩 : 정보의 형태나 형식을 표준화, 보안, 처리 속도 향상, 저장 공간 절약 등을 위해서 **다른 형태나 형식으로 변환하는 처리 혹은 그 처리 방식**
+
+### 2. 변환과정
+
+1. 문자열을 한 문자씩 ASCII 코드(10진수)로 바꾼다.
+2. ASCII 코드를 binary(2진수)로 바꾸고 한 줄로 나열하여 6bit씩(숫자 6단위씩) 끊어준다. (여기서 6bit로 나누어 떨어지지 않는 경우, 마지막 자리에 "="문자를 추가하여 6bit를 채워넣음)
+3. Base64 표에서 문자로 바꿔준다.
+
+- 진행 순서 : **원본 문자열> ASCII binary> 6bit로 cut> base64 encoding** 순서<br/>
+- 예시 : Man > 77 97 110 > 01001101 01100001 01101110 > TWFu로 변환<br/>
+  <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcUtiW8%2FbtqC6PUQfRF%2Fw8l5dQgbmWVLZD12MneZ90%2Fimg.png" alt="man" width="700" />
+
+### 3. 사용이유
+
+- **ASCII는 시스템간 데이터를 전달하기에 안전하지 않음**
+  - ASCII는 7 bits Encoding인데 나머지 1bit를 처리하는 방식이 시스템 별로 상이함
+  - 일부 제어문자 (e.g. Line ending)의 경우 시스템 별로 다른 코드값을 가짐
+- **Base64는 HTML 또는 Email과 같이 문자를 위한 Media에 Binary Data를 포함해야 될 필요가 있을 때, 포함된 Binary Data가 시스템 독립적으로 동일하게 전송 또는 저장되는걸 보장하기 위해 사용함**
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[base64 인코딩이란](https://codingpractices.tistory.com/entry/Base64-%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%B4%EB%9E%80-%EC%A0%95%ED%99%95%ED%95%98%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)<br/>
+[base64 인코딩 추가설명](https://veneas.tistory.com/entry/JAVA-Base64-%EC%9D%B8%EC%BD%94%EB%94%A9-%EB%94%94%EC%BD%94%EB%94%A9-3%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95)<br/>
+[사용 방식](https://velog.io/@haeinah/Base64-%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%B4%EB%9E%80)<br/>
+[변환 방법 + base64 사용이유](https://effectivesquid.tistory.com/entry/Base64-%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%B4%EB%9E%80)
