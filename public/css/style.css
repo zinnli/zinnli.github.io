@@ -390,7 +390,7 @@ summary a.nav-item:hover {
   color: #5581ca;
 }
 
-details ul li {
+.home-details ul li {
   font-size: 1.1em;
 }
 
@@ -420,6 +420,7 @@ td {
 .language-css,
 .language-javascript,
 .language-react,
+.language-jsx,
 .language-cpp,
 .language-html {
   margin: 10px 0;

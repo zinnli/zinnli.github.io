@@ -1,0 +1,126 @@
+---
+layout: post
+title: Java Script | JS 이벤트
+date: 2023-01-09 12:30:30 +0900
+category: JavaScript
+---
+
+# 이벤트 🌊
+
+> #### 목차 <br/>
+>
+> 1. **이벤트 전파(propagation)에 대해서 알고 있나요?** <br/>계층적 구조를 가진 DOM에 이벤트가 발생할 경우 연쇄적으로 이넵트가 전파되는데 이를 이벤트 전파라고 부른다.
+> 2. **이벤트 위임(delegation)에 대해서 알고있나요?** 🌊 <br/>하위 요소마다 직접 이벤트를 붙이지 않고 상위 요소에서 하위 요소들의 이벤트를 제어하도록 하는 방식을 말한다.
+
+<br/><br/>
+
+## 이벤트<br/>
+
+### 1. 이벤트 전파(propagation)에 대해서 알고 있나요?
+
+- DOM 트리상에 존재하는 모든 DOM 요소 노드에서 발생한 이벤트는 DOM 트리를 통해 전파됨
+- 사용자의 다양한 입력을 통해 동적으로 생성되는 이벤트 객체는 이벤트를 발생시킨 타깃(target)을 중심으로 DOM 트리를 통해 전파
+- 전파되는 방향에 따라 구분
+
+  - `캡쳐링 단계` : 이벤트가 상위 요소에서 하위 요소 방향으로 전파
+  - `타깃 단계` : 이벤트가 이벤트 타깃에 도달
+  - `버블링 단계` : 이벤트가 하위 요소에서 상위 요소 방향으로 전파(거품이 아래에서 올라오는 것 생각하면 기억하기 쉬움!) <br/>대부분의 이벤트는 버블링을 기본 동작으로 갖는다
+    [이벤트 전파 과정](https://domevents.dev/)
+
+  <details>
+  <summary>예시</summary>
+  <div markdown="1">
+
+  ```html
+  <form id="form-id">
+    form 영역
+    <div id="div-id">
+      div 영역
+      <p id="p-id">p 영역</p>
+      <!-- p 영역 클릭시 -->
+    </div>
+  </form>
+  <script>
+    const form = document.getElementById("form-id");
+    const div = document.getElementById("div-id");
+    const p = document.getElementById("p-id");
+    [form, div, p].forEach((target) => {
+      target.addEventListener(
+        "click",
+        () => {
+          console.log(`${String(target.tagName)} 캡쳐링`);
+        },
+        true // 캡쳐링 단계에서 이벤트 캐치를 원하는 경우 : addEventListener 3번째 인수의 옵션에 boolean값을 true로 넣어주면 이벤트 객체 캐치 가능
+      );
+    });
+    [form, div, p].forEach((target) => {
+      target.addEventListener("click", () => {
+        console.log(`${String(target.tagName)} 버블링`);
+      });
+    });
+  </script>
+  ```
+
+  - console.log 이벤트 전파 순서 : form 캡쳐링 → div 캡쳐링 → p 캡쳐링 → p 버블링 → div 버블링 → form 버블링
+  - 버블링 단계에서 이벤트 객체가 캐치(캡쳐링 단계는 addEventListener 3번째 인수의 옵션에 boolean값을 `true`로 넣어주면 이벤트 객체 캐치 가능)
+
+  </div></details>
+
+### 2. 이벤트 위임(delegation)에 대해서 알고있나요?
+
+- 하위 요소마다 이벤트를 붙이지 않고 상위 요소에서 하위 요소의 이벤트들을 제어하는 방식
+
+    <details>
+    <summary>예시</summary>
+    <div markdown="1">
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>eventDelegation</title>
+      <meta charset="UTF-8" />
+      <style>
+        body {
+          font-family: sans-serif;
+        }
+        .btn-number {
+          background-color: yellowgreen;
+        }
+      </style>
+    </head>
+
+    <body>
+      <div class="container">
+        <button class="btn-number">1</button>
+        <button class="btn-number">2</button>
+        <button class="btn-number">3</button>
+        <button class="btn-number">4</button>
+        <button class="btn-number">5</button>
+      </div>
+      <script>
+        const div = document.querySelector("div");
+
+        div.addEventListener("click", (e) => {
+          console.log(e.target.innerHTML);
+        });
+      </script>
+    </body>
+  </html>
+  ```
+
+  - 모든 요소에 이벤트 리스너를 등록할 경우 불필요한 코드나 중복된 코드가 양산될 수 있기 떄문에 상위의 요소에 이벤트 리스너를 등록하여 사용
+  - 이벤트 버블링을 통해 이벤트가 발생한 target 요소로부터 상위 요소로 이벤트 전파
+
+    </div></details>
+  <br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[이벤트](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EC%9D%B4%EB%B2%A4%ED%8A%B8)<br/>
+[이벤트 전파 1](https://velog.io/@0seo8/JS%EA%B8%B0%EC%B4%88-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%A0%84%ED%8C%8C)<br/>
+[이벤트 전파 2](https://velog.io/@hyesom/Deep-Dive-40.-%EC%9D%B4%EB%B2%A4%ED%8A%B82)<br/>
+도서 기초부터 완성까지, 프론트엔드(210p ~)

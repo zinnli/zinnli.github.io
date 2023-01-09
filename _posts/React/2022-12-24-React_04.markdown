@@ -15,7 +15,7 @@ category: React
 
 <br/>
 
-### 1. **Suspense**
+### 1. Suspense
 
 1.  **suspense가 뭔가요?**
 

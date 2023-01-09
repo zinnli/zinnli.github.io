@@ -15,9 +15,9 @@ category: React
 
 <br/><br/>
 
-### 1. **setState가 비동기 동작을 취했을 때 얻을 수 있는 이점은 무엇인가요?**
+### 1. setState가 비동기 동작을 취했을 때 얻을 수 있는 이점은 무엇인가요?
 
-1. setState 동작 방식
+1. **setState 동작 방식**
 
    - setState는 비동기식으로 동작
    - state 값이 변할때마다 컴포넌트가 렌더링이 되기 때문에 효율성을 위해서 setState가 여러번 입력될 경우 연속적으로 동작하여 state값을 변경하는 것이 아니라 `여러번 입력된 setState를 모았다가 동작, 최종 변경된 state 값이 적용`되어 한번만 렌더링됨
@@ -30,7 +30,7 @@ category: React
    - `비동기 렌더링을 위해` setState는 비동기적으로 동작해야함
      <br/> <br/>
 
-### 2. **useLayoutEffect는 무엇인가요?**
+### 2. useLayoutEffect는 무엇인가요?
 
 1. **브라우저 렌더링 과정** <br/>
    <img src="https://junilhwang.github.io/TIL/assets/1.257affbd.png" alt="brower-render" width="800"/> <br/>
@@ -135,7 +135,7 @@ category: React
 
   <br/>
 
-### 3. **리액트의 성능개선 방법에 대해서 설명해주세요** <span style="font-size:18px">// 구글링을 바탕으로 나온 내용 (직접 개선 후 사용한 내용으로 교체 예정)</span>
+### 3. 리액트의 성능개선 방법에 대해서 설명해주세요 <span style="font-size:18px">// 구글링을 바탕으로 나온 내용 (직접 개선 후 사용한 내용으로 교체 예정)</span>
 
 \* 불필요한 렌더링이 발생하면 성능저하, 손실이 발생하게 되기때문에 렌더링을 최적화하여 손실을 줄이는 방법이 필요하다.
 

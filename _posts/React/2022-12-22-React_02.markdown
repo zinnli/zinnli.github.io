@@ -11,11 +11,10 @@ category: React
 >
 > 1. **리덕스에 대해서 아나요?** 🌊🌊 <br/>JavaScript(자바스트립트) 상태관리 라이브러리
 > 2. **리덕스의 기본 원칙은?** 🌊🌊 <br/> 1. 앱 전체상태는 단일 스토어로 관리 <br/> 2. 상태(state)는 읽기 전용 <br/> 3. 순수 함수에 의해서 변경되어야 함
-> 3. **React에서 state의 불변성을 유지하라는 말이 있는데 이에 대해 설명해달라** 🌊 <br/>기존 state의 불변성을 지켜주어야만, 리액트 컴포넌트에서 상태가 업데이트가 됐음을 감지 할 수 있고 이에 따라 필요한 리렌더링이 진행되기 때문에 불변성 유지가 필요함
 
 <br/><br/>
 
-### 1. **리덕스에 대해서 아나요?**
+### 1. 리덕스에 대해서 아나요?
 
 1.  **Redux란**
 
@@ -39,7 +38,7 @@ category: React
 
   <br/>
 
-### 2. **리덕스의 기본 원칙은?**
+### 2. 리덕스의 기본 원칙은?
 
 1. `Single source of truth`
    - 앱 전체상태는 단일스토어로 관리
@@ -54,22 +53,17 @@ category: React
 
    \* 순수함수 : 순수함수란 어떤 함수에 동일한 파라미터를 주었을때 항상 같은 값을 리턴하고, 외부의 상태를 변경하지 않는 함수
 
-### 3. **React에서 state의 불변성을 유지하라는 말이 있는데 이에 대해 설명해달라**
-
-- 기존 state의 불변성을 지켜주어야만, 리액트 컴포넌트에서 상태가 업데이트가 됐음을 감지 할 수 있고 이에 따라 필요한 리렌더링이 진행되기 때문
-- 불변성을 지켜줘야하는 이유
-  1.  얕은 비교를 통해 상태 변화를 감지하기 때문 : 참조 값 안의 요소가 수정되면 얕은 비교로 참조 값이 동일하기 때문에 업데이트된 부분을 비교할 수 없어 리렌더링도 발생하지 않음
-  2.  컴포넌트 성능 최적화 작업을 위함 : 불변성이 지켜지지 않으면 객체 내부의 값이 새로워져도 바뀐것을 감지하지 못하기 때문에 React.memo에서 서로 비교하여 최적화 하는것이 불가능
-
 <br/>
 
 <hr/>
 
+<br/>
+
+\*230109 불변성 → React의 상태 게시물로 이동
 <br/><br/>
 출처<br/>
 
 [Redux란?](https://hanamon.kr/redux%EB%9E%80-%EB%A6%AC%EB%8D%95%EC%8A%A4-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/)<br/>
 [Redux 진행순서](https://velog.io/@hailey99/whatisreact)<br/>
 [Redux 기본 원칙](https://abangpa1ace.tistory.com/86)<br/>
-[불변성](https://velog.io/@ellie12/React-state-%EB%B6%88%EB%B3%80%EC%84%B1)<br/>
 [Redux 전체 참고](https://github.com/junh0328/prepare_frontend_interview/blob/main/react.md#%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%95%84%EB%82%98%EC%9A%94)
