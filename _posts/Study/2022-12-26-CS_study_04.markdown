@@ -32,6 +32,8 @@ category: Study
      서버 > Access-Control-Allow-Credentials: true
      ```
 
+   <br/>
+
 2. **CORS를 겪고 직접 해결해 본 경험이 있으면 말해주세요**
 
    1. 서버 개발자와 빠르게 소통함
