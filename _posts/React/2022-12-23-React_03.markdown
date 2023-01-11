@@ -1,7 +1,7 @@
 ---
 layout: post
-title: React | setState, useLayoutEffect, 성능개선
-date: 2022-12-23 12:00:30 +0900
+title: React | useLayoutEffect
+date: 2022-12-23 13:00:30 +0900
 category: React
 ---
 
@@ -9,28 +9,11 @@ category: React
 
 > #### 목차 <br/>
 >
-> 1. **setState가 비동기 동작을 취했을 때 얻을 수 있는 이점은 무엇인가요?** 🌊 <br/>일괄적인 업데이트를 위해 재조정을 연기하는 것이 이득
-> 2. **useLayoutEffect는 무엇인가요?** 🌊 <br/>렌더링할 상태가 이펙트 내에서 초기화되어야 할 경우, 사용자 경험을 위해 useLayoutEffect를 활용(사용자가 깜빡임을 경험하지 않도록 적용함)
-> 3. **리액트의 성능개선 방법에 대해서 설명해주세요** <br/>1. state 선언 위치 파악 <br/>2. React.memo() <br/>3. key 값으로 index를 사용하지 않기 <br/>4. useMemo <br/>5.useCallback
+> 1. **useLayoutEffect는 무엇인가요?** 🌊 <br/>렌더링할 상태가 이펙트 내에서 초기화되어야 할 경우, 사용자 경험을 위해 useLayoutEffect를 활용(사용자가 깜빡임을 경험하지 않도록 적용함)
 
 <br/><br/>
 
-### 1. setState가 비동기 동작을 취했을 때 얻을 수 있는 이점은 무엇인가요?
-
-1. **setState 동작 방식**
-
-   - setState는 비동기식으로 동작
-   - state 값이 변할때마다 컴포넌트가 렌더링이 되기 때문에 효율성을 위해서 setState가 여러번 입력될 경우 연속적으로 동작하여 state값을 변경하는 것이 아니라 `여러번 입력된 setState를 모았다가 동작, 최종 변경된 state 값이 적용`되어 한번만 렌더링됨
-   - setState()를 연속적으로 호출할 경우 Batch 처리가 됨(state 값이 바로 변경되는 것이 아니라 16ms 단위로 변경된 상태 값을 모아서 batch update를 진행함) <br/> <br/>
-
-2. **setState가 비동기 동작을 취했을 때 얻을 수 있는 이점**
-
-   - `일괄적인 업데이트를 위해` 재조정을 연기하는 것이 이득
-   - 내부적으로 전달되는 `props와 state의 일관성을 유지`하기 위해서는 setState가 비동기적으로 동작해야함
-   - `비동기 렌더링을 위해` setState는 비동기적으로 동작해야함
-     <br/> <br/>
-
-### 2. useLayoutEffect는 무엇인가요?
+### 1. useLayoutEffect는 무엇인가요?
 
 1. **브라우저 렌더링 과정** <br/>
    <img src="https://junilhwang.github.io/TIL/assets/1.257affbd.png" alt="brower-render" width="800"/> <br/>
@@ -133,18 +116,6 @@ category: React
 
 \* 내부의 코드가 모두 실행된 후 paint 작업을 거치기 때문에 로직이 복잡할 경우 사용자가 레이아웃을 보는데까지 `오랜 시간`이 걸림 <br/>-> `useEffect 사용을 권장`함 <br/> \* 렌더링할 상태가 이펙트 내에서 초기화되어야 할 경우, 사용자 경험을 위해 useLayoutEffect를 활용
 
-  <br/>
-
-### 3. 리액트의 성능개선 방법에 대해서 설명해주세요 <span style="font-size:18px">// 구글링을 바탕으로 나온 내용 (직접 개선 후 사용한 내용으로 교체 예정)</span>
-
-\* 불필요한 렌더링이 발생하면 성능저하, 손실이 발생하게 되기때문에 렌더링을 최적화하여 손실을 줄이는 방법이 필요하다.
-
-1. `state 선언 위치 파악` : state를 사용할 때 최상단 컴포넌트 위치를 파악하여 선언을 해줘야 원치않은 리렌더링에서 벗어날 수 있음
-2. `React.memo()` : 컴포넌트를 렌더링하여 그 결과를 메모이징 하는데 다음 렌더링이 일어날 때 props가 같으면 메모이징된 내용을 재사용하여 불필요한 리렌더링을 피할 수 있음
-3. `key 값으로 index를 사용하지 않기` : map을 돌릴 때 고유 key값을 부여하도록 하는데 index로 key값을 설정한다면 중간에 새로운 값이 삽입된 경우 리마운트가 일어나며 데이터가 매칭이 되지 않는 오류도 발생할 수 있음
-4. `useMemo` : 종속 변수들이 변하지 않으면 함수를 굳이 다시 호출하지 않고 이전에 반환한 참조값을 재사용함 (함수 호출 시간 세이브, 같은 값을 props로 받는 하위 컴포넌트의 리렌더링도 방지할 수 있음)
-5. `useCallback` : 컴포넌트 내부 로직에서 쓰이는 함수의 재렌더링을 막음 (함수와 종속성 배열을 매개변수로 전달받으면 메모이제이션된 콜백을 반환) ← 무분별한 사용은 메모리가 낭비될 수 있음
-
 <br/>
 
 <hr/>
@@ -152,10 +123,6 @@ category: React
 <br/><br/>
 출처<br/>
 
-[setState 동작원리](https://velog.io/@hey880/setState-polling)<br/>
-[batch](https://velog.io/@zuzokim/React-setState%EA%B0%80-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%9D%B8-%EC%9D%B4%EC%9C%A0)<br/>
-[setState와 비동기](https://velog.io/@yhnb3/setState%EB%8A%94-%EC%99%9C-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8F%99%EC%9E%91%ED%95%A0%EA%B9%8C)<br/>
 [브라우저 로딩과정](https://junilhwang.github.io/TIL/Javascript/Design/Vanilla-JS-Virtual-DOM/#_1-%E1%84%91%E1%85%A1%E1%84%89%E1%85%B5%E1%86%BC)<br/>
 [useEffect와 useLayoutEffect](https://medium.com/@jnso5072/react-useeffect-%EC%99%80-uselayouteffect-%EC%9D%98-%EC%B0%A8%EC%9D%B4%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C-e1a13adf1cd5)<br/>
-[useEffect와 useLayoutEffect 예시](https://merrily-code.tistory.com/46)<br/>
-[리액트의 성능개선 방법](https://jmllog.tistory.com/entry/React%EC%9D%98-%EB%A0%8C%EB%8D%94%EB%A7%81-%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94-%EB%B0%A9%EB%B2%95%EC%9D%84-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90)<br/>
+[useEffect와 useLayoutEffect 예시](https://merrily-code.tistory.com/46)

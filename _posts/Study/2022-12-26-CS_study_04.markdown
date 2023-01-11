@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Study | CORS
+title: Study | CS CORS
 date: 2022-12-26 21:30:30 +0900
 category: Study
 ---
