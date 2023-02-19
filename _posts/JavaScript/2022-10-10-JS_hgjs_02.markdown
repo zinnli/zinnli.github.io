@@ -1,0 +1,92 @@
+---
+layout: post
+title: Java Script | Java Script 구문 오류와 예외
+date: 2022-10-10 23:30:30 +0900
+categories: [JavaScript]
+---
+
+# [도서] 나혼자 공부하는 자바스크립트
+
+## [ 08-1 구문오류와 예외 ]
+
+<br/>
+**핵심 키워드** <br/> #구문 오류 #예외(런타임 오류) #예외 처리 #try catch finally 구문
+<br/>
+<br/>
+
+### 오류의 종류
+
+- 프로그램 실행 전에 발생하는 오류 : 구문 오류(syntax error)
+- 프로그램 실행 중이 발생하는 오류 : 예외(exception) or 런타임 오류(runtime error)
+
+  <br/>
+
+### 구문 오류
+
+: 프로그램 실행 전에 발생하는 오류(프로그램 자체가 실행되지 않음)
+
+- 오류가 나는 경우
+  1.  괄호의 짝을 맞추지 않았을 때
+  2.  문자열을 열었는데 닫지 않았을 때
+- 구문 오류가 생기면 => 웹 브라우저가 코드를 분석조차 하지 못하므로 실행되지않음
+
+<br/>
+
+```javascript
+Uncaught SyntaxError : missing "구문 오류 난 부분" after argument list
+```
+
+<br/>
+
+### 예외(런타임 오류)
+
+: 프로그램 실행 중이 발생하는 오류
+
+- syntaxError라고 출력되는 오류 이외의 모든 오류(TypeError, ReferenceError, RangeError)가 예외로 분류됨
+- javascript는 유연한 편이라 예외 발생이 적음
+  <br/>
+
+```javascript
+ex1) Uncaught TypeError : console.rog is not a function
+
+ex2) Uncaught TypeError : Cannot set property 'textContent' of null at null at HTMLDocument.<anonynous> (test.html:7)
+```
+
+<br/>
+
+#### 기본 예외 처리
+
+: 조건문을 사용해서 예외가 발생하지 않게 만드는 것
+
+#### 고급 예외 처리
+
+: 예외를 조금 더 쉽게 잡을 수 있는 기능(try catch finally)
+
+- try catch finally 구문 : try 구문 안에서 예외가 발생하면 catch 구문에서 처리하는 고급 예외 처리
+  - finally 구문 : 예외 발생과 상관 없이 무조건 실행 ==> 필요한 경우에만 사용
+  - throw 키워드 : 예외를 강제로 발생시키는 키워드 ==> 예외가 발생하면서 프로그램 중단
+
+```javascript
+try {
+  // 예외가 발생할 가능성이 있는 코드
+} catch (exception) {
+  // 예외가 발생했을 때 실행할 코드
+} finally {
+  // 필요한 경우에만 사용
+  // 무조건 실행할 코드
+}
+```
+
+##### 기본 예외 처리 vs 고급 예외 처리
+
+- 속도 : 기본 >> 고급 (현재는 별 차이 없음)
+- 어떤 예외가 발생할지 예측하기 힘든 경우 -> 고급 예외처리로 처리하는 것이 좋음
+
+<br/>
+
+\*\* 추가
+
+- try catch 구문 내부의 return 키워드
+- try catch 구문 내부의 break / continue 키워드
+
+위의 두가지는 다른 출력값이 나옴

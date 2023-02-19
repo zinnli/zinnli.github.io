@@ -1,0 +1,121 @@
+---
+layout: post
+title: 221101_TIL | 3번째 로그인 진행중 222..
+date: 2022-11-01 21:50:30 +0900
+categories: [I Learn, TIL]
+---
+
+<br/>
+
+## 오늘한 일
+
+- [항해 99] 로그인 회원가입 구현 완료
+- [핳해 99] 검색 기능 공부중
+
+<br/>
+
+## 내일 할 일
+
+- [항해 99] 검색 공부
+- [항해 99] 마이페이지 제작
+- [노마드 코더] 마스터 리액트 3강 이상 보기
+
+<br/>
+
+**오늘의 배운 점**
+<br/>
+
+1.  div로 감쌌을 때 / form으로 감쌌을 때 --- disable이 div일때만 먹음(해결은 했으나 이해못함..)<br/>
+    일반적으로 유효성 검사가 필요한 부분들(입력이 되어 submit이 되는 부분)은 form태그를 사용했는데, 이번에 disable를 버튼에 추가해주려고 하는데 변수형태로 들어가니 오류가나서 주위에 여쭤보니 div 태그로 감싸보라고 하셨고, 해당부분이 해결되었다.<br/><br/>
+    근데 왜 이렇게 되는지 이해 못했다. 이해하는대로 추가할 예정<br/>
+    <br/>
+
+2.  중복확인 버튼 => state 값이 변경되었을 때 버튼 누른 상태가 유지됨<br/>
+    하단의 코드처럼 reducer에서 전역 관리를 해줌으로써 state가 변경될 때마다 중복확인 버튼이 체크되었던게 해지된다<br/>
+    <br/>
+
+    ```react
+    ./src/moudule/userSlice
+    reducers: {
+         //이메일 중복확인 전역관리(state 변경시 버튼 활성 초기화)
+         emailChkChange: (state) => {
+              state.isEmailCheck = false;
+         },
+         //이름 중복확인 전역관리(state 변경시 버튼 활성 초기화)
+         nameChkChange: (state) => {
+              state.isNameCheck = false;
+         },
+    },
+
+    ./src/component/login/register
+      //state가 변경되었을 때 -> 중복확인 check 초기화
+    useEffect(() => {
+         if (!regEmail.test(email)) {
+              setEmailChk(false);
+         }
+         dispatch(emailChkChange());
+    }, [email]);
+
+    useEffect(() => {
+         if (!regUsername.test(username)) {
+              setUnChk(false);
+         }
+         dispatch(nameChkChange());
+    }, [username]);
+
+    ```
+
+    <br/>
+
+3.  중복확인 버튼을 클릭하지 않아도 회원가입이 가능함<br/>
+    회원가입 버튼을 중복확인 버튼 체크 && 각 input들이 정규식에 알맞게 들어갔을 때 활성화가 되도록 코드를 짰다.<br/>
+    코드가 엉망진창이라 이 부분을 해소하는데 같이 공부하시는 분들의 도움을 많이 받았다.<br/><br/>
+
+    하단의 코드 참고<br/>
+
+    ```react
+    //중복확인 버튼 전역상태관리
+    const { isEmailCheck, isNameCheck } = useSelector((state) => state.userList);
+    // extraReducer에서 바르게 입력했을 때 각 부분이 true 잘못 입력햇을 땐 false로 입력해두었다
+
+    //입력 값의 true/false에 따라 회원가입 버튼 활성화 관련
+    const [disabled, setDisabled] = useState(false);
+
+     //회원가입 버튼 disabled 삼항 연산자
+    useEffect(() => {
+         setDisabled(
+              regEmail.test(email) &&
+              regUsername.test(username) &&
+              regPassword.test(password) &&
+              password === passwordConfirm &&
+              isEmailCheck &&
+              isNameCheck
+         );
+    }, [setDisabled, regEmail, regPassword, regUsername, password, email, username, passwordConfirm, isEmailCheck, isNameCheck,]);
+         // 이 부분은 안적으면 경고가 떠서 적어두긴 했는데 사실 useEffect를 확실하게 이해한 건 아닌 것 같음
+
+    //return 부분
+    //true일때 회원가입이 되고, false일 때 회원가입이 비활성화 되도록 작업
+    {disabled ? (
+                   <button
+                        className="signup"
+                        onClick={onSubmitJoinHandler}
+                   >
+                        회원가입
+                   </button>
+              ) : (
+                   <button className="signope">회원가입</button>
+    )}
+    ```
+
+<br/>
+
+<hr>
+
+<br/>
+부가적인 내용들이 대다수라 고치는데 오래걸렸다. 사실 지난주에 했던 내용이라 2-3시간이면 끝날 줄 알았는데 이틀이 걸리다니..☹<br/>
+중복버튼에 대한 내용들은 처음하는데다가 나름대로 이해한다고 여기저기 뒤져보고 구글링하면서 보니까 지난 주에 얼마나 내가 엉망진창으로 코드를 짰는지 알 수 있었다. 물론 지금의 코드도 엉망이지만 ..ㅎㅎ.. <br/>로그인쪽은 그래도 조금씩 이해가 가는 것 같은데 중요한 건 각 hook나 전역관리 상태 등에 대한 이해가 부족하다보니 활용하는데에 한계가 있는 것 같아 이번 주 중에는 확실하게 정리하고 넘어가야할 것 같다.<br/>
+<br/>
+<br/>
+이제 이틀 뒤면 본격적인 실전 프로젝트에 들어가는데 너무 무섭다. 나 할 수 있겠지..? 시간이 지날수록 다른 분들과의 실력의 갭이 커지는 것 같아서 너무 불안하다..<br/> 그래도 뭐 해봐야지 어쩌겠슈.. 하기로 했으면 해야지~!~~!~! 으쌰 💪🏻
+<br/>

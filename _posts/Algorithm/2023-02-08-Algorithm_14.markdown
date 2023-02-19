@@ -1,0 +1,59 @@
+---
+layout: post
+title: 230208_Algorithm | 제일 작은 수 제거하기(Lv.1)
+date: 2023-02-08 12:30:30 +0900
+categories: [Algorithm, Lv.1]
+---
+
+# 제일 작은 수 제거하기 (Lv.1)
+
+<br/>
+
+### 문제 설명
+
+- 정수를 저장한 배열, arr 에서 가장 작은 수를 제거한 배열을 return
+
+<br/>
+
+### 제한사항
+
+- arr은 길이 1 이상인 배열
+- 인덱스 i, j에 대해 i ≠ j이면 arr[i] ≠ arr[j]
+
+<br/>
+
+### 입출력 예시
+
+| arr       | return  |
+| --------- | ------- |
+| [4,3,2,1] | [4,3,2] |
+| [10]      | [-1]    |
+
+<br/>
+
+```javascript
+function solution(arr) {
+  if (arr.length === 1) return [-1];
+  let result = arr.indexOf(Math.min(...arr));
+
+  arr.splice(result, 1);
+  return arr;
+}
+```
+
+<br/>
+
+---
+
+<br/>
+
+### 나름 풀이
+
+- length가 1이면 가장 작은 수를 제거 했을 때 빈 배열이 남음 → -1 도출
+- 가장 적은 수 : Math.min으로 구하기(spread 연산자 사용해야 쓸 수 있음)
+
+#### 참고해야하는 메소드
+
+- Math.min() : 함수는 주어진 숫자들 중 가장 작은 값을 반환
+- String.prototype.indexOf() : 메서드는 호출한 String 객체에서 주어진 값과 일치하는 첫 번째 인덱스를 반환
+  - 여기서 indexOf는 몇번째가 제일 작은 숫자인지 index 번호를 도출해줌

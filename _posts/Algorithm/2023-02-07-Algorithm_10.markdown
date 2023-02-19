@@ -1,0 +1,124 @@
+---
+layout: post
+title: 230207_Algorithm | 소수 만들기(Lv.1)
+date: 2023-02-07 12:30:30 +0900
+categories: [Algorithm, Lv.1]
+---
+
+# 소수 만들기 (Lv.1)
+
+<br/>
+
+문제 설명
+
+- 주어진 숫자 중 3개의 수를 더했을 때 소수가 되는 경우의 개수를 구하기
+- 숫자들이 들어있는 배열 nums가 매개변수로 주어질 때, nums에 있는 숫자들 중 서로 다른 3개를 골라 더했을 때 소수가 되는 경우의 개수를 return
+
+<br/>
+
+제한사항
+
+- nums에 들어있는 숫자의 개수는 3개 이상 50개 이하
+- nums의 각 원소는 1 이상 1,000 이하의 자연수이며, 중복된 숫자가 들어있지 않음
+
+<br/>
+
+입출력 예시
+<br/>
+
+| nums        | result |
+| ----------- | ------ |
+| [1,2,3,4]   | 1      |
+| [1,2,7,6,4] | 4      |
+
+<br/>
+
+```javascript
+function prime(n) {
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function solution(nums) {
+  let len = nums.length,
+    answer = 0;
+
+  for (let i = 0; i < len - 2; i++) {
+    for (let j = i + 1; j < len - 1; j++) {
+      for (let k = j + 1; k < len; k++) {
+        if (prime(nums[i] + nums[j] + nums[k])) {
+          answer++;
+        }
+      }
+    }
+  }
+
+  return answer;
+}
+```
+
+<br/>
+
+---
+
+<br/>
+
+### 나름 풀이
+
+1. prime 함수로 소수인지 판별
+2. 소수인 값들만 solution에서 모아서 더했을 때, 개수 추가해줌
+3. 끗 ~~(근데 어려워서 혼자 못풀었다 :( 헷갈리는 부분들이 몇가지 있었어서 그나마 이해되는 코드로 가져옴)~~
+
+<br/>
+
+---
+
+<br/>
+
+### 소수 구하기
+
+- **소수** : 1과 자기 자신만으로 나누어 떨어지는 1보다 큰 양의 정수(n이 소수가 되려면 2보다 크거나 같고, n보다 작은 자연수로 떨어지면 안됨)
+
+1. **반복문 사용**
+
+   ```javascript
+   function isPrime(num) {
+     // 소수는 1과 자기 자신만으로만 나누어 떨어지는 수
+     // num > i
+     for (let i = 2; num > i; i++) {
+       if (num % i === 0) {
+         //이 부분에서 num이  다른 수로 나눠떨어진다면 소수가 아님
+         return false;
+       }
+     }
+     // 소수는 1보다 큰 정수임으로
+     // 1보다 작으면 false를 리턴
+     return num > 1;
+   }
+   ```
+
+   <br/>
+
+2. **제곱근 - Math.sqrt()**
+
+   ```javascript
+   function prime(n) {
+     for (let i = 2; i <= Math.sqrt(n); i++) {
+       //2는 짝수인 유일한 소수
+       if (n % i === 0) {
+         //나머지가 0으로 떨어지면 소수에 해당하지 않음
+         return false;
+       }
+     }
+     return true;
+   }
+   ```
+
+<br/><br/>
+
+출처<br/>
+\: [소수(Prime number) 판별법 [ JavaScript ]](https://velog.io/@loocia1910/javascript%EC%97%90%EC%84%9C-%EC%86%8C%EC%88%98Prime-number-%EA%B5%AC%ED%95%98%EA%B8%B0)

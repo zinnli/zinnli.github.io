@@ -1,0 +1,70 @@
+---
+layout: post
+title: Java Script | ==, ===의 차이점
+date: 2023-01-17 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 연산자
+
+> #### 목차 <br/>
+>
+> 1. ==, ===의 차이점
+> 2. 더 알아보기
+
+<br/><br/>
+
+## 연산자
+
+### 1. ==, ===의 차이점
+
+- == (Equal Operator, 동등 연산자) : 두 피연산자의 타입이 서로 다르면 비교를 위해 강제로 타입을 같게 변환함
+- === (Strict Equal Operator, 일치 연산자) : 타입과 값이 모두 같을 경우에만 true를 반환함
+
+→ 정확한 비교를 위해선 == 가 아니라 항상 === 를 쓰는 것을 지향함<br/><br/>
+
+\* 변수를 비교하거나 어떤 비교를 위해 항상 '===' 연산자를 사용 할 것을 권장<br/><br/>
+
+### 2. 더 알아보기
+
+1. null 와 undefined 비교
+
+   ```javascript
+   // 자동 유형변화 비교
+   null == undefined; // expected output: true
+
+   // 두 피연산자의 유형이 다르기 때문에 ->false
+   null === undefined; // expected output: false
+   console.log(typeof null); // expected output: "object"
+   console.log(typeof undefined); // expected output: "undefined"
+   ```
+
+   <br/>
+
+2. '!=' 와 '!==' 비교연산자의 차이
+   \: 유형 변환 비교와 엄격한 비교의 [값]과 [자료형]의 다름을 boolean 형식으로 반환
+
+   ```javascript
+   // 값이 다르지 않음으로 (자료형 비교 안함)
+   2 != "2"; // expected output: false
+
+   // 두 피연산자의 유형이 다른 것이 맞기 때문에 -> true
+   2 !== "2"; // expected output: true
+   console.log(typeof 2); // expected output: "number"
+   console.log(typeof "2"); // expected output: "string"
+   ```
+
+   <br/>
+
+3. 비교 연산자를 이용하여, 'NaN'을 비교
+   \: NaN (Not a Number)은, 어떤 것과도 같지 않다
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[자바스크립트: '==' 와 '===' 는 다르다!](https://velog.io/@filoscoder/-%EC%99%80-%EC%9D%98-%EC%B0%A8%EC%9D%B4-oak1091tes)<br/>
+[[JS] "==" 와 "===" 연산자의 차이점](https://pgh268400.tistory.com/510)<br/>

@@ -1,0 +1,120 @@
+---
+layout: post
+title: Java Script | 생성자 함수에 의한 객체 생성
+date: 2023-01-03 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 생성자 함수에 의한 객체 생성
+
+> #### 목차 <br/>
+>
+> 생성자 함수에 의한 객체 생성 🌊
+>
+> 1. **생성자 함수가 뭔가요?** <br/>생성자 함수란 new 연산자와 함께 호출해 인스턴스를 생성하는 함수이다.<br/>
+> 2. **객체 리터럴로 만들 때와는 무슨 차이가 있죠? 왜 생성자 함수를 사용하나요?** <br/>객체 리터럴로 객체 생성 시 프로퍼티 구조가 동일하더라도 객체를 여러개 생성해서 사용해야하는 단점이 있는 반면에 생성자 함수는 프로퍼티 구조가 동일할 때 동일한 객체를 생성할 때 생성자 함수를 재사용할 수 있어 편리하다.<br/>
+> 3. **생성자 함수가 객체(인스턴스)를 생성하는 과정에 대해 간략하게 설명해줄 수 있나요?** <br/>1. 생성자 함수를 선언하고, <br/>2. 인스턴스를 생성하는데 이때 인스턴스는 빈 객체로 생성된 객체는 this에 바인딩된다. <br/>3. 생성자 함수 내부에 기술 되어 있는 코드를 한 줄씩 실행해 인스턴스를 초기화하고, <br/>4. 인스턴스 생성 시 생성자 함수를 호출할 때 넣은 인수를 this 바인딩을 통해 프로퍼티에 할당하여 인스턴스틀 반환한다.<br/>
+
+### 생성자 함수에 의한 객체 생성
+
+1.  **생성자 함수가 뭔가요?**
+
+    - `new 연산자와 함께 호출해 인스턴스를 생성하는 함수`
+    - 일반 함수와의 구분을 위해 생성자 함수 이름의 첫 글자를 대문자로 표기하는 것을 권장함
+    - 특정한 형태의 객체를 생성하거나 상속받고 싶을 때 사용
+    - 화살표 함수는 this 바인딩을 하지않아 생성자 함수로 받을 수 없음
+
+    ```javascript
+    function Person(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+
+    const person = new Person("둘리", 20);
+    ```
+
+    \* `인스턴스` : 생성자 함수에 의해 생성된 객체 <br/>\* `바인딩` : 식별자와 값이 연결됨<br/>
+
+2.  **객체 리터럴로 만들 때와는 무슨 차이가 있죠? 왜 생성자 함수를 사용하나요?**
+
+    - `객체 리터럴` : `단 하나의 객체만 생성`하는 객체 생성 방식 → 같은 프로퍼티를 갖는 객체를 여러 개 생성해야함(비효율적)
+    - `생성자 함수` : 객체를 생성하기 위한 `템플릿`처럼 생성자 함수를 사용 → 프로퍼티 구조가 동일한 객체 여러 개를 간편하게 생성할 수 있음
+    <details>
+      <summary>활용 예시</summary>
+      <div markdown="1">
+
+    ```javascript
+    //객체 리터럴
+    const circle1 = {
+      radius: 10,
+      getDiameter() {
+        return 2 * this.radius;
+      },
+    };
+    const circle2 = {
+      radius: 20,
+      getDiameter() {
+        return 2 * this.radius;
+      },
+    };
+
+    circle1.getDiameter(); //20
+    circle2.getDiameter(); //40
+
+    console.dir(circle1); //생성자 : Object()
+
+    //생성자 함수
+    //Constructor 생성자 함수를 이용한 객체 생성 방식
+    function Circle(radius) {
+      this.radius = radius; //
+      this.Diameter = function () {
+        return 2 * this.radius;
+      };
+    }
+    //인스턴스 생성
+    const circle1 = new Circle(10);
+    const circle2 = new Circle(20);
+
+    console.log(circle1.getDiameter()); //20
+    console.log(circle2.getDiameter()); //40
+
+    console.dir(circle1); //생성자 : Circle()
+    ```
+
+    </div></details>
+    \* 프로토 타입도 각자 다르게 나오기 때문에 상위 객체 다름(예시 참고)<br/><br/>
+
+3.  **생성자 함수가 객체(인스턴스)를 생성하는 과정에 대해 간략하게 설명해줄 수 있나요?**
+
+    1. 생성자 함수 선언
+    2. 인스턴스 생성(빈 객체 생성 및 this 바인딩)
+    3. 인스턴스 초기화
+    4. 인스턴스 반환
+
+    ```javascript
+    // 1. 생성자 함수 선언
+    function Circle(radius) {
+      // 2. 암묵적으로 빈 객체가 생성되고 생성된 인스턴스는 this에 바인딩됨
+      // 3. 인스턴스 초기화 - 생성자 함수 내부에 기술 되어 있는 코드를 한 줄씩 실행해 인스턴스를 초기화함
+      this.radius = radius;
+      this.getDiameter = function () {
+        return 2 * this.radius;
+      };
+      // 4. 인스턴스 생성시에 생성자 함수를 호출할 때 넣은 인수를 this 바인딩을 통해 프로퍼티에 할당한 뒤, 인스턴스를 반환한다
+    }
+
+    const circle1 = new Circle(5); // 반지름이 5인 Circle 객체를 생성
+    ```
+
+    <br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[생성자 함수](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EC%83%9D%EC%84%B1%EC%9E%90-%ED%95%A8%EC%88%98%EC%97%90-%EC%9D%98%ED%95%9C-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1)<br/>
+[생성자 함수와 this](https://developer-talk.tistory.com/538)<br/>
+[생성자 함수와 리터럴 1](https://velog.io/@jeaseong/%EC%83%9D%EC%84%B1%EC%9E%90-%ED%95%A8%EC%88%98)<br/>
+[생성자 함수와 리터럴 2](https://novlog.tistory.com/218)<br/>
+[도서]기초부터 완성까지, 프론트엔드 69p~

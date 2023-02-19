@@ -1,0 +1,97 @@
+---
+layout: post
+title: React | HOC
+date: 2023-01-16 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. HOC
+> 2. HOC 장단점
+> 3. HOC 주의할 점
+> 4. HOC 사용 예제
+
+<br/>
+
+### 1. HOC(Higher-Order-Components)
+
+\: HOC는 컴포넌트를 인자로 받아 새로운 컴포넌트를 반환하는 함수
+
+- 고차 컴포넌트(HOC, higher-order-componentm), 이하 HOC로 통일
+- 컴포넌트 로직을 재사용 하기 위한 방식
+- HOC의 이름은 with이름지정 규칙을 따름
+- 예) 리덕스 - connect() 함수 / 라우터 - withRouter()<br/>
+
+\* 함수 컴포넌트가 생기고 hook이 도입된 이후, HOC을 사용하는 경우는 많이 줄어들고 있음<br/>
+→ HOC이 보통 클래스형 컴포넌트에서 react life cycle을 고려한 재사용 가능한 로직을 만들기 위해 사용되기 때문<br/>
+→ 함수 컴포넌트에서는 거의 대부분 hook으로 대체가 가능<br/><br/>
+
+### 2. HOC 장단점
+
+- **장점**
+  - 반복적인 코드 재사용 용이<br/><br/>
+- **단점**
+  - 동명의 props를 생성/사용할 때 충돌발생
+  - 속성 값의 암묵적 전달
+  - 의례적 절차 필요
+    - 항상 함수로 감싸줘야 함
+    - displayName 설정해야함 (recompose/getDisplayName 패키지로 InputCompo의 displayName 불러와야함)
+    - 정적메서드 호출 설정해야함 (hoist-non-react-statics 패키지 사용해야 함)
+    - typescript와 같은 정적타입언어를 사용할때 타입 정의가 까다롭다
+
+### 3. HOC 주의할 점
+
+- **render 메서드 안에서 고차 컴포넌트를 사용하면 안됨**
+  - 컴포넌트 정의 바깥에 HOC을 적용하여 컴포넌트가 한 번만 생성
+- **정적 메서드는 반드시 따로 복사해야함**
+  - 메서드를 반환하기 전에 컨테이너에 복사
+  - hoist-non-react-statics를 사용하여 모든 non-React 정적 메서드를 자동으로 복사
+  - 정적 메서드를 컴포넌트와 별도로 내보내기
+- **ref는 전달되지 않음**
+  - React.forwardRef API 사용
+
+### 4. HOC 사용 예제
+
+```react
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+```
+
+- 예시
+
+  ```react
+  import React from 'react';
+  import Loading from '../components/Loading';
+
+  const withLoading = (WrappedComponent) => props => {
+  if (props.isLoading) return <Loading/>
+  return <WrappedComponent {...props}/>
+  }
+  export default withLoading;
+
+  //만든 HOC 적용
+  import React from 'react';
+  import withLoading from '../hoc/withLoading'
+
+  const ComponentA = props => {
+  ...
+  }
+  export default withLoading(ComponentA);
+  ```
+
+- 컴포넌트 렌더 시에 로딩 상태값을 두고, 로딩이 되지 않았다면 로딩 메세지를 보여주고 로딩이 끝났다면 컨텐츠가 담긴 컴포넌트를 보여줌(여러개에 해당 로직 적용하기 위해 공통 HOC 제작)
+- HOC을 사용하기 위해 변환하고자 하는 컴포넌트에 인자로 전달
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[고차 컴포넌트 (Higher-Order Components)](https://reactjs-kr.firebaseapp.com/docs/higher-order-components.html)<br/>
+[React HOC에 대해 알아보자](https://jiyoon-park.tistory.com/entry/React-HOC%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90)<br/>
+[[React] 고차 컴포넌트란?](https://itprogramming119.tistory.com/entry/React-%EA%B3%A0%EC%B0%A8-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EB%9E%80)<br/>
+[React, 고차 컴포넌트 (HOC) 사용하기](https://velog.io/@hwang-eunji/React-%EA%B3%A0%EC%B0%A8-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-HOC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)

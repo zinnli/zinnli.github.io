@@ -1,0 +1,214 @@
+---
+layout: post
+title: Java Script | JS Scope
+date: 2022-11-29 17:30:30 +0900
+categories: [JavaScript]
+---
+
+# Scope
+
+> #### 목차 <br/>
+>
+> #### 스코프
+>
+> 1.  스코프가 뭔가요?
+> 2.  스코프에는 어떤 종류가 있죠?
+> 3.  렉시컬 스코프를 아나요? 안다면 렉시컬 스코프는 무엇을 의미하나요?
+> 4.  전역 변수로 변수를 선언하면 생기는 문제점은 무엇이 있을까요?
+
+<br/><br/>
+
+## 스코프<br/>
+
+### 1. 스코프가 뭔가요?
+
+- 식별자 접근 규칙에 따른 유효 범위
+- 식별자(변수, 함수, 클래스)에 접근할 수 있는 범위가 존재함
+- 범위는 중괄호(블록) 또는 함수에 의해 나눠짐
+- 이러한 범위 = 스코프
+- Block Scope와 Function Scope로 나눠짐
+
+  EX)
+
+  ```javascript
+  var x = "global";
+  function foo() {
+    var x = "function scope";
+    console.log(x);
+  }
+  foo(); // function scope
+  console.log(x); // global
+  ```
+
+  <br/>
+
+### 2. 스코프에는 어떤 종류가 있죠?
+
+1.  **전역 스코프(Global Scope)** : 코드의 `어느 곳에서든` 참조할 수 있는 범위
+
+    - 이 곳에서 선언된 변수는 전역변수가 되어 코드 어디에든 참조 가능<br/>
+
+      ```javascript
+      let x = "global"; // 전역 변수
+      function foo() {
+        console.log(x);
+      }
+      foo(); // global
+      console.log(x); // global
+      ```
+
+      <br/>
+
+2.  **지역 스코프(Local Scope)** : 코드 블록, 함수 `내에서의 범위`이며 자기 자신과 하위 범위에만 참조할 수 있음
+
+    - 이 곳에서 선언된 함수는 지역변수가 되어 해당 지역과 그 하위 지역에서만 참조 가능<br/>
+
+      ```javascript
+      let x = "global";
+      function foo() {
+        let x = "local"; // 지역 변수
+        console.log(x);
+      }
+      foo(); // local
+      console.log(x); // global
+      ```
+
+      <br/>
+
+\*\***블록 레벨 스코프 vs 함수 레벨 스코프**<br/>
+지역 스코프는 함수에 의해서 생성되는지, 코드 블록에 의해 생성되는지에 따라 레벨이 나뉨<br/>
+
+|        |    var    |    let    |   const   |
+| :----: | :-------: | :-------: | :-------: |
+| scope  | 함수 레벨 | 블록 레벨 | 블록 레벨 |
+| 재선언 |     O     |     X     |     X     |
+| 재할당 |     O     |     O     |     X     |
+
+<br/>
+
+- **블록 레벨 스코프** : 코드 블록 ({}) 내에서만 참조(접근)가능한 범위 (C언어)
+
+  ```cpp
+  //블록 레벨 스코프
+  int main(void) {
+  // block-level scope
+       if (1) {
+            int x = 5;
+            printf("x = %d\n", x);
+            }
+       printf("x = %d\n", x); // use of undeclared identifier 'x'
+       return 0;
+  }
+  ```
+
+  <br/>
+
+- **함수 레벨 스코프** : 함수 코드 블록 내에서만 참조(접근) 가능한 범위 (JS)
+
+  ```javascript
+  //함수 레벨 스코프
+  let x = 5;
+  function foo() {
+    let y = 10;
+  }
+  console.log(x); // 5
+  console.log(y); // "y" is not defined = > y는 foo라는 함수의 지역 변수가 되므로 not defined
+  ```
+
+  <br/>
+
+  \*let 사용 시 블록 레벨 스코프
+
+  ```javascript
+  //함수 레벨 스코프
+  var x = 0;
+  {
+    var x = 1;
+    console.log(x); // 1
+  }
+  console.log(x); // 1
+
+  //블록 레벨 스코프
+  let y = 0;
+  {
+    let y = 1;
+    console.log(y); // 1
+  }
+  console.log(y); // 0
+  ```
+
+  <br/>
+
+### 3. 렉시컬 스코프를 아나요? 안다면 렉시컬 스코프는 무엇을 의미하나요?
+
+- **렉시컬 스코프** : 함수를 어디에서 선언하였는지에 따라 결정 (=정적 스코프)
+- Javascript 및 대부분의 프로그래밍 언어에서 사용하는 방법
+
+  ```javascript
+  //예시 1
+  var name = "zero";
+  function log() {
+    console.log(name);
+  }
+
+  function wrapper() {
+    name = "nero"; // log 호출 전에 전역변수 name을 nero로 바꿈
+    log();
+  }
+  wrapper(); //nero
+
+  //예시 2
+  var name = "zero";
+  function log() {
+    console.log(name);
+  }
+
+  function wrapper() {
+    var name = "nero"; //새로 선언
+    log(); // 이 log 안의 name은 지역변수 name이 아니라 전역변수 name
+  }
+  wrapper(); //zero
+  ```
+
+\*함수 선언 시 함수 내부의 변수는 자기 스코프로부터 가장 가까운 곳(상위범위)에 있는 변수를 계속 참조함<br/> -> 위의 예시에서 name 변수는 선언 시 가장 가까운 전역변수 name을 참조하게 됨<br/><br/>
+
+### 4. 전역 변수로 변수를 선언하면 생기는 문제점은 무엇이 있을까요?
+
+- 전역 변수의 사용은 변수 이름이 중복될 수 있고, 의도치 않은 재할당에 의한 상태 변화로 코드를 예측하기 어렵게 만드므로 사용을 억제해야함
+  <br/><br/>
+
+## 총 정리
+
+<br/>
+
+### **스코프**
+
+1. **스코프가 뭔가요?**
+
+   - 식별자(변수, 함수, 클래스)의 접근 규칙에 따른 유효 범위<br/><br/>
+
+2. **스코프에는 어떤 종류가 있죠?**
+
+   - 전역 스코프와 지역 스코프
+   - 전역 스코프의 경우 코드의 어느 곳에서든 참조할 수 있는 범위
+   - 지역 스코프의 경우 코드 블록, 함수 내에서의 범위이며 자기 자신과 하위 범위에만 참조 가능<br/><br/>
+
+3. **렉시컬 스코프를 아나요? 안다면 렉시컬 스코프는 무엇을 의미하나요?**
+
+   - 함수를 어디에서 선언하였는지에 따라 결정하는 방식
+   - 하위 스코프의 변수를 참조하지 않기 때문에 상단 스코프의 변수가 참조됨(위의 예시 참조)<br/><br/>
+
+4. **전역 변수로 변수를 선언하면 생기는 문제점은 무엇이 있을까요?**
+
+   - 전역 변수의 사용은 변수 이름의 중복이 될 수 있고, 의도치 않은 재할당에 의한 상태 변화로 코드 예측을 어렵게 함<br/><br/>
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[scope](https://hanamon.kr/javascript-%EC%8A%A4%EC%BD%94%ED%94%84%EC%99%80-%EB%B3%80%EC%88%98%EC%84%A0%EC%96%B8%ED%82%A4%EC%9B%8C%EB%93%9C-%EC%B0%A8%EC%9D%B4%EC%A0%90/)<br/>
+[scope](https://doozi0316.tistory.com/entry/JavaScript-Scope%EB%9E%80-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%B2%B4%EC%9D%B8-%EC%8B%A4%ED%96%89-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8)<br/>
+[렉시컬 스코프](https://velog.io/@bico/JavaScript-%EB%A0%89%EC%8B%9C%EC%BB%AC-%EC%8A%A4%EC%BD%94%ED%94%84lexical-scope)<br/>

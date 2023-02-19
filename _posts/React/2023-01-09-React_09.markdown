@@ -1,0 +1,47 @@
+---
+layout: post
+title: React | props Drilling
+date: 2023-01-09 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **props Drilling**<br/> 데이터를 하위 컴포넌트로 전달하는 과정에서 중간 컴포넌트들은 해당 데이터가 필요하지 않더라도 하위 컴포넌트에 데이터를 전달하기 위해 props를 전달해야하는 과정
+> 2. **props Drilling 해결방법**<br/>
+
+<br/>
+
+### 1. props Drilling
+
+- props를 오로지 하위 컴포넌트로 전달하는 용도로만 쓰이는 컴포넌트를 거치면서 React Component 트리의 한 부분에서 다른 부분으로 데이터를 전달하는 과정
+  - props를 통해 데이터를 전달하는 과정에서 중간 컴포넌트는 그 데이터가 필요하지 않음에도 자식 컴포넌트에 전달하기 위해 props를 전달해야하는 과정
+
+### 2. props Drilling 해결방법
+
+1. props Drilling으로 생기는 **문제**
+   - 어플리케이션의 규모가 커지고, 컴포넌트의 수가 많아지게 되면서 prop drilling으로 코드가 복잡해짐
+     - 필요보다 많은 props를 전달하다가, 컴포넌트를 분리하는 과정에서 필요하지 않은 props가 계속 남거나 전달되는 문제
+     - props 전달이 누락되었는데 defaultProps가 과용되었을 때, props가 전달되지 않은 상황을 인지하기가 어려운 문제
+     - props의 이름이 전달중에 변경되어서 데이터를 추적하기가 쉽지 않게되는 문제<br/><br/>
+2. props Drilling **해결방법**
+
+   - 렌더링 될 컴포넌트를 불필요하게 여러 컴포넌트로 나누지 않음
+   - defaultProps를 필수 컴포넌트에 사용하지 않음
+     - defaultProps를 사용하면 컴포넌트가 제대로 동작하기 위해 꼭 필요한 props가 전달되지 못한 상황에도 중요한 오류가 가려지게 됨
+     - 때문에 필수적이지 않은 컴포넌트에서만 사용하면 prop drilling으로 인한 문제를 막을 수 있음
+   - 가능한 관련성이 높은 곳에 state를 위치시킴
+     - 최상위 컴포넌트에 state를 위치시키는 것보다 해당 데이터를 필요로 하는 최소 공통 부모 컴포넌트에서 관리하는 것이 효율적임
+   - 상태관리 도구를 사용
+     - Context API나 Redux 등의 외부 상태관리 라이브러리를 사용해서 문제를 해결할 수 있음
+
+   <br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[props Drilling](https://velog.io/@ricky0813/React-Prop-Drilling)<br/>

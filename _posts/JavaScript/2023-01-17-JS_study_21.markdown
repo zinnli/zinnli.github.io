@@ -1,0 +1,173 @@
+---
+layout: post
+title: Java Script | 얕은 복사와 깊은 복사
+date: 2023-01-17 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 얕은 복사와 깊은 복사
+
+> #### 목차 <br/>
+>
+> 1. 얕은복사와 깊은복사
+> 2. 얕은복사와 깊은복사 예시
+
+<br/>
+
+### 1. 얕은 복사와 깊은 복사
+
+1. **얕은 복사(Shallow Copy)**
+   - 객체의 참조값(주소 값)을 복사
+   - 참조값을 복사할 때는 변수가 객체의 참조를 가리키고 있기 때문에 복사된 변수 또한 객체가 저장된 메모리 공간의 참조를 가리키고 있음 → 복사를 하고 객체를 수정하면 두 변수는 똑같은 참조를 가리키고 있기 때문에 기존 객체를 저장한 변수에 영향을 끼침
+2. **깊은 복사(Deep Copy)**
+   - 실제 값을 복사
+   - 원시값을 복사할 때 그 값은 또 다른 독립적인 메모리 공간에 할당하기 때문에, 복사를 하고 값을 수정해도 기존 원시값을 저장한 변수에는 영향을 끼치지 않음
+
+### 2. 얕은 복사와 깊은 복사 예시
+
+1. **얕은 복사 예시**
+
+   1. Array.prototype.slice()
+
+      - start부터 end 인덱스까지 기존 배열에서 추출하여 새로운 배열을 리턴하는 메소드
+      - start와 end를 설정하지 않는다면, 기존 배열을 전체 얕은 복사
+
+   2. Object.assign()
+
+      - Object.assign(생성할 객체, 복사할 객체)
+      - 메소드의 첫 번째 인자로 빈 객체를 넣어주고 두 번째 인자로 복사할 객체
+
+   3. Spread 연산자 (전개 연산자)
+
+   ```javascript
+   //1. slice
+   const original = ["a", 2, true, 4, "hi"];
+   const copy = original.slice();
+
+   console.log(JSON.stringify(original) === JSON.stringify(copy)); // true
+
+   copy.push(10);
+
+   console.log(JSON.stringify(original) === JSON.stringify(copy)); // false
+
+   console.log(original); // [ 'a', 2, true, 4, 'hi' ]
+   console.log(copy); // [ 'a', 2, true, 4, 'hi', 10 ]
+
+   //2. assign
+   const object = {
+     a: "a",
+     number: {
+       one: 1,
+       two: 2,
+     },
+   };
+
+   const copy = Object.assign({}, object);
+
+   copy.number.one = 3;
+
+   console.log(object === copy); // false
+   console.log(object.number.one === copy.number.one); // true
+
+   //3. spread
+   const object = {
+     a: "a",
+     number: {
+       one: 1,
+       two: 2,
+     },
+   };
+
+   const copy = { ...object };
+
+   copy.number.one = 3;
+
+   console.log(object === copy); // false
+   console.log(object.number.one === copy.number.one); // true
+   ```
+
+   <br/>
+
+2. **깊은 복사 예시**
+
+   - 참조형 데이터는 얕은 복사가 발생하기 때문에 별도의 처리가 필요
+
+     1. 반복문을 이용한 방법<br/> : 할당 이후에는 반복문을 통해 복사하고자 하는 데이터의 값을 하나씩 복사하면서 같은 값을 가진, 서로 다른 변수가 됨
+     2. 전개 연산자를 이용한 방법<br/> : 내부의 값들을 전개하여 새로운 데이터를 만들기에 깊은 복사가 되며, 반복문을 이용한 방법보다 짧은 코드로 구현 가능
+
+        ```javascript
+        //1. 반복문
+        const arr1 = [1, 2, 3, 4, 5];
+        const arr2 = [];
+
+        for (let i = 0; i < arr1.length; i++) {
+          arr2.push(arr1[i]);
+        }
+        console.log(arr1 === arr2); // false;
+
+        const obj1 = { name: "Tom", age: 5 };
+        const obj2 = {};
+
+        Object.keys(obj1).forEach((key) => {
+          obj2[key] = obj1[key];
+        });
+        console.log(obj1 === obj2); // false;
+
+        //2. 전개 연산자
+        const arr1 = [1, 2, 3, 4, 5];
+        const arr2 = [...arr1];
+
+        console.log(arr1 === arr2); // false;
+
+        const obj1 = { name: "Tom", age: 5 };
+        const obj2 = { ...obj1 };
+
+        console.log(obj1 === obj2); // false;
+        ```
+
+        <br/>
+
+3. **원시형 데이터와 참조형 데이터에 따른 얕은 복사와 깊은 복사**<br/>
+   → 원시형 데이터는 기본적으로 깊은 복사가, 참조형 데이터는 얕은 복사가 발생
+
+   - 원시형 데이터와 참조형 데이터가 메모리에 저장되는 방식이 서로 다름
+
+     ```javascript
+     let num1 = 123;
+     let num2 = num1;
+
+     console.log(num1 === num2); //true
+
+     num2 = 456;
+
+     console.log(num1 === num2); //false
+
+     const obj1 = { name: "tom", age: 5 };
+     const obj2 = obj1;
+
+     console.log(obj1 === obj2); //true
+
+     obj2.name = "jerry";
+
+     console.log(obj1 === obj2); //true
+     ```
+
+   ###### 이미지 출처 : https://nohack.tistory.com/30
+
+   <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbb7dsd%2Fbtrqt0OsT7s%2Fcx4eGRHSsqVxYYqwUGziB1%2Fimg.jpg" alt="메모리" width="500" /><br/>
+
+   > **원시형 데이터**는 스택 메모리만 이용하고 메모리에 값 자체를 저장함<br/>
+   > → 원본을 새로운 변수에 할당하면 값을 복사하기에 완전히 새로운 값이 만들어짐<br/><br/> > **참조형 데이터**는 스택 외에도 힙이라 하는 메모리를 사용하며, 이를 스택에서 참조하는 방식으로 동작함<br/>
+   > → 스택에는 힙을 가리키는 주소를 담게 되고, 원본을 새로운 변수에 복사하게 되면 스택에 담긴 메모리 주소를 복사하게 됨<br/>
+   > → 두 변수는 동일한 하나의 객체를 가리키게 되고 참조형 데이터의 특성으로 두가지가 모두 변경됨<br/>
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[얕은복사 VS 깊은복사](https://velog.io/@filoscoder/-%EC%99%80-%EC%9D%98-%EC%B0%A8%EC%9D%B4-oak1091tes)<br/>
+[[JavaScript] 깊은 복사, 얕은 복사](https://bbangson.tistory.com/78)<br/>
+[얕은복사 & 깊은복사](https://nohack.tistory.com/30)

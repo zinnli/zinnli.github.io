@@ -1,0 +1,141 @@
+---
+layout: post
+title: React | 리액트의 이벤트
+date: 2023-01-12 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **HTML에서의 이벤트 처리**
+> 2. **React에서의 이벤트 처리**
+> 3. **HTML과 React에서의 이벤트 처리의 차이점**
+
+<br/>
+ 
+### 1. HTML에서의 이벤트 처리
+- HTML DOM element addEventListener함수 이용(가장 권장)
+  - 기존 이벤트를 유지하고, 이벤트를 추가하는 방식
+  - 이벤트를 연결해줄 DOM객체를 얻어온 후 addEventListener함수를 이용해서 해당 이벤트명과 함수를 연결
+
+    ```react
+    <button type="button" id="myName">내 이름</button>
+    document.getElementById('myName').addEventListener('click', function () {
+    console.log('ccusean')
+    })
+    ```
+
+- HTML DOM element 속성 이용
+
+  - 기존에 추가된 이벤트를 모두 무시하고, 여기서 추가된 이벤트만 실행
+  - 이벤트를 연결해줄 DOM객체를 얻어온 후 이벤트 속성(onclick)에 함수를 연결
+
+    ```react
+    <button type="button" id="myName">내 이름</button>
+    document.getElementById('myName').onclick = function () {
+    console.log('ccusean') }
+    ```
+
+- HTML 속성 이용
+
+  - html 태그의 이벤트 속성(onclick)에 자바스크립트 함수
+
+    ```react
+    <button type="button" onclick="showName()">내 이름</button>
+    function showName() {
+        console.log('ccusean')
+        }
+    ```
+
+### 2. react에서의 이벤트 처리
+
+\* DOM 요소에만 이벤트 설정이 가능(리액트의 컴포넌트에는 불가능)
+
+1. 이벤트 핸들러 네이밍
+
+- props의 경우 : on접두사 지정(ex. onClick) ← 실제 이벤트가 연결
+- Function 이름의 경우 : handle접두사 지정(ex. handleClick) ← 이벤트가 발생했을 때 호출되는 실제 function
+
+2. 이벤트 핸들링
+
+   1. 클래스형 컴포넌트
+
+   - 엘리먼트가 처음 렌더링될때 리스너를 제공
+   - 이벤트핸들러를 클래스의 메서드로 만들었고 이를 컴포넌트 내에서 사용할 수 있음
+
+        <details>
+        <summary>사용예시</summary>
+        <div markdown="1">
+
+     ```react
+      class Test extends React.Component {
+        // 이 문법은 `this`가 handleClick 내에서 바인딩되도록 합니다.
+        handleClick = () => {
+          console.log(this);
+        }
+
+        render() {
+          return (
+            <button onClick={this.handleClick}>
+              Click me
+            </button>
+          );
+        }
+      }
+     ```
+
+        </div></details><br/>
+
+   2. 함수 컴포넌트
+
+   - 함수형 컴포넌트의 상태값은 useState훅으로 관리되기 때문에 컴포넌트의 this로부터 자유로움
+   - 이벤트 핸들러에 콜백 함수를 넘기는 상황에도 딱히 신경 쓸 필요가 없음
+   - const 키워드 + 함수 형태로 선언
+
+        <details>
+        <summary>사용예시</summary>
+        <div markdown="1">
+
+     ```react
+      import React, {useState} from "react";
+
+      function NumberTest() {
+        const [num, setNumber] = useState(0);
+
+        const increase = () => {
+          setNumber(num+1);
+        }
+
+        return (
+          <div>
+            <h1>Number Test</h1>
+            <h2>{num}</h2>
+            <button onClick={increase}>증가</button>
+          </div>
+        );
+      }
+
+      export default NumberTest;
+     ```
+
+        </div></details><br/>
+
+### 3. HTML과 react에서의 이벤트 처리의 차이점
+
+|          특징          |                 HTML                 |              React               |
+| :--------------------: | :----------------------------------: | :------------------------------: |
+|      이벤트 이름       |         소문자(ex. onclick)          |      camelCase(ex. onClick)      |
+|     함수 호출 방식     | 문자열<br/> (ex. onclick="active()") | 함수<br/> (ex. onClick={active}) |
+| 이벤트의 기본동작 방지 |             return false             |         preventDefault()         |
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[html 이벤트 처리](https://ccusean.tistory.com/entry/HTML-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94-3%EA%B0%80%EC%A7%80-%EB%B0%A9%EC%8B%9D)<br/>
+[react 이벤트 처리](https://velog.io/@yoonvelog/React-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%B2%98%EB%A6%AC)<br/>

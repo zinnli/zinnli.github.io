@@ -1,0 +1,119 @@
+---
+layout: post
+title: React | Next.js
+date: 2023-01-16 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. Next.js
+
+<br/>
+
+### 1. Next.js
+
+\: React + Express.js + React-Router-Dom + SSR
+
+- 실제 서버까지 내장되어 있는 all-in-one 솔루션
+
+- **next.js가 제공하는 주요 기능**
+
+  - **hot reloading** <br/>: 개발 중 저장되는 코드는 자동으로 새로고침
+  - **automatic routing** <br/>: pages 폴더에 있는 파일은 해당 파일 이름으로 라우팅
+  - **single file components** <br/>: style jsx를 사용함으로 컴포넌트 내부에 해당 컴포넌트만 스코프를 가지는 css를 만들수 있음
+  - **server rendering** <br/>: 서버렌더링을 함<br/>(서버렌더링을 한 페이지의 페이지 소스보기를 클릭하면 내부에 소스가 있음)
+  - **code splitting** <br/>: dynamic import를 이용하면 손쉽게 코드 스플리팅이 가능<br/>(모든 번들(chunk.js)이 하나로 묶이지 않고, 각각 나뉘어 좀 더 효율적으로 자바스크립트 로딩 시간을 개선할 수 있음)
+  - **typescript** <br/>: 타입스크립트 활용을 위해 웹팩을 만지거나 바벨을 만질 필요 없음
+  - **sass 사용하기** <br/>: 따로 config 파일을 정의 하지 않고이 css 파일을 scss로 바꾸고 yarn add sass --dev 를 해주면 next에서 알아서 설정을 해줌
+  - **Link 사용하기** <br/>: 보통 페이지간 이동은 a 태그를 사용하나 next에서는 사용하지 않음
+  - **prefetching** <br/>: 백그라운드에서 페이지를 미리 가져옴 <br/>→ 정적 생성을 사용하는 JSON페이지는 더 빠른 페이지 전환을 위해 데이터가 포함 된 파일을 미리 로드함
+
+- **Next.js 사용하기**
+
+  - 개발환경실행 : npm run dev
+  - 배포 파일 생성 : npm run build
+  - 서비스(실제) 시작 : npm run start
+
+<details>
+<summary>Route</summary>
+<div markdown="1">
+
+- Route<br/>
+
+  | url                | router              |
+  | :----------------- | :------------------ |
+  | http://a.com/      | /pages/index.js     |
+  | http://a.com/sub   | /pages/sub/index.js |
+  | http://a.com/sub/1 | /pages/sub/[id].js  |
+
+  <br/><br/>
+
+  ```react
+  // pages/sub/[id].js
+  import {useRouter} from "next/router';
+  export default function SubIndex(){
+    const router = useRouter;
+    const id = Number(router.query.id);
+  return <>
+    <h1>/pages/sub/[id].js</h1>
+    <p>Parameter id = {id}</p>
+    <a href="/">/pages/index.js</a>
+    </>
+  }
+  ```
+
+</div></details>
+
+<details>
+<summary>API Route</summary>
+<div markdown="1">
+
+- API Route
+
+  ```react
+  // pages/api/hello.js
+  export default function handler(req, res){
+    res.status(200).json({name:'zinnli'})
+  }
+  ```
+
+- 예시 : 연결에 성공했을 때(status 200) json 안의 객체를 보여줌<br/><br/>
+
+- environment variables(환경변수) 설정가능
+
+  ```react
+  // .env
+  NEXT_PUBLIC_API_URL=http://localhost:3000
+
+  // pages/sub/fetch.js (환경변수 적용하기)
+  import {useEffect} from 'react';
+  export default function Fetch(){
+    useEffect(()=>{
+      fetch(process.env.NEXT_PUBLIC_API_URL+'api/hello')
+        .then(type=>type.json())
+        .then(result=>{
+            console.log(result);
+        })
+    })
+    return <>
+      <h1>/pages/sub/fetch.js</h1>
+      <a href="/">/pages/index.js</a>
+      </>
+  }
+  ```
+
+</div></details>
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[Next.js 공식 문서](https://nextjs.org/)<br/>
+[Next.js - React, Express.js 그리고 SSR을 한방에](https://www.youtube.com/watch?v=ECMB4kUCKWQ)<br/>
+[next.js 기본 개념 알아보기](https://kyounghwan01.github.io/blog/React/next/basic/#next-js%E1%84%80%E1%85%A1-%E1%84%8C%E1%85%A6%E1%84%80%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB-%E1%84%8C%E1%85%AE%E1%84%8B%E1%85%AD-%E1%84%80%E1%85%B5%E1%84%82%E1%85%B3%E1%86%BC)

@@ -1,0 +1,95 @@
+---
+layout: post
+title: 230203_Algorithm | 약수의 개수와 덧셈(Lv.1)
+date: 2023-02-03 15:30:30 +0900
+categories: [Algorithm, Lv.1]
+---
+
+# 약수의 개수와 덧셈(Lv.1)
+
+<br/>
+
+문제 설명
+
+- 두 정수 left와 right가 매개변수
+- left부터 right까지의 모든 수들 중에서, 약수의 개수가 짝수인 수는 더하고 / 약수의 개수가 홀수인 수는 모두 뺀 수를 return
+
+<br/>
+
+제한사항
+
+- 1 ≤ left ≤ right ≤ 1,000
+
+<br/>
+
+입출력 예시
+<br/>
+
+| left | right | result |
+| ---- | ----- | ------ |
+| 13   | 17    | 43     |
+| 24   | 27    | 52     |
+
+<br/>
+
+```javascript
+function count(count) {
+  let num = 0;
+  for (let j = 1; j <= count; j++) {
+    if (count % j == 0) {
+      num++;
+    }
+  }
+  return num;
+}
+
+function solution(left, right) {
+  var answer = 0;
+  for (let i = left; i <= right; i++) {
+    count(i) % 2 == 1 ? (answer -= i) : (answer += i);
+  }
+  return answer;
+}
+```
+
+<br/>
+
+---
+
+<br/>
+
+### 나름 풀이
+
+1. 약수의 개수 구하기
+2. 구한 약수의 개수를 바탕으로 약수의 개수가 홀수인 경우 빼는 것으로 처리<br/><br/>
+
+\+\+ 사실 모르겠어서 중간에 찾아봤다. 다 본 건 아니고 힌트정도..? 20분가량 하나의 함수 안에서 저 모든 코드를 짜면서 꼬여서 고통받았는데 나눠서 쓰니까 아직 알고리즘을 어려워하는 상황에서 적는 입장에서는 간편했다.<br/>그런데 다른 방법이 있을 것 같아 좀 더 간결하고 알아보기 쉬운 코드를 훔쳐봤다. 희희..
+
+<br/>
+
+#### 다른 분의 풀이
+
+```javascript
+function solution(left, right) {
+  var answer = 0;
+  for (let i = left; i <= right; i++) {
+    if (Number.isInteger(Math.sqrt(i))) {
+      answer -= i;
+    } else {
+      answer += i;
+    }
+  }
+  return answer;
+}
+```
+
+<br/>
+
+#### 위 풀이에 대한 설명
+
+- Number.isInteger() : 주어진 값이 정수인지 판별
+- Math.sqrt() : 숫자의 제곱근을 반환함<br/><br/>
+
+→ 제곱근이 정수이면 약수의 개수는 홀수<br/><br/>
+
+(예시 : Math.sqrt(5) = 2.23606797749979 // 제곱근( x2 = a -> x가 제곱근)이 정수면 ( 양의정수, 0 , 음의정수) 약수의 개수가 홀수)

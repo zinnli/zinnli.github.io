@@ -1,0 +1,62 @@
+---
+layout: post
+title: Study | CS CORS
+date: 2022-12-26 21:30:30 +0900
+categories: [Study]
+---
+
+# CORS 🌊
+
+> #### 목차 <br/>
+>
+> 1. CORS가 뭔가요?<br/>&nbsp;&nbsp;- Cross Origin Resource Sharing의 약자로, 교차 출처 공유를 의미함 <br/>&nbsp;&nbsp;- 응답을 보내는 출처가 자신이 속한 출처가 아닌, 다른 출처여도 서로 예상되는 출처라면 요청에 대해 허용해주는 응답 헤더를 보내, 브라우저가 응답 결과를 보여줍
+> 2. CORS를 겪고 직접 해결해 본 경험이 있으면 말해주세요 <br/>&nbsp;&nbsp;1. 서버 개발자와 빠르게 소통함 <br/>&nbsp;&nbsp;2. 개발 환경 프록시 설정 <br/>&nbsp;&nbsp;3. 프록시 서버 구축
+
+<br/>
+
+### 1. **CORS**
+
+1. **CORS가 뭔가요?**
+
+   - Cross Origin Resource Sharing의 약자로, `교차 출처 공유`
+   - Origin은 **① scheme(프로토콜), ② host(도메인), ③ port** 로 이루어진 URL을 의미
+   - 자신이 속한 출처(Origin)를 기준으로 다른 출처(Origin)에 API를 요청하게 되면 브라우저에서 이 요청으로 넘어오는 경과가 안전한지 판단하게 되는데, 응답을 보내는 출처가 자신이 속한 출처가 아닌, 다른 출처여도 서로 예상되는 출처라면 **요청에 대해 허용해주는 응답 헤더**를 보내, 브라우저가 응답 결과를 보여줍
+   - 모든 서버들이 다 CORS를 인지하지는 않기 때문에 브라우저는 거부했더라도 서버에서 처리해버리는 결과가 생길 수 있기 때문에 서버가 안전하게 요청을 주고받을 수 있도록 `브라우저에서 해당 요청(CORS)을 처리함`
+
+   - 실제 요청시 : 같은 Origin에서 http 통신을 하는 경우 알아서 cookie가 request header에 들어가지만, 교차 출처로 요청하는 상황에서는 그렇지 않음
+
+     - **Origin이 다른 http 통신**에서는 request header에 쿠키가 자동으로 들어가지 않기 때문에 서버에게 또는 클라이언트에게 내가 어떤 요청을 보내는 지 알려줄 필요가 있음
+
+     ```javascript
+     프론트 > WithCredentials: true
+     서버 > Access-Control-Allow-Credentials: true
+     ```
+
+   <br/>
+
+2. **CORS를 겪고 직접 해결해 본 경험이 있으면 말해주세요**
+
+   1. 서버 개발자와 빠르게 소통함
+
+      - 출처가 애초부터 허용되지 않도록 설정이 됐다면, 옵션과 응답 헤더를 깜빡하고 서버 개발자가 세팅해주지 않았다면, 결과적으로 브라우저는 클라이언트의 요청이 정상적이라고 판단하지 않음
+      - 따라서 모든 해결방법에 앞서, 일단 먼저 우리는 서버 개발자와 빠르게 소통해봅시다.
+
+   2. 개발 환경 프록시 설정
+
+      - 개발 환경에 있어서 세팅을 잘 해놓은 상태이고, 서버의 세팅은 완벽한데 그럼에도 문제가 생긴다면, 개발 환경에서의 프록시 설정도 대안이 될 수 있음
+      - 이는 CRA, Vue-cli, Webpack-dev-server 등을 통해 세팅을 직접해줄 수 있지만 각자 방법이 다르기 때문에 [공식문서](https://developer.mozilla.org/ko/docs/Web/HTTP/CORS) 참고
+
+   3. 프록시 서버 구축
+      - CORS는 브라우저에서 판단하기 때문에 프록시 서버 구축을 통해 수정(모든 방법이 먹히지 않을 때)
+      - 단 직접 서버를 구축할 줄 알아야 하고 이때문에 시간적, 인적 자원이 소요됨
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[CORS 1](https://github.com/junh0328/prepare_frontend_interview/blob/main/cs.md#CORS)<br/>
+[CORS 짱 자세한 설명](https://velog.io/@young_pallete/CORS)<br/>
+[CORS 동작과정 참고](https://inpa.tistory.com/entry/WEB-%F0%9F%93%9A-CORS-%F0%9F%92%AF-%EC%A0%95%EB%A6%AC-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EB%B2%95-%F0%9F%91%8F)

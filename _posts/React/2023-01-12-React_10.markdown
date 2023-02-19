@@ -1,0 +1,98 @@
+---
+layout: post
+title: React | code splitting (+lazy loading)
+date: 2023-01-12 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **code splitting 이란?**
+> 2. **lazy loading**
+
+<br/>
+
+### 1. code splitting 이란?
+
+1. **bundling**
+
+   1. 번들(to 프론트엔드 개발자) : 사용자에게 웹 앱을 제공하기 위한 파일 묶음
+   2. 번들링(bundling) : 모듈화 했던 자바스크립트 파일들을 하나로 묶어줌
+      - 파일을 묶는 작업 그 자체를 말하며 파일은 의존적 관계에 있는 파일들(import, export)그 자체 혹은 내부적으로 포함되어 있는 모듈
+      - CRA, Next.js, Gatsby, ... 등은 웹팩 설정이 즉시 제공됨(이 외에는 번들링 설정 필요함)
+   3. 웹팩(Webpack) : 번들러로써 여러개의 파일을 하나의 파일로 묶어주는 개발 자동화 도구
+      - 웹 애플리케이션의 빠른 로딩 속도와 높은 성능을 위해 사용함
+      - 웹팩을 통해 같은 타입의 파일들을 묶어서 요청 및 응답을 받으면 네트워크 코스트가 획기적으로 줄어듬
+   4. 번들러(bundler) : HTML, CSS, JavaScript 등의 자원을 전부 각각의 모듈로 보고 이를 조합해 하나의 묶음으로 번들링(빌드)하는 도구
+   5. 빌드(build) : 개발이 완료된 앱을 배포하기 위해 하나의 폴더(directory)로 구성하여 준비하는 작업<br/><br/>
+
+2. **code-splitting**<br/>
+   :불필요한 코드, 중복되는 코드 없이 적절한 사이즈의 코드가 적절한 타이밍에 적절한 로딩시간으로 로드되도록 하는 것
+
+   - code-splitting의 방법
+
+     1. import()
+     2. React.lazy
+
+   \* `why?`
+
+   - spa의 특징으로 맨처음 로딩할 때, 페이지의 전체 리소스를 다운 받게 되는데 페이지의 전체 리소스를 다운받아야 처음 페이지가 렌더링되고 우리 눈에 페이지가 보이게 됨 → 불필요한 로딩 시간(지루한 로딩 시간)을 갖게 됨(lighthouse의 unuse javascript)
+
+### 2. lazy loading
+
+:로딩을 바로 하지 않고 지연시켰다가 나중에 로딩하게 해줌 <br/>(= 보이는 페이지만 로드한 후 다른 페이지에 접속했을 때 그 곳의 데이터를 로드해오는 작업을 해주는 것)
+
+1.  lazy loading 사용하는 이유
+
+    - 성능 향상
+      - 페이지를 훨씬 빨리 유저가 이용할 수 있도록 해줌
+    - 비용 감소
+      - 이미지가 보이지 않으면 로딩이 되지 않기 때문에 페이지 내에서 전달할 총 바이트 용량을 줄일 수 있음(전송비용 ↓)<br/><br/>
+
+2.  사용 방법
+
+    :동적 import로 나누고 싶은 컴포넌트를 넣어주면 되고, 꼭 Suspense를 반영해야함(없으면 suspense를 만들라는 에러가 뜸)
+
+    - Dynamic import : 화면이 위치할 때마다 import함
+      - import(...)표현식은 모듈을 읽고 내보내는 모든 것을 포함하는 객체를 담는 Promise를 반환
+    - lazy : 동적으로 필요할 때 import를 하여 실제로 로드되는 것으로 정해진 주소로 접속하면 로딩
+    - Suspense : 컴포넌트가 동적으로 로드되면 어느 순간 아무것도 로드되지 않는 순간에 에러를 도출하지 않고 Suspense에 들어오는 컴포넌트를 렌더링함
+
+      ```react
+      import React, { Suspense, lazy } from "react";
+      import { Switch, Route } from "react-router-dom";
+      import "./App.css";
+      const ListPage = lazy(() => import("./pages/ListPage/index"));
+      const ViewPage = lazy(() => import("./pages/ViewPage/index"));
+
+      function App() {
+        return (
+          <div className="App">
+            <Suspense fallback={<div>로딩중...</div>} />
+            <Switch>
+              <Route path="/" component={ListPage} exact />
+              <Route path="/view/:id" component={ViewPage} exact />
+            </Switch>
+          </div>
+        );
+      }
+
+      export default App;
+      ```
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[React 공식 페이지](https://reactjs.org/docs/code-splitting.html)<br/>
+[code splitting](https://kyounghwan01.github.io/blog/React/optimize-performance/code-splitting/#%E1%84%89%E1%85%A1%E1%84%8C%E1%85%A5%E1%86%AB-%E1%84%8B%E1%85%A1%E1%86%AF%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%A3%E1%84%92%E1%85%A1%E1%86%AF-%E1%84%8C%E1%85%B5%E1%84%89%E1%85%B5%E1%86%A8)<br/>
+[bundle 1](https://velog.io/@jejeje/%EB%B2%88%EB%93%A4%EB%A7%81%EA%B3%BC-%EC%9B%B9%ED%8C%A9)<br/>
+[bundle 2](https://velog.io/@starrypro/React-%EB%B2%88%EB%93%A4%EB%A7%81%EA%B3%BC-%EC%9B%B9%ED%8C%A9)<br/>
+[lazy loading](https://choijying21.tistory.com/63)<br/>
+[lazy loading 사용 이유](https://helloinyong.tistory.com/297)<br/>
+[lazy loading 시 참고하면 좋을 경험 블로그](https://tech.trenbe.com/2022/07/20/FE-Lazy-Loading-%EC%A0%81%EC%9A%A9%EA%B8%B0.html)<br/>

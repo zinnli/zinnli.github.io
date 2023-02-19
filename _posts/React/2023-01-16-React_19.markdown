@@ -1,0 +1,46 @@
+---
+layout: post
+title: React | React Client-Side Routing
+date: 2023-01-16 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. Routing in React SPA
+> 2. Client-Side Routing
+
+<br/>
+
+### 1. Routing in React SPA
+
+\* Routing: 사용자가 웹사이트의 다른 페이지로 이동하는 프로세스
+
+- 라우팅과 렌더링은 애플리케이션의 효율성과 속도에 미치는 영향을 추측하는데 도움이 됨
+- React SPA에서는 라우팅을 위해 React Router 라이브러리가 가장 많이 사용
+- 이를 사용한 라우팅은 클라이언트 측에서 일어나기 때문에 Client-Side Routing이라고 함
+- 클라이언트 측 라우팅은 페이지의 JavaScript에 의해서만 처리됨 → 사용자가 링크를 클릭할 때마다 URL 표시줄이 변경되고 페이지에 다른 뷰가 렌더링됨
+
+### 2. Client-Side Routing
+
+- React는 View에 중점을 둔 프론트엔드 라이브러리이기 때문에 React 자체만으로는 라우팅 기능을 사용할 수 없음
+- React Router를 통한 SPA 내 화면 전환 및 주소 값 변경은 서버가 아니라 클라이언트 측에서 일어나기 때문에 Client-Side Routing라고 함
+  <br/><br/>
+- **장점**
+  - 서버와 클라이언트 간의 데이터 트래픽이 감소(라우팅이 클라이언트 측에서 일어나게 되면 주소가 변경될때마다 매번 서버에서 페이지를 받아오지 않아도 되기 때문)
+  - 별도의 페이지가 렌더링되지 않으며, 현재 페이지는 새 화면을 보여주기 위해 새로 고침되지 않음 ← 자연스러운 페이지 이동과 사용자 경험을 제공하는 것이 가능
+- **단점**
+  - 색엔진 최적화(SEO)에 불리<br/> → 라우팅 시 콘텐츠 구성이 완료된 HTML을 서버에서 받아오는 것이 아니라 화면 구성에 필요한 모든 HTML을 클라이언트 측에서 처리하기 때문
+  - 보안에 취약함<br/> → 사용자 정보 저장이 기존 서버 기반 세션이 아닌 상대적으로 보안에 취약한 클라이언트 기반의 쿠키에서 이루어지기 때문
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[React Client-Side Routing](https://tturbo0824.tistory.com/131)<br/>
+[리액트 라우터같은 Client Side Routing 에 대해서 설명하세요.](https://mari-mo.tistory.com/217)<br/>

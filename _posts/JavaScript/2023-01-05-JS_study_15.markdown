@@ -1,0 +1,54 @@
+---
+layout: post
+title: Java Script | async await
+date: 2023-01-04 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# async await
+
+> #### 목차 <br/>
+>
+> async await 🌊
+>
+> 1. **async await란?**
+
+### async await
+
+#### 1. async await란?
+
+- 간단하고 가독성 좋게 `비동기 처리를 동기 처리처럼 동작하도록 구현`할 수 있는 async/await가 도입
+- 프로미스의 후속 처리 메서드 없이 마치 동기 처리처럼 프로미스가 처리 결과를 반환하도록 구현할 수 있음
+- `async` : function 키워드 앞에 배치 (async가 붙은 함수는 프라미스를 반환하고, 프라미스가 아닌 것은 프라미스로 감싸 반환함)
+- `await` : 비동기로 처리되는 부분 앞에 배치 (await 키워드를 만나면 프라미스가 처리(settled)될 때까지 기다림) ++ Promise의 .then()을 통한 동기 처리와 같은 역할
+  ```javascript
+  //async await
+  async function f() {
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("완료!"), 1000);
+    });
+    let result = await promise; // 원래라면, promise.then(()=>{})을 통해 비동기를 받아야하지만
+    // await 키워드로 직관적 이어졌다.
+    alert(result); // "완료!"
+  }
+  f();
+  ```
+
+#### 2. promise와 async await
+
+- `에러 핸들링`
+  - Promise 를 활용할 시에는 .catch() 문을 통해 에러 핸들링을 해야 하지만,
+  - async/await 은 try / catch를 통해 에러를 처리할 수 있다
+- `코드 가독성`
+  -Promise의 후속 처리 메서드인 .then() 의 hell의 가능성
+  -async/await 은 프로미스의 후속 처리 메서드 없이 마치 동기 처리처럼 프로미스가 처리 결과를 반환하도록 구현할 수 있기 때문에 코드 흐름을 이해 하기 쉬움
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[async await](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%EC%A0%9C%EB%84%88%EB%A0%88%EC%9D%B4%ED%84%B0%EC%99%80-async-await)<br/>
+[비동기 처리와 async](https://inpa.tistory.com/entry/JS-%F0%9F%93%9A-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%B2%98%EB%A6%AC-async-await)<br/>

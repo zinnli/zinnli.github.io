@@ -1,0 +1,90 @@
+---
+layout: post
+title: Java Script | 콜스택과 힙
+date: 2023-01-18 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 콜스택과 힙
+
+> #### 목차 <br/>
+>
+> 1. 콜스택과 힙 <br/>1) 콜스택은 원시타입 데이터가 저장되는 장소 <br/>2) 메모리 힙은 참조타입 데이터가 저장되는 장소
+>
+> 2. 원시타입과 참조 타입의 데이터 저장방식과 재할당 비교 <br/>1) 원사타입은 기존 콜스택의 값을 변경하지 않고 새로운 주소를 추가해 값을 저장함 <br/>2) 참조타입의 재할당의 경우 새로운 메모리를 확보하여 새로운 메모리 힙의 주소값을 저장함
+
+<br/>
+
+## 1. 콜스택과 힙
+
+\: 자바스크립트 엔진은 Memory Heap 과 Call Stack 으로 구성
+
+- 자바스크립트는 단일 스레드 (sigle thread) 프로그래밍 언어인데, 이 의미는 Call Stack이 하나 라는 뜻
+
+- **콜스택**(Call Stack)
+
+  - 원시 타입(숫자 등) 데이터가 저장됨
+  - 지역변수를 저장하는 공간
+  - 원시 타입 : Boolean, String, Number, null, undefined, Symbol
+  - 실행 콘텍스트(Execution Context)를 통해
+    1. 변수 식별자(이름) 저장,
+    2. 스코프 체인 및 this 관리,
+    3. 코드 실행 순서 관리 등을 수행
+
+- **메모리 힙**(Memory Heap)
+  - 참조 타입(객체 등) 데이터가 저장됨
+  - 메모리 누수를 방지하기 위해 js 엔진의 메모리 관리자가 항상 관리하는 공간
+  - 메모리 할당이 일어나는 곳
+  - 참조 타입 : Object, Array
+
+## 2. 원시타입과 참조 타입의 데이터 저장방식과 재할당 비교
+
+1. **데이터 저장 방식**<br/>
+   <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FwyILC%2Fbtrdon3nQV9%2FyWgZ1qDmEZDwzINEm5dkf1%2Fimg.png" alt="콜스택과 힙" width="700" /><br/>
+
+   - 원시타입: 변수 a에 값 10을 저장을 했을 경우 콜 스택의 변수값에 10이 그대로 저장됨
+   - 참조타입: 변수 b,c,d에 array, object를 저장할 경우 실제 값은 메모리 힙에 저장되고, 메모리의 힙의 주소가 콜 스택의 값에 저장이 됨<br/><br/>
+
+2. **변수 할당과 재할당**
+
+   1. **원시타입** 특징<br/>
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F4vFmN%2Fbtq128vr2np%2FfPicalzn5hKOmAtmmbstb0%2Fimg.png" alt="원시타입" height="250" />
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9uqHj%2Fbtq13AFhNgh%2FjanHYKlsIlOPOtuF65DOS1%2Fimg.png" alt="원시타입" height="250" />
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEpV4%2Fbtq127iXj4k%2FK6R4OyGRknUe7fGj2xnHeK%2Fimg.png" alt="원시타입" height="250" />
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FF2bMp%2Fbtq12luYilD%2FKkhqhskMGvlC2Tse9c6rOk%2Fimg.png" alt="원시타입" height="250" /><br/>
+
+      이미지 출처 : <https://curryyou.tistory.com/276> <br/><br/>
+
+      - 기존 콜스택의 값을 변경하지 않고 새로운 주소를 추가해 값을 저장하고 변수 b가 바라보게 함
+      - 메모리 영역의 값은 변경되지 않음
+      - 여기서 더이상 참조되지 않는 데이터는 가비지 컬렉터에 의해 적절한 시점에서 메모리가 해제됨<br/><br/>
+
+   2. **참조타입** 특징<br/>
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FczfA3r%2Fbtq11AsofeV%2FdDpZVC5zgThkkr9Y06knQK%2Fimg.png" alt="참조타입" height="250" />
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkE7Bh%2Fbtq11ztu4Pn%2FrCm9mPHKh1XCKaxVXDbemk%2Fimg.png" alt="참조타입" height="250" /><br/>
+
+      이미지 출처 : <https://curryyou.tistory.com/276> <br/><br/>
+
+      - 배열과 같은 참조타입 데이터는 메모리 힙에 저장됨
+      - 참조타입 데이터의 값을 변경하는 경우, 배열이 저장된 메모리 힙의 주소는 그대로임<br/><br/>
+
+      1. **let으로 선언된 참조타입의 재할당**<br/>
+         <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdvN7ow%2Fbtq10KvvJLJ%2FFGgTfds2Kfvg7Pw3NFbeOk%2Fimg.png" alt="참조타입" height="250" /><br/>
+
+         - 메모리 힙에 새로운 주소가 확보되고, 새로운 배열이 저장됨(새로운 메모리를 확보해서 새로운 메모리힙의 주소값을 저장함)<br/><br/>
+
+      2. **const로 선언된 참조타입의 재할당**<br/>
+         <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FxYB3r%2Fbtq1014Qzt5%2FC0HutuLOhyS2B42PtIt5fK%2Fimg.png" alt="참조타입" height="250" />
+
+         - const로 선언된 a에 다른 배열을 할당을 할당하면 에러발생
+
+   <br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[[React] 불변성이란? 불변성을 지켜야 하는 이유](https://narup.tistory.com/268)<br/>
+[[javascript] 콜스택/메모리힙 구조, 데이터 저장/참조 원리](https://charming-kyu.tistory.com/19)<br/>
+[[자바스크립트] 콜스택/메모리힙 구조, 데이터 저장/참조 원리](https://curryyou.tistory.com/276)

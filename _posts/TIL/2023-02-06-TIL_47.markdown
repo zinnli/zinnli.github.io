@@ -1,0 +1,81 @@
+---
+layout: post
+title: 230206_TIL | 사프 로그인, 회원가입 완료
+date: 2023-02-06 21:50:30 +0900
+categories: [I Learn, TIL]
+tag: [side project, react hook form, github]
+---
+
+<br/>
+
+## 오늘한 일
+
+- [알고리즘] 1문제 풀기(2문제 풀랬는데 하나는 이해가 잘 안되서 더 찾아봐야함)
+- [사이드 프로젝트] 로그인, 회원가입 1차 구현 완료
+- [원티드] 프리온보딩 챌린지 강의 듣기
+
+  <br/>
+
+## 내일 할 일
+
+- [사이드 프로젝트] react hook form 말고 일반적인 사용법으로 교체하기
+- [리액트를 다루는 기술] 4장까지 정독
+- [알고리즘] 3문제 풀기
+
+<br/>
+
+**오늘의 배운 점**
+<br/>
+
+- **react hook form 사용해봄**
+
+  - 확실히 코드가 간단하고 가독성(?)이 좋다
+  - 근데 라이브러리라.. 쓰면 편하긴 한데 손코딩 해보는게 나을 것 같아서 수정 예정
+  - 사용 방법 일부
+
+    ```react
+      //react hook form
+      const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+      } = useForm({ ¹mode: 'onChange' });
+
+    <input
+      type="email"
+      placeholder="사용하실 이메일을 입력하세요"
+      name="email"
+      ²{...register('email', {
+        required: true,
+        pattern: {
+          value: /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/,
+          message: '유효한 이메일을 입력해주세요.',
+        },
+      })}
+    />
+    ³<p className="error-message">{errors && <h1>{errors?.email?.message}</h1>}</p>
+    ```
+
+    1. useForm의 mode : onChange를 통해 react hook form이 실시간으로 유효성 검사를 하게 됨
+    2. register는 입력하는 값을 불러오기 위한 함수
+    3. pattern에 맞지 않는 경우 error 메세지가 뜨도록 설정 가능<br/><br/>
+
+- **react-query 사용 해보는 중**
+  - 이건 공부 좀 더 필요할 것 같음
+  - onSuccess에서 data, value 생각해보기
+    - data : response가 여기에 해당
+    - value : 입력값이 필요할 때 불러와서 사용했음<br/><br/>
+- **issue로 커밋하기**
+  - 처음에 issue와 브랜치만 잘 연결해두면 push 후 PR해주면 알아서 잘 들어갔음
+  - issue를 닫고싶지않으면 reopen 기능 사용
+
+<br/>
+
+<hr>
+<br/>
+react hook form + react-query + recoil 3연타.. <br/>많이 어렵고 헷갈렸지만 확실히 이전에 쓰던 방법들 보다는 훨씬 간편했다. 이해까지 확실하게 하고나면 유용할 것 같다는 생각이 들었다.<br/>알고리즘 푸는거 외에는 3일동안 이것만 한듯 ㅎ...<br/>
+그리고 react hook form이 이전에 스터디하면서 관심이 생겼던 터라 이번에 꼭 써보리라 다짐하고 사용했는데.. 사용방법은 확실히 쉬운데 현실적으로 나에게 도움이 될까라는 생각에는 "아니다"라는 생각이 조금 더 강하게 들어서, 다시 손코딩?으로 되돌리려고 생각 중이다. 코드 다 짠 건 아쉽지만 구현 1차적으로 끝난데에 의의를 두고..<br/>
+그리고 보니까 원티드에서 진행하는 프리온보딩 인턴쉽이 있어서 한 번 사전과제를 해볼까 싶다. 개인공부할 겸 해서..? 뭔가 하고싶은건 자꾸 늘어나는데 시간이 부족해서 너무 아쉽다. 무엇보다 취업도 빨리 하고싶고 희희..<br/>
+그래도 여러가지를 하기보단 하나라도 명확하게 하고 지나가는 쪽으로 생각을 좀 바꿔야할 것 같다.<br/>
+일단 꾸준히 알고리즘 매일 풀면서 javascript 공부를 주로 하는 게 맞을듯. 화이링~ <br/>

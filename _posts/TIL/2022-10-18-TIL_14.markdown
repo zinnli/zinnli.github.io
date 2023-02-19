@@ -1,0 +1,121 @@
+---
+layout: post
+title: 221018_TIL | toolkit 오류 해결(TypeError Cannot find..)
+date: 2022-10-18 21:50:30 +0900
+categories: [I Learn, TIL]
+---
+
+<br/>
+
+## 오늘한 일
+
+- [항해 99] redux API 통신 추가 기능 구현
+
+<br/>
+
+## 내일 할 일
+
+- [항해 99] 삭제 / 수정 기능 구현해보자!
+- [항해 99] 조원과 코드리뷰
+
+<br/>
+
+<br/>
+
+### **오늘의 오류!**
+
+<br/>
+
+![221018_오류코드1](https://user-images.githubusercontent.com/102575747/196492493-a3a0c98d-25c3-4937-b2cb-0e8eedcd82b2.PNG)
+
+<br/>
+
+TypeError: Cannot read properties of undefined (reading '')
+
+의 형식으로 오류코드가 떴다.
+
+<br/>
+이 부분은 해당 배열의 콘솔을 찍었을 때 올바르게 배열이 나오다가도 새로고침을 하고 나면 위의 오류와 빈 화면이 출력된다.
+<br/>
+<br/>
+오류코드로 예상한 부분 중의 하나는 아래와 같다.
+<br/>
+<br/>
+
+```react
+// 오류 코드
+    <p>{Hots[id].restaurant}</p>
+
+// 해결 코드
+    <p>{Hots[id]?.restaurant}</p>
+```
+
+<br/>
+위처럼 ?연산자를 사용해주니 올바르게 결과가 출력되었다.
+<br/>
+?연산자의 역할은 에러없이 undefined를 띄어주는 용도로 주로 사용된다고 한다.
+<br/>
+원인은 API 통신으로 가져온 데이터들은 비동기 통신으로 진행되지만 JS에서는 코드가 순서대로 실행되는데, 페이지가 먼저 띄어지는 시점에서 데이터를 불러오게 되어 오류가 생기는 것 같았다. 
+<br/>
+<br/>
+그러나..
+
+<br/>
+이전 내용을 db에서 삭제한 뒤 다른 페이지에 들어가보면 게시물의 순서가 뒤섞여 버리는 문제가 생겼다.
+
+<br/>
+이 부분같은 경우는 매니저님의 도움을 조금 받았는데..
+
+<br/>
+이전처럼 filter를 사용하여 수정하는 방법, thunk 함수를 하나 더 추가하여 진행하는 경우 두가지였다.
+filter는 이전에 해봤던 방식이라 오늘은 매니저님의 도움을 받아 thunk 추가하는 형식으로 진행했다.
+<br/>
+
+```react
+export const __detailHot = createAsyncThunk(
+     "hot/detailHot",
+     async (payload, thunkAPI) => {
+          //async 함수 맨앞 /await비동기처리되는구문
+          try {
+               const data = await axiosInstance.get(`/hot/${payload}`);
+               console.log(data);
+               return thunkAPI.fulfillWithValue(data.data);
+          } catch (error) {
+               return thunkAPI.rejectWithValue(error);
+
+
+//extraReducers : getdetail
+          [__detailHot.pending]: (state) => {
+               state.isLoading = true;
+          },
+          [__detailHot.fulfilled]: (state, action) => {
+               state.isLoading = false;
+               state.detail = action.payload;
+          },
+          [__detailHot.rejected]: (state, action) => {
+               state.isLoading = false;
+               state.error = action.payload;
+          },
+```
+
+<br/>
+위처럼 추가해주는 방식. GET으로 한 번 더 받아온다고 생각하면 좋을 것 같다.
+<br/>
+통신없이 임의로 삭제하면 이후에 꼬일 수도 있기때문에 명확하게 하려면 detail처럼 저렇게 get으로 한 번 더 가져오는 게 좋다고 한다.
+<br/>
+
+<br/>
+<hr>
+<br/>
+오늘도 무척 쉽지않은 하루.. 이해하고 넘어가고 싶은데 따라 작성하는데에 급급한 것 같다. 자신감이 자꾸 떨어져서 속상하다. 나름 열심히 하는 것 같은데 쉽지않군.. 
+<br/>TIL도 매일 올리고 싶은데 이제 슬슬 시간에 쫒겨서 코드를 짜다 보니까 TIL에 시간을 할애하는게 조금 어렵다.
+<br/>시간이 지날수록 오류 해결에 대한 내용 위주로 올리게 되지않을까 싶다.
+<br/>일단 열심히 해보고 생각하자!
+<br/>
+
+<br/>
+
+?연산자 관련 출처
+<br/>
+
+<https://velog.io/@op032/%EB%A0%8C%EB%8D%94%EB%A7%81-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%ED%95%B4%EA%B2%B0%ED%95%B4%EB%B3%B4%EC%9E%90-TypeError-Cannot-read-property-title-of-undefined>

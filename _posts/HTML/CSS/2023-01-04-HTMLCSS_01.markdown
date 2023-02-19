@@ -1,0 +1,107 @@
+---
+layout: post
+title: HTML | 반응형과 상대 길이 단위
+date: 2023-01-04 13:30:30 +0900
+categories: [HTML/CSS]
+---
+
+# 반응형과 상대 길이 단위
+
+> #### 목차 <br/>
+>
+> 1. **px, em, rem, vw, vh의 설명 (차이점)**
+> 2. **반응형 구현 방법 (사용하는 단위, 브레이크포인트)**
+
+<br/>
+
+1. **px, em, rem, vw, vh의 설명 (차이점)**
+
+   - `절대 길이 단위` : 다른 요소들의 크기와 상관없이 항상 동일한 값(ex. px)
+     - 주변의 어떤 요소와도 상관없이 고정된 값을 지님
+   - `상대 길이 단위`
+     - em과 rem : 글꼴의 크기를 나타낼 때 사용
+       - `em` : 상위 요소의 글꼴 크기에 비례함(중첩의 위험이 있음)
+       - `rem`(root em) : 뿌리가 되는 요소의 크기에 비례함
+     - vw와 vh : 뷰포트 크기의 1/100의 단위, 주로 반응형 웹을 제작할 때 사용
+       - `vw`(vertical width)
+       - `vh`(vertical height)<br/><br/>
+
+2. **반응형 구현 방법 (사용하는 단위, 브레이크포인트)**
+
+   1. 사용하는 단위
+      - px : 절대적인 값 유지시 사용
+      - % : 레이아웃 지정, flexbox, margin, padding 사용시 주로 사용(컨테이너 블록 기준)
+      - em, rem : font 크기
+      - vw, vh, vmin, vmax : 뷰포트 기준
+   2. 반응형 콘텐츠
+      - 이미지(img vs background-image)
+        - img : 사용자의 페이지에 대한 이해
+        - background-image : 디자인이나 배경 이미지
+      - 유동적 레이아웃
+        - flexbox
+        - grid
+   3. `브레이크 포인트` : 반응형 웹에서 사이즈가 변화하는 지점
+   4. `미디어 쿼리` : 사용자 미디어의 종류와 상태에 대해 질의를 던져 기기의 종류나 화면 크기에 맞춰 개별적인 css 코드가 적용될 수 있도록 하는 css3의 기능
+      <details>
+        <summary>일반적으로 사용하는 device별 미디어 쿼리 사이즈</summary>
+        <div markdown="1">
+
+      ```css
+      /* All Device */
+      @media screen {
+        /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+      }
+
+      /* Mobile Device */
+      @media all and (max-width: 768px) {
+        /*
+      768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다.
+      모든 해상도에서 이 코드가 실행됨.
+      미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다.
+      */
+      }
+
+      /* Tablet Device */
+      @media all and (min-width: 768px) {
+        /*
+      사용자 해상도가 768px 이상일 때 이 코드가 실행됨.
+      테블릿과 데스크톱의 공통 코드를 작성한다.
+      */
+      }
+
+      /* Tablet & Desktop Device */
+      @media all and (min-width: 768px) and (max-width: 1024px) {
+        /*
+      사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨.
+      아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다.
+      */
+      }
+
+      /* Desktop Device */
+      @media all and (min-width: 1025px) {
+        /*
+      사용자 해상도가 1025px 이상일 때 이 코드가 실행됨.
+      1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다.
+      */
+      }
+      ```
+
+      </div></details>
+
+      ```css
+      @media only|not 매체유형 and (표현식) { CSS스타일코드; }
+      <!-- ex -->
+      @media only|not screen and (min-width : 400px) { CSS스타일코드; }
+      ```
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[상대 길이단위](https://velog.io/@jhur98/CSS%EC%97%90%EC%84%9C-px-em-rem-vh-vw-%EB%8B%A8%EC%9C%84%EB%93%A4%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)<br/>
+[모바일 우선 반응형 웹 디자인](https://velog.io/@aiden/%EB%AA%A8%EB%B0%94%EC%9D%BC-%EC%9A%B0%EC%84%A0-%EB%B0%98%EC%9D%91%ED%98%95-%EC%9B%B9-%EB%94%94%EC%9E%90%EC%9D%B8)<br/>
+[미디어 쿼리](https://uxkm.io/publishing/css/03-cssMiddleclass/09-css_media_part2#gsc.tab=0)<br/>
+[적응형과 반응형](https://uxkm.io/publishing/css/03-cssMiddleclass/09-css_media_part2#gsc.tab=0)

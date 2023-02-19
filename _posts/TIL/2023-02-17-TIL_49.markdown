@@ -1,0 +1,50 @@
+---
+layout: post
+title: 230217_TIL | 깃블로그 댓글 만들기
+date: 2023-02-17 21:50:30 +0900
+categories: [I Learn, TIL]
+tag: [gitblog, github]
+---
+
+<br/>
+
+## 오늘한 일
+
+- 최종 면담
+- 깃블로그 댓글 만들기
+
+<br/>
+
+**오늘의 정리**
+<br/>
+
+- **깃블로그 댓글 만들기**
+  - utterances 연동해서 댓글만드는 방법 사용(원래 댓글있는 테마를 찾으려다가.. 일단 한번 적용해봤다.)
+  - 설명에 따르면 github에 이슈를 만듦으로써 댓글을 생성하는 형태 → 때문에 github와 연동하고 권한을 부여해야함
+  - [utterances](https://github.com/apps/utterances) 접속하여 configure
+  - 원하는 계정 선택 → 접근 가능한 저장소(repo)를 선택
+  - 원하는 내용들 선택한 뒤 코드 복사해서 \_layout의 post.html에 넣어주기
+    - 여기서 원하는 내용이란(나의 경우)
+      - Repository : 내 아이디(깃허브)와 깃블로그 레포 이름 작성
+      - Blog Post ↔️ Issue Mapping : Issue title contains page URL
+      - Enable Utterances 의 내용 copy하여 붙여넣기
+  - 완성<br/>
+    <img src="https://user-images.githubusercontent.com/102575747/219679686-a68d535f-1d18-4a98-b137-5cd6e9d40267.PNG" alt="댓글" width="900" />
+
+<br/>
+
+<hr>
+<br/>
+되겠나 싶어서 해봤는데 갑자기 되서 엄청 당황했다. 어라?x200<br/>
+이거 된 김에 검색하는 것까지 진행해보고 싶지만 지난 번에 실패한게 충격이 커서 아마 테마 자체를 바꿀까 싶은 생각x500..<br/>
+그리고 요즘에 작업이 안땡겨서 사프 로고 만들고 했는데 같이 하시는 프엔분은 만족하시는 것 같아서 이대로 진행할듯.<br/><br/>
+
+소소한 내 로고 자랑 (일러로 나비 만들었담 화질 깨지네 :( )..<br/>
+<img src="https://user-images.githubusercontent.com/102575747/219681740-d82033c8-d576-4809-90c4-156a6b026904.png" alt="댓글" width="300" /><br/>
+
+이번 주 중에 타입스크립트 다 듣는게 목표~!~! 화이팅하자~~~<br/>
+
+<br/><br/>
+
+출처<br/>
+\: [utterances](https://utteranc.es/?installation_id=34316821&setup_action=install)

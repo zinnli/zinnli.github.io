@@ -1,0 +1,96 @@
+---
+layout: post
+title: Study | bundle 사이즈 줄이는 방법
+date: 2023-01-15 12:30:30 +0900
+categories: [Study]
+---
+
+# bundle 사이즈 줄이는 방법
+
+> #### 목차
+>
+> 1. BundleAnalyzerPlugin
+> 2. bundle 사이즈 줄이는 방법
+
+<br/>
+
+## 1. [BundleAnalyzerPlugin](https://www.npmjs.com/package/webpack-bundle-analyzer)(webpack bundle analyzer)
+
+- 웹팩을 통해 번들링한 결과를 시각적으로 보여줘서 어떤파일이 용량이 큰지 중복되는 패키지는 없는지 체크하여 번들결과물을 최적화하는데 도움을 줌
+- CRA로 만든 앱은 webpack 관련 파일이 내부적으로 react-script로 래핑되어있기 때문에 webpack.config.js 파일을 사용할 수 없음 ← webpack-bundle-analyzer 사용
+
+### webpack-bundle-analyzer 사용하기
+
+1. 패키지 설치
+
+   ```bash
+   npm i webpack-bundle-analyzer
+   ```
+
+2. 스크립트 파일을 프로젝트 내부에 생성
+
+   ```react
+   // analyze.js
+   process.env.NODE_ENV = 'production';
+
+   const webpack = require('webpack');
+   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+   const webpackConfigProd = require('react-scripts/config/webpack.config')('production');
+
+   webpackConfigProd.plugins.push(new BundleAnalyzerPlugin());
+   webpackConfigProd.resolve.alias['react-dom'] = '@hot-loader/react-dom';
+
+   webpack(webpackConfigProd, (err, stats) => {
+   if (err || stats.hasErrors()) {
+       console.log(err);
+   }
+   });
+   ```
+
+3. node analyze.js 파일 실행
+
+## 2. bundle 사이즈 줄이는 방법
+
+\* 번들 사이즈 구성
+
+- stat : 최적화되기 전 코드의 번들 사이즈
+- parsed : minimize된 파일 사이즈다. 브라우저에서 파싱된 자바스크립트 코드의 사이즈
+- gzip : minimize와 gzip을 거친 후의 사이즈. 네트워크에서 로드될 때의 사이즈
+
+1. **react-icons 제거**<br/>
+   일반 svg파일로 변경가능한지 확인해보고 변경<br/><br/>
+
+2. **loader-specific 옵션**<br/>
+   minifier가 줄이지 못하는 코드를 줄여줄 수 있음
+
+   ```react
+   { loader: 'css-loader', options: { minimize: true } }
+   ```
+
+   <br/>
+
+3. **code splitting**<br/>
+
+   - webpack 설정
+   - React.lazy를 활용해 페이지를 분리
+     이와 함께 Suspense를 사용하면 컴포넌트를 불러오는 것을 필요한 시점까지 미뤘다가 성공적으로 불러왔을 때 렌더링 해줄 수 있음<br/><br/>
+
+4. **소스 코드 최소화하기** — minify, uglify<br/>
+
+   - minify : 불필요한 모든 공백과 개행을 지우고, 문법적으로 필수가 아닌 (자바스크립트에서는 세미콜론 등)을 제거하는 과정
+   - uglify : 변수 명과 함수 명을 변경해 해석을 어렵게 하는 과정(이름을 단축해 불필요한 데이터를 제거)<br/><br/>
+
+5. **CSS 압축**<br/>
+   CSS에도 해석에 불필요한 공백 제거
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[React 프로젝트의 번들 사이즈를 줄이는 방법](https://dev-r.tistory.com/27)<br/>
+[성능 최적화 1 — 번들 크기 줄이기 (React, Webpack, Minify, Code Splitting)](https://medium.com/@uk960214/%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94-1-%EB%B2%88%EB%93%A4-%ED%81%AC%EA%B8%B0-%EC%A4%84%EC%9D%B4%EA%B8%B0-react-webpack-minify-code-splitting-e2391e7e5f1b)<br/>
+[[React] webpack-bundle-analyzer를 이용한 번들 사이즈 최적화](https://satisfactoryplace.tistory.com/359)<br/>
+[CRA로 생성한 프로젝트에서 webpack bundle analyzer 사용하기](https://trend21c.tistory.com/2255)

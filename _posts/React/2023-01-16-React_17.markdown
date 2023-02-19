@@ -1,0 +1,50 @@
+---
+layout: post
+title: React | Portal
+date: 2023-01-16 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. Portal
+> 2. Portal 사용법
+> 3. Portal 사용 이유
+
+<br/>
+
+### 1. Portal
+
+\: 부모 컴포넌트의 DOM 계층 구조 바깥에 있는 DOM 노드로 자식을 랜더링하는 최고의 방법을 제공<br/>(컴포넌트들의 상하 관계, 구조를 가지고 있는 문서인 DOM 상에서, 자식 컴포넌트를 부모 컴포넌트 바깥에 있는 다른 컴포넌트에 전달할 수 있다는 뜻)
+
+- 사용 예시 : 모달, ...
+
+### 2. Portal 사용법
+
+```react
+ReactDOM.createPortal(child, container)
+```
+
+- 첫 번째 인자(child) : 엘리먼트, 문자열, 혹은 fragment와 같은 어떤 종류이든 렌더링할 수 있는 React 자식
+- 두 번째 인자(container) : DOM 엘리먼트(= Portal의 목적지)
+
+\* 하위 컴포넌트에서 발생하는 이벤트가 상위 컴포넌트에도 전달되는 이벤트 버블링의 상황<br/>
+→ 이 또한 DOM 트리 내 상위 컴포넌트가 아닌 React 트리의 Portal의 상위 컴포넌트로 잘 전달됨<br/><br/>
+
+### 3. Portal 사용 이유
+
+- 주로 Modal, Tooltip 같이 뭔가 튀어나오는 요소에 사용([예시!!!](https://jeonghwan-kim.github.io/2022/06/02/react-portal))
+- Portal을 이용해 DOM 트리 상에서 부모 컴포넌트의 영향을 받지 않도록, 최상위 계층으로 옮김으로써 의도치 않은 CSS 상의 방해를 받지 않을 수 있음(z-index나 overflow:hidden 같은 부모 컴포넌트의 CSS에 방해를 받아 제 역할이 힘들수도 있음)
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[Portals](https://ko.reactjs.org/docs/portals.html)<br/>
+[리액트 Portal](https://jeonghwan-kim.github.io/2022/06/02/react-portal)<br/>
+[React Fragments 사용이유 및 사용법](https://velog.io/@lilyoh/React-Fragments-%EC%82%AC%EC%9A%A9%EC%9D%B4%EC%9C%A0-%EB%B0%8F-%EC%82%AC%EC%9A%A9%EB%B2%95)<br/>

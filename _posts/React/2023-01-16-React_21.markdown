@@ -1,0 +1,56 @@
+---
+layout: post
+title: React | Form 이벤트 제어 방법
+date: 2023-01-16 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. 리액트에서 이벤트 다루는 방법
+> 2. 이벤트 처리(핸들링) 방법
+> 3. 이벤트의 기본동작 방지 처리
+
+<br/>
+
+### 1. 리액트에서 이벤트 다루는 방법
+
+\: React 엘리먼트에서 이벤트를 처리하는 방식은 DOM 엘리먼트에서 이벤트를 처리하는 방식과 매우 유사함
+
+- React의 이벤트는 소문자 대신 캐멀 케이스(camelCase)를 사용
+- JSX를 사용하여 문자열이 아닌 함수로 이벤트 핸들러를 전달
+
+### 2. 이벤트 처리(핸들링) 방법
+
+\: 이벤트를 실행할 코드를 그대로 전달하는 것이 아니라 아래 onClick처럼 함수의 형태로 객체를 전달함
+
+- 핸들링 함수 선언
+  - 별도의 핸들링 함수를 선언하고 Element에 넘겨주는 방법
+- 익명 함수로 처리
+  - 이벤트를 할당하는 부분에서 익명 함수를 작성하는 방법<br/><br/>
+- **많이 쓰이는 DOM 이벤트**
+  - onClick : Element를 클릭했을 때
+  - onChange : Element의 내용이 변경되었을 때(input의 텍스트를 변경, 파일 선택 등)
+  - onKeyDown, onKeyUp, onKeyPress : 키보드 입력이 일어났을 때
+  - onDoubleClick : Element를 더블 클릭했을 때
+  - onFocus : Element에 Focus 되었을 때
+  - onBlur : Element가 Focus를 잃었을 때
+  - onSubmit : Form Element에서 Submit 했을 때
+
+### 3. 이벤트의 기본동작 방지 처리
+
+- React에서는 false를 반환해도 기본 동작을 방지할 수 없음
+- 반드시 preventDefault를 명시적으로 호출해야함
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[이벤트 처리하기](https://ko.reactjs.org/docs/handling-events.html)<br/>
+[[React] 리액트에서 이벤트를 다루는 방법](https://lakelouise.tistory.com/261)<br/>
+[next.js 기본 개념 알아보기](https://kyounghwan01.github.io/blog/React/next/basic/#next-js%E1%84%80%E1%85%A1-%E1%84%8C%E1%85%A6%E1%84%80%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB-%E1%84%8C%E1%85%AE%E1%84%8B%E1%85%AD-%E1%84%80%E1%85%B5%E1%84%82%E1%85%B3%E1%86%BC)

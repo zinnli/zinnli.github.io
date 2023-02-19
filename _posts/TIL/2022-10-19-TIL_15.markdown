@@ -1,0 +1,84 @@
+---
+layout: post
+title: 221019_TIL | 오류 대잔치!
+date: 2022-10-19 21:50:30 +0900
+categories: [I Learn, TIL]
+---
+
+<br/>
+
+## 오늘한 일
+
+- [항해 99] 팀과제 삭제 기능 추가
+- [항해 99] 팀과제 게시물 내용 - 댓글 부분과 합치기
+- [항해 99] 게시물 오류 수정
+- [항해 99] 조원과 코드리뷰
+
+<br/>
+
+## 내일 할 일
+
+- [항해 99] 팀과제 수정 기능 구현
+- [항해 99] 팀과제 배포
+- [항해 99] 팀 과제 노션 정리
+
+<br/>
+
+<br/>
+
+### **오늘의 오류!**
+
+- `게시물을 추가`할 때 해당 Form 화면이 새로고침 될 때 마다 `id만 있는 빈 객체` 형태로 db에 저장되는 문제
+  <br/>
+
+```react
+     const onSubmitInfoHandler = (e) => {
+          e.preventDefault();
+          if (hot.title.trim() === "" || hot.content.trim() === "") {
+               alert("내용을 넣어주세요");
+               return;
+          }
+          dispatch(__postHot({ ...hot }));
+          setHot(initialState);
+          window.location.replace("/");
+     };
+
+     //이부분 삭제
+     // useEffect(() => {
+     //      dispatch(__postHot());
+     // }, [dispatch]);
+```
+
+<br/>
+위 문제는 하단의 `useEffect 부분을 주석처리`하면서 해결됐다! 처음에 보고 따라한 자료에 이런 식으로 코드가 짜있다보니 무지성으로 따라하다보니 생긴 오류인 것 같았다. 
+<br/>쉽게 말하면 입력 브라우저가 열릴 때마다 post가 실행되는 것을 useEffect로 추가했는데 해당 부분을 막아줬다고 보면 될듯!
+<br/>
+
+- `Delete 부분 뒤로가기` 했을 때 수정
+  <br/>
+
+```react
+ const onDelHandler = () => {
+          dispatch(__deleteHot(Hots.id));
+          //console.log(Hots.id);
+          navigate("/", { replace: true });
+     };
+```
+
+<br/>
+replace:true로 뒤로가기 했을 때 한 번 막아준다. 그래서 404 오류 페이지가 뜨는 것을 막아줌!
+
+<br/>
+
+<br/>
+<hr>
+<br/>
+이 외에도 오류가 많고, 많이 고쳤는데 너무 많아서.. 일단 패스😂
+<br/>
+
+수정버튼에 대한 힌트는 얻었는데 구현하는게 너무 쉽지않다..
+<br/>
+매니저님한테 들을 때마다 새로운 사실들을 많이 얻게되는데 당장 모레부터는 안계신데.. 이거 정말 큰일이다<br/>
+<br/>
+
+오류 코드 수정 출처 - 기술 매니저님 머리속...........

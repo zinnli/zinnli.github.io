@@ -1,0 +1,83 @@
+---
+layout: post
+title: Java Script | 메모리 관리
+date: 2023-01-18 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 메모리 관리
+
+> #### 목차 <br/>
+>
+> 1. 메모리 생존주기
+> 2. 가비지 콜렉션
+
+<br/>
+
+## 1. 메모리 생존주기
+
+- 변수에 값을 재할당할 때 기존에 사용하고 있는 메모리 공간을 지우고 재할당하는 게 아니라 새로운 메모리 공간을 확보해서 저장
+- 기존의 메모리 공간 생존 주기
+
+  1. **메모리 할당(allocate)**<br/>
+     생성한 객체(object)에 필요한 메모리를 할당함
+  2. **메모리 사용(use)**<br/>
+     변수에서 읽거나 쓰는 것
+  3. **메모리 해제(release)**<br/>
+
+  → Javascript는 Managed 언어이기 때문에 1번과 3번을 알아서 수행
+
+\* managed 언어 : 메모리의 할당 및 해제를 위한 메모리 관리 기능을 언어 차원에서 담당하고 개발자의 직접적인 메모리 제어를 허용하지 않음 → 개발자가 명시적으로 메모리를 할당하고 해제할 수 없음
+
+- 개발자의 역량에 의존하는 부분이 상대적으로 작아져 어느 정도 일정한 생산성을 확보할 수 있다는 장점
+- 성능 면에서 어느 정도의 손실은 감수할 수 밖에 없음
+
+## 2. Garbage Collection
+
+\: 할당된 메모리가 더 이상 필요 없을 것으로 추정되어 회수하는 것
+
+- 가비지 컬렉터가 자바스크립트 엔진에서 끊임없이 동작하며 객체를 모니터링함
+- 가비지 콜렉션 알고리즘의 핵심 개념은 참조
+
+1. Reference Counting(과거방식)
+
+   <img src="https://velog.velcdn.com/images/kdh10806/post/81936033-1817-46fe-a773-c06451a8ca94/image.png" alt="가비지" width="600" />
+
+   - 객체에 참조가 하나도 없는 경우 가비지 컬렉션이 되는 방식
+   - 더 이상 필요없는 오브젝트(=어떤 다른 오브젝트도 참조하지 않는 오브젝트)
+
+   \* 여기서의 오브젝트 = 가비지
+
+   ```javascript
+   var x = {
+     a: {
+       b: 1,
+     },
+   };
+   var y = x.a;
+   var z = a.b;
+
+   y = null; // x는 가비지 컬렉션이 되지만 a는 여전히 참조되고 있다.
+   z = 2; // a 객체와 b 프로퍼티 모두 가비지 컬렉션이 된다.
+   ```
+
+2. Mark and Sweep(최신 브라우저)
+   \: 참조가 아닌 도달할 수 있는지를 기준으로 메모리를 정리
+
+   - 닿을 수 없는 오브젝트
+   - root(전역 변수와 현재 함수의 변수)에서 접근할 수 있는 모든 객체를 mark(기억)하고, mark되지 않은 모든 객체는 가비지 컬렉션이 됨
+   - 스코프를 벗어난 순환 참조도 결국 접근할 수 없는 객체기 때문에 가비지 컬렉션이 됨
+   - 현재 대부분의 브라우저가 가비지 콜렉션에서 Mark and Sweep 알고리즘을 사용
+
+   <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdB8BOQ%2FbtrFjW4ldFF%2FGUneFUJ5kc8lXqmbS5Drl0%2Fimg.png" alt="Mark and Sweep" width="600" />
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[자바스크립트의 메모리 관리](https://developer.mozilla.org/ko/docs/Web/JavaScript/Memory_Management)<br/>
+[[Javascript] 메모리 관리](https://velog.io/@kdh10806/Javascript-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EA%B4%80%EB%A6%AC)<br/>
+[[JavaScript] 메모리 관리, GC(가비지 컬렉션)](https://koguri.tistory.com/78)

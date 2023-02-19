@@ -1,0 +1,97 @@
+---
+layout: post
+title: React | React
+date: 2022-12-20 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. **React란?** <br/>Javascript 기반 라이브러리
+> 2. **React를 사용하는 이유** 🌊🌊 <br/> 1. SPA의 사용 <br/> 2. 컴포넌트 기반의 화면 구성 <br/> 3. Virtual DOM으로 인한 충분히 빠른 속도
+
+<br/><br/>
+
+### 1. React란?<br/>
+
+1.  **React란?**
+
+    - Facebook에서 주도하여 개발한 웹 어플리케이션의 UI를 효과적으로 구축하기 위해 사용하는 `Javascript 기반 라이브러리`
+    - React 자체는 Framework라 부르는 기준의 라우팅, 상태관리 기본 제공에 충족하지는 못하나, 생태계 자체는 framework라고 할 수 있음
+
+    \* framework 와 library
+
+    - library : 소프트웨어를 개발할 때 컴퓨터 프로그램이 사용하는 비휘발성 자원의 모임. 즉 특정 기능을 모와둔 코드, 함수들의 집합이며 코드 작성 시 활용 가능한 도구들을 의미 ex) npm 모듈, jQuery, ... <br/>(어플리케이션의 흐름을 사용자가 직접 제어)
+    - framework : 원하는 기능 구현에 집중하여 개발할 수 있도록 일정한 형태와 필요한 기능을 갖추고 있는 골격, 뼈대를 의미 ex) Spring, Vue.js, express.js, ...<br/>(코드를 연결할 수 있는 위치를 제공하고 필요에 따라 사용자가 연결한 코드를 호출하는 제어 흐름 권한을 가지고 있음)<br/><br/>
+
+2.  **React의 원리**
+
+    - 실제로 DOM을 제어하지 않고 중간에 `virtual DOM`을 두어 virtual DOM이 변경될 때, 실제 DOM을 변경하도록 설계되어있으며 이작업을 Reconciliation이라고 함
+    - virtual DOM을 갱신하는 방법
+      - setState()메소드를 호출하는 방법
+      - redux의 경우처럼 store가 변하면 다시 최상위 컴포넌트의 render()함수를 호출해서 갱신하는 방법
+    - `단방향 데이터 흐름`(Flux)
+
+       <details>
+       <summary>Flux와 MVC 패턴</summary>
+       <div markdown="1">
+
+      - **MVC 패턴** : 양방향 데이터 흐름<br/>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FAqWj9%2FbtqJXVvt5E9%2FjS3EFgQnM1lwy9GiX9hPX1%2Fimg.png" alt="MVC" height="200" /><br/>
+        - Model View Controller
+          - `Controller` : Model의 데이터를 조회하거나 업데이트하는 역할
+          - `View` : Model이 업데이트 되면 View는 화면에 반영(View가 Model을 업데이트할 수 있음)
+          - `Model` : Model에 상태변화가 있을 때, View와 Model 사이에 무수히 많은 양방향 통신이 발생함
+        - 애플리케이션의 규모가 커지면 커질수록 애플리케이션의 구조가 복잡해짐
+      - **Flux 패턴** : 단방향 데이터 흐름 ex)Redux<br/>
+        <img src="https://github.com/junh0328/prepare_frontend_interview/raw/main/images/flux1.PNG" alt="flux" height="300" /><br/>
+        - 항상 Dispatcher 에서 Store로, Store에서 View로 View에서는 Action 을 통해 Dispatcher 로 데이터가 흐름
+        - `Dispatcher` : 데이터 흐름을 관리하는 허브 역할, 동기적 (Action 을 보고 등록된 콜백 함수를 실행하여 Store에 데이터를 전달)
+        - `Store` : 모든 상태 변경은 Store에 의해 결정 (무조건 디스패처를 통해 액션을 보내야만, 데이터 변경이 가능)
+        - `View` : 화면에 나타내는 것 뿐만 아니라, 자식 View 로 데이터를 흘려 보내는 뷰 컨트롤러의 역할도 함께 함
+          - 뷰는 스토어의 변경 사항을 감지할 수 있는 이벤트 리스너를 스토어에 등록하고, 스토어에 변경 사항이 발생하면 이를 뷰에 반영함
+        - `Action` : 데이터가 담겨 전달되는 객체
+
+       </div></details>
+
+### 2. React를 사용하는 이유<br/>
+
+1. **Single Page Application(SPA)**
+
+   - 새로고침 없이 부드럽게 사용하고 싶을 때
+   - JS로도 사용 가능하지만 JS로 코드를 짰을 때 코드가 길어지고 복잡해짐<br/><br/>
+
+2. **컴포넌트 기반의 화면구성**
+
+   - 리액트는 화면의 한 부분을 컴포넌트 단위로 나눌 수 있으며 독립적으로 관리 가능
+   - 대규모 웹 애플리케이션에서 컴포넌트는 역할과 기능에 따라 따로 관리하기 용이함
+   - 반복되는 부분을 대체할 수 있게 해주어서 코드 `재사용성`을 높여줌
+   - 컴포넌트 기반으로 화면을 구성할 경우 컴포넌트를 쌓아서 빠르고 효율적으로 화면을 구성할 수 있음<br/><br/>
+
+3. **Virtual DOM으로 인한 충분히 빠른 속도**
+
+   - 기존의 DOM은 매번 DOM 전체를 직접 접근하여 변화를 주면 HTML, CSS, JS 파일 전체를 다시 리렌더링하기 때문에 느려질 수 밖에 없음<br/> -> 리액트는 가상 DOM을 이용해서 실제 DOM을 조작하는 횟수를 줄여 성능을 빠르게 개선함
+   - 애플리케이션의 규모가 크고 데이터의 변경이 많을수록 더 큰 이점이 됨<br/><br/>
+
+4. **같은 문법으로 앱개발 가능**
+
+\* **단점**
+
+1. IE8 이하 버전은 지원하지 않음
+2. view 이외의 기능은 직접 구현하거나 라이브러리를 사용해서 구현해야 하기에 javascript 배경지식이 필수 선행되어야 함
+3. 로딩시간이 김
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[React를 사용하는 이유 + 영상](https://wooder2050.medium.com/%EB%A6%AC%EC%95%A1%ED%8A%B8-react-%EB%8A%94-%EC%99%9C-%EC%93%B0%EB%8A%94-%EA%B1%B4%EB%8D%B0-8e0da30f60df)<br/>
+[React 원리](https://www.knoticle.app/viewer/4/9)<br/>
+[React 원리와 장단점](https://velog.io/@jeromecheon/React%EB%9E%80-%ED%8A%B9%EC%A7%95%EA%B3%BC-%EC%9E%A5%EB%8B%A8%EC%A0%90-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)<br/>
+[flux와 MVC](https://velog.io/@aeong98/%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91-Redux-Flux-MVC-%ED%8C%A8%ED%84%B4-%EB%B9%84%EA%B5%90)<br/>
+[React에서 Redux가 왜 필요할까?](https://devlog-h.tistory.com/26)

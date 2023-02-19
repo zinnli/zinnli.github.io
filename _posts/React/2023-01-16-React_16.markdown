@@ -1,0 +1,98 @@
+---
+layout: post
+title: React | React.Fragment
+date: 2023-01-16 12:00:30 +0900
+categories: [React]
+---
+
+# React
+
+> #### 목차 <br/>
+>
+> 1. React.Fragment
+> 2. Fragment 사용 이유
+
+<br/>
+
+### 1. React.Fragment
+
+- Fragment는 React v16에 추가된 기능
+- 컴포넌트가 여러 엘리먼트를 return 할때 jsx규칙상 하나의 태그로 묶어서 return 해줘야 하는데, 이때 fragment를 사용하면 dom에 별도의 노드를 추가하지 않고 여러자식을 그룹화 할 수 있다고 함<br/>(DOM에 의미 없는 div를 사용하지 않고 여러 하위 노드들을 그룹화할 수 있음)
+
+### 2. Fragment 사용 이유
+
+<details>
+<summary>오류! 코드!</summary>
+<div markdown="1">
+
+```react
+//오류!! → "You can't return more than one "root" JSX element."
+return (
+    <h2>Hello world!</h2>
+    <p>This is forntend</p>
+);
+```
+
+자바스크립트에서는 두 개 이상을 리턴할 수 없기 때문에 요소들을 하나로 감싸주는 형태로 사용해야함
+
+</div></details>
+
+```react
+// 의미없는 div 사용
+return (
+    <div>
+       <h2>Hello world!</h2>
+       <p>This is forntend</p>
+    </div>
+);
+
+//React.Fragment로 묶어주기
+return (
+    <React.Fragment>
+       <h2>Hello world!</h2>
+       <p>This is forntend</p>
+    </React.Fragment>
+);
+
+//React.Fragment로 묶기(빈태그 형태)
+return (
+    <>
+   <h2>Hello world!</h2>
+   <p>This is forntend</p>
+    </>
+);
+```
+
+- 위의 예시처럼 <></>, <React.Fragment> 사용하는 것을 지향(의미없는 div 사용은 자제)
+
+> 하지만<br/>
+> <></>형태는 key나 속성을 지원하지 않기때문에 <React.Fragment> 사용을 지향하기
+
+#### key가 있는 Fragment
+
+```react
+function Glossary(props) {
+return (
+    <dl>
+    {props.items.map(item => (
+        // Without the `key`, React will fire a key warning
+        <React.Fragment key={item.id}>
+        <dt>{item.term}</dt>
+        <dd>{item.description}</dd>
+        </React.Fragment>
+    ))}
+    </dl>
+);
+}
+```
+
+<br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[Fragments](https://reactjs-kr.firebaseapp.com/docs/fragments.html)<br/>
+[[React] Fragment에 대해 알아보자!](https://chiefcoder.tistory.com/33)<br/>
+[React Fragments 사용이유 및 사용법](https://velog.io/@lilyoh/React-Fragments-%EC%82%AC%EC%9A%A9%EC%9D%B4%EC%9C%A0-%EB%B0%8F-%EC%82%AC%EC%9A%A9%EB%B2%95)<br/>

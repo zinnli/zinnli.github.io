@@ -1,0 +1,85 @@
+---
+layout: post
+title: 230215_Algorithm | 최소직사각형(Lv.1)
+date: 2023-02-15 12:30:30 +0900
+categories: [Algorithm, Lv.1]
+---
+
+# 최소직사각형 (Lv.1)
+
+<br/>
+
+### 문제 설명
+
+- 모든 명함의 가로 길이와 세로 길이를 나타내는 2차원 배열 sizes가 매개변수
+- 모든 명함을 수납할 수 있는 가장 작은 지갑을 만들 때, 지갑의 크기를 return 하도록 solution 함수
+
+<br/>
+
+### 제한사항
+
+- sizes의 길이는 1 이상 10,000 이하
+  - sizes의 원소는 [w, h] 형식
+  - w는 명함의 가로 길이
+  - h는 명함의 세로 길이
+  - w와 h는 1 이상 1,000 이하인 자연수
+
+<br/>
+
+### 입출력 예시
+
+| sizes                                         | result |
+| --------------------------------------------- | ------ |
+| [[60, 50], [30, 70], [60, 30], [80, 40]]      | 4000   |
+| [[10, 7], [12, 3], [8, 15], [14, 7], [5, 15]] | 120    |
+| [[14, 4], [19, 6], [6, 16], [18, 7], [7, 11]] | 133    |
+
+<br/>
+
+```javascript
+function solution(sizes) {
+  var answer = 0;
+  let maxWid = [];
+  let maxHei = [];
+
+  for (let i = 0; i < sizes.length; i++) {
+    if (sizes[i][0] > sizes[i][1]) {
+      sizes[i].reverse();
+    }
+    maxWid.push(sizes[i][0]);
+    maxHei.push(sizes[i][1]);
+    answer = Math.max(...maxWid) * Math.max(...maxHei);
+  }
+  return answer;
+}
+
+//다른 사람 풀이
+function solution(sizes) {
+  let w = 0;
+  let h = 0;
+  sizes.forEach((s) => {
+    const [a, b] = s.sort((a, b) => a - b);
+    if (a > h) h = a;
+    if (b > w) w = b;
+  });
+
+  return w * h;
+}
+```
+
+<br/>
+
+---
+
+<br/>
+
+### 내 풀이
+
+1. 배열 안에서 작은 수가 앞, 큰 수가 뒤로가도록 설정(차곡차곡 쌓여야하기 때문에)
+2. 작은 수로만 이루어진 maxWid 배열과 큰 수로만 이루어진 maxHei 배열을 만듦
+3. 각 배열에서 제일 큰 숫자들끼리 곱한 값 = answer
+
+### 다른 사람 풀이
+
+1. sizes의 배열의 [a,b]형태의 배열을 오름차순으로 정렬
+2. a와 b 가 제일 큰 형태를 if문을 통해 도출(반복하면서 큰 수를 찾아냄)

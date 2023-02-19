@@ -1,0 +1,79 @@
+---
+layout: post
+title: Java Script | 불변성
+date: 2023-01-18 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 불변성
+
+> #### 목차 <br/>
+>
+> 1. 불변성
+> 2. 불변성을 유지하는 방법
+
+<br/>
+
+## 1. 불변성
+
+\: 자바스크립트에서 불변성이란 객체가 생성된 이후 그 상태를 변경할 수 없는 것을 의미
+
+\*\* 상태를 변경할 수 있는 것과 값을 재할당하는 것은 다름!
+
+- immutable vs mutable[챔고](https://zinnli.github.io/javascript/2023/01/17/JS_study_22.html)
+
+  - **immutable**(불변성)
+    - 원시타입이 여기에 해당하며 원시타입은 불변함
+    - 메모리 영역 안에서 변경이 불가능하며 변수에 할당할 때 완전히 새로운 값이 만들어져 재할당됨
+  - **mutable**(변할 수 있음)
+    - immutable type을 제외하고 모든 값은 객체(Object)타입이며 변할 수 있는 값
+    - 객체는 새로운 값이 만들어지지않고 직접적으로 변경 가능함
+  - **불변성을 지켜야하는 이유**
+    → 불변성을 지키지 않는다면 위의 예시처럼 사용할 데이터가 어디서 어떻게 바뀌어가는지 흐름을 쫓아가기 어렵고, 이는 곧 예기치 못한 side effects나 버그로 이어짐
+    → 불변성을 지키면서 데이터를 변화시킨다면, 예상가능하고 신뢰할 수 있는 코드가 될 수 있음
+
+## 2. 불변성을 유지하는 방법
+
+1. **스프레드 문법 사용** : 스프레드 문법을 사용하여 객체를 복사하면 객체가 불변성을 유지할 수 있음<br/>(하지만 스프레드 문법에서는 1레벨 깊이에서만 유효하게 동작함 → 객체 내부의 객체의 불변성까지는 유지할수 없음)<br/>레벨2 객체까지 불변성을 유지해주려면 아래와 같이 별도의 변수에 값을 재할당하고 넣어주는 번거러운 과정을 거쳐야 함<br/><br/>
+2. **immer** : immer라이브러리를 사용하면 간단하게 불변성을 유지할 수 있음
+
+   - 이용 방법
+     ```javascript
+     //설치
+     npm i immer
+     //import
+     import produce from 'immer'
+     ```
+     <br/>
+   - 사용예시
+
+     ```javascript
+     //사용방법
+     import produce from "immer";
+     const coke = {
+       name: "coca",
+       fake: {
+         name: "pepsi",
+       },
+     };
+
+     const new_coke = produce(coke, (draft) => {
+       draft.name = "pepsi";
+       draft.fake.name = "coca";
+     });
+     console.log(coke.name, coke.fake.name);
+     console.log(new_coke.name, new_coke.fake.name);
+
+     //"coca" "pepsi"
+     //"pepsi" "coca"
+     ```
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[[JS] 불변성(Immutability)](https://velog.io/@co_mong/JS-%EB%B6%88%EB%B3%80%EC%84%B1Immutability)<br/>
+[자바스크립트에서 불변성(Immutability)이란](https://sustainable-dev.tistory.com/156)<br/>

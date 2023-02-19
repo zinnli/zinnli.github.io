@@ -1,0 +1,55 @@
+---
+layout: post
+title: Study | 자료구조 스택과 큐
+date: 2023-01-12 12:30:30 +0900
+categories: [Study]
+---
+
+# 자료구조 스택과 큐
+
+> #### 목차
+>
+> 1. 스택
+> 2. 큐
+
+<br/>
+
+### 1. 스택(Stack)
+
+: 차곡차곡 쌓아 올린 형태의 자료구조
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fby1qnT%2FbtqBE1v1UlX%2FzbnXdYnGAXhMYbcDCca6WK%2Fimg.png" alt="LIFO" width="300"/>
+
+- 같은 구조와 크기의 자료를 정해진 방향으로만 쌓을 수 있음
+- top으로 정한 곳을 통해서만 접근할 수 있음(삽입/삭제 모두)
+- 가장 마지막에 삽입된 자료가 가장 먼저 삭제됨
+- 스택에서 top을 통해 삽입하는 연산을 'push' <br/> top을 통한 삭제하는 연산을 'pop'이라고 함
+- 활용 예시 : 뒤로가기(웹 브라우저 방문기록), 실행 취소, ...
+
+→ **후입선출(LIFO, Last-In-First-Out) 구조**
+
+\* 스택이 넘치는 경우 = stack overflow
+
+### 2. 큐(Queue)
+
+: 가장 먼저 넣은 데이터를 가장 먼저 꺼낼 수 있는 구조
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZce3U%2FbtqBDaOfGU5%2FRc2kR3Puqi3QiQa3o6CPL1%2Fimg.png" alt="FIFO" width="300"/>
+
+- 접근방법은 가장 첫 원소와 끝 원소로만 가능
+- 큐는 한쪽 끝에서 삽입 작업이, 다른 쪽 끝에서 삭제 작업이 양쪽으로 이루어짐
+- 삽입연산만 이루어지는 곳을 리어(rear), 삭제연산만 수행되는 곳을 프론트(front)
+- 큐의 리어에서 이루어지는 삽입연산을 인큐(enQueue - JS에서 push), 프론트에서 이루어지는 삭제연산을 디큐(dnQueue - JS에서 shift)
+- 활용 예시 : 은행업무, 캐시(Cash) 구현, 콜센터 고객 대기시간, ...
+
+→ **선입선출(FIFO, First in first out) 방식의 구조**
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[큐와 스택 1](https://github.com/junh0328/prepare_frontend_interview/blob/main/data_structure.md#%ED%81%90)<br/>
+[큐와 스택 2](https://devuna.tistory.com/22)<br/>

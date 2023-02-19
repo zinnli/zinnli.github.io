@@ -1,0 +1,121 @@
+---
+layout: post
+title: 221009_WIL | State, Props, Rerendering, DOM, Serverless
+date: 2022-10-09 14:30:30 +0900
+categories: [I Learn, WIL]
+---
+
+# 221009_WIL
+
+<br/>
+
+## **오늘한 일**
+
+- WIL 작성(state, props, rerendering, DOM, serverless)
+- redux 정리하기
+
+<br/>
+
+## **이번주 한 일**
+
+- redux 공부시작
+- TodoList 만들기 과제 완성/코드리뷰 정리
+
+<br/>
+
+## **이번주 공부한 메인 키워드(어려웠던 부분 위주)**
+
+- redux(정말 어렵다...)
+
+<br/>
+
+<br/>
+오늘 항해 99 정리사항들!
+<br/>
+
+---
+
+## -state, props, rerendering-
+
+### **State**
+
+데이터는 `변수/state` 에 보관<br/>
+
+#### 리액트의 데이터 저장공간 state 만들기
+
+1. {useState} 상단에 첨부
+2. useState(데이터)
+   let [a,b] = useState('');
+
+a = state 데이터<br/>
+b = state 데이터 변경 함수(대체할 데이터)
+
+<br/>
+
+### **Props**
+
+부모 컴포넌트로부터 `받아온 데이터`(컴포넌트 간의 정보 교류)
+
+#### props 사용 방법
+
+```react
+function Mother() {
+     const name = "현징";
+     return <Child myName={name} />;
+}
+
+function Child(props) {
+     return <div>{props.myName}</div>; // 위 Mother의 props를 props.전달명 형식으로 받음
+
+방법 2) // 주로 2번 방식을 사용
+function Todo({ name }) {
+     return <div>{name}</div>;
+}
+}
+```
+
+<br/>
+
+위처럼 부모 -> 자식 컴포넌트에게 `정보 전달 시 props`를 사용함<br/>
+
+<br/>
+
+## **Re-rendering** <span style="font-size: 13px"> (리렌더링) </span>
+
+- `rendering(렌더링)` : 사용자 화면에 내용을 보여주는 것
+
+- `rerendering(리렌더링)` : 화면에 뷰를 다시 새롭게 보여줌
+
+  - 컴포넌트가 업데이트되는 과정에서 리렌더링이 발생 <br/> -> reder함수로 인해 새로운 요소로 갈아끼워짐 <br/> -> 이전에 생성한 컴포넌트 정보와 다시 렌더링한 정보를 비교해 최소한의 연산으로 DOM트리 업데이트 <br/> -> 새로운 요소로 갈아끼워짐
+
+<br/>
+
+## **DOM**(Document Object Model)
+
+: 문서 객체 모델
+
+HTML, XML 문서의 프로그래밍 인터페이스
+
+<br/>
+
+### Virtual DOM (가상 DOM)
+
+: 실제 DOM에서 처리하는 방식이 아닌 Virtual DOM과 메모리에서 미리 처리하고 저장한 후 실제 DOM과 동기화
+(DOM의 단점을 해결하기 위해 나타남)
+
+<br/>
+
+## **Serverless** <span style="font-size: 13px">(서버리스)</span>
+
+: 특정 작업을 수행하기 위해 컴퓨터나 가상머신에 서버를 설정하고 이를 통해 처리하는 것이 아님(= 직역은 '서버가 없다'라는 뜻이지만 `실제로 서버가 없는 것이 아님`)
+<br/>
+
+<hr>
+<br/>
+자세한 정리는 아래의 링크!
+
+<br/>
+
+[state,props,rerendering 자세한 정리 -> Click!](https://zinnli.github.io/react/2022/10/03/React-base_01.html)
+
+[DOM과 severless 자세한 정리 -> Click!](https://zinnli.github.io/react/2022/10/09/React-base_02.html)

@@ -1,0 +1,106 @@
+---
+layout: post
+title: React | React Redux
+date: 2022-12-22 12:00:30 +0900
+categories: [React]
+---
+
+# React - Redux
+
+> #### 목차 <br/>
+>
+> 1. 리덕스에 대해서 아나요? 🌊🌊 <br/>JavaScript(자바스트립트) 상태관리 라이브러리
+> 2. 리덕스의 기본 원칙은? 🌊🌊 <br/> 1. 앱 전체상태는 단일 스토어로 관리 <br/> 2. 상태(state)는 읽기 전용 <br/> 3. 순수 함수에 의해서 변경되어야 함<br/>
+> 3. Redux의 사용이유
+> 4. Redux 장단점
+> 5. contextAPI 와 Redux 비교
+
+<br/><br/>
+
+## 1. 리덕스에 대해서 아나요?
+
+1.  **Redux란**
+
+    - JavaScript(자바스트립트) 상태관리 라이브러리
+    - 모든 컴포넌트들이 state를 쉽게 공유할 수 있게 해주는 방식
+    - 순수 HTML, JavaScript 내에서도 사용이 가능함
+
+2.  **Redux의 구성요소**
+
+    - **Action(액션)** : 앱에서 스토어에 운반할 데이터 (주문서)
+      - 자바스크립트 객체 형식
+    - **Reducer(리듀서)** : state에 변화를 일으키는 함수
+      - 액션을 리듀서에 전달(dispatch() 메소드 사용) → 리듀서가 주문을 보고 스토어의 상태를 업데이트함
+    - **Store(스토어)** : State 를 수시로 확인해 View 한테 변경된 사항을 알려줌(상태가 관리되는 오직 하나의 공간)
+
+3.  **Redux의 진행 순서**
+
+    <img src="https://velog.velcdn.com/images/hailey99/post/a75af92c-bc51-4f00-b2d2-fe83df701efe/react-redux-overview-1024x731.png" alt="reducer" width="500"/><br/>
+
+    - Action 객체가 dispatch() 메소드에 전달됨 → dispatch(액션)를 통해 Reducer 호출 → Reducer는 새로운 Store 생성
+
+  <br/>
+
+## 2. 리덕스의 기본 원칙은?
+
+1. `Single source of truth`
+   - 앱 전체상태는 단일스토어로 관리
+   - 디버깅이나 개발자도구를 쉽게 사용할 수 있게 함
+2. `State is read-only` (상태는 읽기 전용)
+   - 리액트에서는 setState 메소드를 활용해야만 상태 변경이 가능
+   - 리덕스에서도 액션이라는 객체를 통해서만 상태를 변경할 수 있음
+3. `Changes are made with pure functions` (순수 함수에 의해서 변경되어야 함)
+
+   - 변경은 순수함수로만 가능
+   - 리듀서와 연관되는 개념
+
+   \* 순수함수 : 순수함수란 어떤 함수에 동일한 파라미터를 주었을때 항상 같은 값을 리턴하고, 외부의 상태를 변경하지 않는 함수
+
+## 3. Redux의 사용이유
+
+1. 컴포넌트의 상태 업데이트 관련 로직을 다른 파일로 분리시켜서 효율적으로 관리 가능
+2. 컴포넌트끼리 똑같은 상태를 공유해야 할 때도 여러 컴포넌트를 거치지 않고 손쉽게 상태 값을 전달하거나 업데이트할 수 있음
+
+→ 상태관리를 효율적이고 간단하게 보여주는 하나의 도구
+
+## 4. Redux 장단점
+
+- 장점
+
+  1. 상태 예측이 가능
+  2. 유지 보수가 용이(코드를 구성하는 방법에 대해 엄격)
+  3. 디버깅이 쉬움
+  4. 한 곳에서 관리(전역 상태관리)
+
+- 단점
+
+  1. 코드의 증량(필수적으로 만들어야하는 파일)
+  2. 읽기 전용(직접 수정하지 않도록 유의해야함)
+  3. 컴포넌트와의 연결성(state와 component를 연결하기 위한 메서드 필요)
+
+## 5. contextAPI 와 Redux 비교
+
+|                                        ContextAPI                                         |                        Redux                        |
+| :---------------------------------------------------------------------------------------: | :-------------------------------------------------: |
+|                                             -                                             |                   미들웨어의 존재                   |
+| 편리하게 사용하기 위해 <br/> context 생성, provider 설정, 커스텀 hook 생성해서 사용해야함 |  hooks를 사용한 손쉬운 상태 조회 및 액션 디스패치   |
+|                         글로벌 상태 관리 시 기능별로 Context 생성                         | 모든 글로벌을 하나의 커다란 상태 객체에 넣어서 사용 |
+
+<br/>
+
+<hr/>
+
+<br/>
+
+\*230109 불변성 → React의 상태 게시물로 이동<br/>
+\*230118 Redux의 사용이유, 장단점, contextAPI와 비교 추가
+<br/><br/>
+출처<br/>
+
+[Redux란?](https://hanamon.kr/redux%EB%9E%80-%EB%A6%AC%EB%8D%95%EC%8A%A4-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/)<br/>
+[Redux 진행순서](https://velog.io/@hailey99/whatisreact)<br/>
+[Redux 기본 원칙](https://abangpa1ace.tistory.com/86)<br/>
+[Redux 전체 참고](https://github.com/junh0328/prepare_frontend_interview/blob/main/react.md#%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%95%84%EB%82%98%EC%9A%94)<br/>
+[[React]리덕스(Redux) vs ContextAPI](https://sewonzzang.tistory.com/53)<br/>
+[[React] Redux 이해하기](https://scoring.tistory.com/entry/React-Redux-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)<br/>
+[상태관리 라이브러리의 장단점 정리](https://dalaranl.github.io/react/redux-mobx-context/)

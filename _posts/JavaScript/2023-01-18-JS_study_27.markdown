@@ -1,0 +1,253 @@
+---
+layout: post
+title: Java Script | 클래스
+date: 2023-01-18 12:30:30 +0900
+categories: [JavaScript]
+---
+
+# 클래스 🌊
+
+> #### 목차 <br/>
+>
+> 1. 자바스크립트에서 클래스가 생기기 전에는 어떤 방식으로 객체지향 패턴을 구현했나요?
+> 2. 그럼 생성자 함수와 클래스는 어떤 차이가 있나요?
+> 3. 클래스 정의
+> 4. 클래스의 상속
+
+<br/>
+
+## 1. 자바스크립트에서 클래스가 생기기 전에는 어떤 방식으로 객체지향 패턴을 구현했나요?
+
+- 자바스크립트는 프로토타입 기반 객체지향 언어로서, 클래스가 필요 없는 객체지향 프로그래밍 언어
+- 생성자 함수와 프로토타입을 통해 객체지향 언어의 상속을 구현할 수 있었음
+
+  ```javascript
+  // ES5 생성자 함수
+  function Person(name) {
+    this.name = name;
+  }
+
+  // 프로토타입 메서드
+  Person.prototype.sayHi = function () {
+    console.log("Hi! My name is " + this.name);
+  };
+
+  // 인스턴스 생성
+  var me = new Person("Lee");
+  me.sayHi(); // Hi! My name is Lee
+  ```
+
+  <br/>
+
+- 자바스크립트에서는 프로토타입 기반의 객체지향 프로그래밍을 기반으로 설계되었지만,<br/>
+  이에 어려움을 느끼는 객체지향 프로그래밍에 익숙한 프로그래머들을 위해 ES6부터 클래스 개념을 도입함
+
+## 2. 그럼 생성자 함수와 클래스는 어떤 차이가 있나요?
+
+<br/>
+
+|                                             클래스                                             |                       생성자 함수                       |
+| :--------------------------------------------------------------------------------------------: | :-----------------------------------------------------: |
+|                              new 연산자 없이 호출하면 에러가 발생                              |                    일반 함수로 호출                     |
+|                          상속을 지원하는 extends와 super 키워드 제공                           |              extends와 super 키워드 제공 X              |
+| 호이스팅이 발생하지 않는 것처럼 동작함<br/> 함수 선언문으로 작성된 클래스는 함수 호이스팅 발생 | 함수 표현식으로 정의한 생성자 함수는 변수 호이스팅 발생 |
+|                모든 코드는 암묵적으로 strict mode가 저장되어 실행<br/>해제 불가                |              암묵적으로 strict mode 지정 X              |
+
+## 3. 클래스 정의
+
+1. **클래스란?**
+
+   - 클래스는 객체를 생성하기 위한 템플릿<br/> 클래스 = 붕어빵 기계, 그리고 객체 = 붕어빵
+   - class를 통해 원하는 구조의 객체 틀을 짜놓고, 비슷한 모양의 객체를 공장처럼 찍어낼 수 있음<br/><br/>
+   - 클래스 문법
+
+     ```javascript
+     //prototype
+     function Me(name) {
+       this.name = name;
+     }
+
+     Me.prototype.wow = function () {
+       console.log("WOW!");
+     };
+
+     let person = new Me("Jason");
+     person.wow(); // WOW!
+
+     //class
+     class Me {
+       constructor(name) {
+         this.name = name;
+       }
+
+       wow() {
+         console.log("WOW!");
+       }
+     }
+
+     let person = new Me("Jason");
+     person.wow(); // WOW!
+     ```
+
+2. **클래스 사용하기**
+
+   <details>
+   <summary>코드 예시</summary>
+   <div markdown="1">
+
+   ```javascript
+   class Korean {
+   constructor(name, age) {
+       this.name = name;
+       this.age = age;
+       this.country = "Korea";
+   }
+
+   addAge(age) {
+       return this.age + age;
+   }
+   }
+
+   //호출
+   let kim = new Korean("KIMJINYOUNG",24);
+
+   {
+   name: 'KIMJINYOUNG',
+   age: 24,
+   country: 'Korea',
+   addAge: function(age){
+       return this.age + age;
+   }
+   }
+   ```
+
+   - method : 클래스 내에 정의된 함수
+   - instance : 클래스를 통해 생성된 객체
+   - 클래스도 함수처럼 호출하기 전까지는 코드가 실행되지 않음 → new키워드와 소괄호()를 사용하여 호출
+   - 클래스 이름은 항상 대문자로 시작
+   - constructor는 class에서 필요한 기초 정보를 세팅하는 곳으로 객체를 new로 생성할 때 가장먼저 자동으로 호출됨
+   - this 는 본인 객체를 의미함 → 클래스 내에서 메소드끼리 소통하기 위해서는 this가 필요
+
+    </div></details>
+
+## 4. 클래스의 상속
+
+\: 상속에 의한 클래스 확장은 프로토타입 기반 상속과는 다른 개념으로 <br/>프로토 타입 기반의 상속은 프로토타입 체인을 통해 다른 객체의 자산을 상속받는 개념이지만 <br/>상속에 의한 클래스 확장은 기존 클래스를 상속받아 새로운 클래스를 확장(extends)하여 정의하는 것임
+
+1. **extends**
+
+   <details>
+   <summary>코드 예시</summary>
+   <div markdown="1">
+
+   ```javascript
+   // 수퍼(베이스/부모)클래스
+   class Base {}
+
+   // 서브(파생/자식)클래스
+   class Derived extends Base {}
+
+   //예시
+   class Animal {
+     constructor(age, weight) {
+       this.age = age;
+       this.weight = weight;
+     }
+
+     eat() {
+       return "eat";
+     }
+
+     move() {
+       return "move";
+     }
+   }
+
+   // 상속을 통해 Animal 클래스를 확장한 Bird 클래스
+   class Bird extends Animal {
+     fly() {
+       return "fly";
+     }
+   }
+
+   const bird = new Bird(1, 5);
+
+   console.log(bird); // Bird {age: 1, weight: 5}
+   console.log(bird instanceof Bird); // true
+   console.log(bird instanceof Animal); // true (프로토타입 체인으로 얽혀있기 때문에)
+   console.log(bird instanceof Object); // true (스코프의 최 상위에는 Object가 있다)
+
+   console.log(bird.eat()); // eat
+   console.log(bird.move()); // move
+   console.log(bird.fly()); // fly
+   ```
+
+   </div></details><br/>
+
+2. **super**
+
+   \: 함수처럼 호출할 수도 있고 this와 같이 식별자처럼 참조할 수 있는 특수한 키워드
+
+   1. super를 호출하면 수퍼클래스의 constructor(super-constructor)를 호출함
+   2. super를 참조하면 수퍼클래스의 메서드를 호출할 수 있음
+
+   <details>
+   <summary>코드 예시</summary>
+   <div markdown="1">
+
+   ```javascript
+   // super 호출
+   // 수퍼클래스
+   class Base {
+     constructor(a, b) {
+       this.a = a;
+       this.b = b;
+     }
+   }
+
+   // 서브클래스
+   class Derived extends Base {
+     constructor(a, b, c) {
+       super(a, b); // 수퍼클래스에 정의한 프로퍼티(a,b)를 그대로 사용하겠다는 의미
+       this.c = c;
+     }
+   }
+
+   const derived = new Derived(1, 2, 3);
+   console.log(derived); // Derived {a: 1, b: 2, c: 3}
+
+   //super 호출
+   // 수퍼클래스
+   class Base {
+     constructor(name) {
+       this.name = name;
+     }
+
+     sayHi() {
+       return `Hi! ${this.name}`;
+     }
+   }
+
+   // 서브클래스
+   class Derived extends Base {
+     sayHi() {
+       // super.sayHi는 수퍼클래스의 프로토타입 메서드를 가리킨다.
+       return `${super.sayHi()}. how are you doing?`;
+     }
+   }
+
+   const derived = new Derived("Lee");
+   console.log(derived.sayHi()); // Hi! Lee. how are you doing?
+   ```
+
+   </div></details>
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[클래스](https://github.com/junh0328/prepare_frontend_interview/blob/main/js.md#%ED%81%B4%EB%9E%98%EC%8A%A4)<br/>
+[[JavaScript] class란 무엇인가?](https://velog.io/@jinyoung985/Javascript-class%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80)<br/>

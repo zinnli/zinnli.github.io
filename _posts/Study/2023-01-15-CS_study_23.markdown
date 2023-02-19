@@ -1,0 +1,122 @@
+---
+layout: post
+title: Study | 크로스 브라우징
+date: 2023-01-15 12:30:30 +0900
+categories: [Study]
+---
+
+# 크로스 브라우징
+
+> #### 목차
+>
+> **크로스 브라우징**
+>
+> 1. 크로스 브라우징이 작업마다 필요한 원인
+> 2. 브라우저 대응 순서
+> 3. 크로스 브라우징 작업
+
+<br/>
+
+## 크로스 브라우징(Cross Browsing)
+
+\: 웹 페이지 제작 시에 모든 브라우저에서 깨지지 않고 의도한 대로 올바르게(호환성) 나오게 하는 작업<br/><br/>HTML5, CSS3, Javascript 작성 시 W3C의 웹 규격에 맞는 코딩을 함으로써 어느 브라우저, 기기에서 사이트가 의도된 대로 보여지고 작동되는 기법
+
+<br/>
+
+### 1. 크로스 브라우징이 작업마다 필요한 원인
+
+\: 브라우저마다 랜더링 엔진이 다르기 때문
+
+- 작동하지 않은 HTML5, Javascript 코드가 존재
+- 해석하지 못하는 CSS 코드 존재
+- 브라우저 버그들이 존재
+- 브라우저 자체적인 CSS 스타일
+
+### 2. 브라우저 대응 순서 - [점유율 사이트](http://gs.statcounter.com/)
+
+\: 타겟이 되는 (가장 점유율이 높은) 브라우저부터 맞추는 것이 좋음
+
+<br/>
+
+### 3. 크로스 브라우징 작업
+
+1. [도움이 되는 사이트](https://caniuse.com)를 이용하여 브라우저에 맞게 작업
+
+   \* 브라우저별 벤터프리픽스
+
+   1. 크롬 : -webkit-
+   2. 사파리 : -webkit-
+   3. 파이어폭스 : moz- (mozila 라는 단체가 파이어폭스를 만들었기 때문에)
+   4. 오페라 : -o-, -webkit-
+   5. 익스플로러 : -ms-<br/><br/>
+
+2. 초기화 작업 (CSS 초기화 작업)
+   '웹 브라우저'마다 default 값으로 스타일이 적용되어 있기 때문에 우리는 브라우저마다의 기본 디폴트 스타일 값이 아니라 동일한 CSS 스타일을 보여주기 위해 default 디폴트 값을 초기화해줘야 함
+   <details>
+   <summary>reset code</summary>
+   <div markdown="1">
+
+   ```react
+   * {margin: 0; padding: 0; box-sizing: border-box;}
+
+   html, body, div, span, applet, object, iframe,
+   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+   a, abbr, acronym, address, big, cite, code,
+   del, dfn, em, img, ins, kbd, q, s, samp,
+   small, strike, strong, sub, sup, tt, var,
+   b, u, i, center,
+   dl, dt, dd, ol, ul, li,
+   fieldset, form, label, legend,
+   table, caption, tbody, tfoot, thead, tr, th, td,
+   article, aside, canvas, details, embed,
+   figure, figcaption, footer, header, hgroup,
+   menu, nav, output, ruby, section, summary,
+   time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+   }
+
+   /* HTML5 display-role reset for older browsers */
+   article, aside, details, figcaption, figure,
+   footer, header, hgroup, menu, nav, section {
+      display: block;
+   }
+
+   html {font-size:10px}
+
+   body { line-height: 1; font-family: 'Noto Sans KR', sans-serif; font-size : 1.4rem }
+   body, input, button,select, textarea, th, td {color: #222;}
+
+   a {text-decoration: none;  color: inherit;}
+   ol, ul { list-style: none; }
+   blockquote, q { quotes: none; }
+
+   blockquote:before, blockquote:after,
+   q:before, q:after {
+      content: '';
+      content: none;
+   }
+
+   table { border-collapse: collapse; border-spacing: 0; }
+   ```
+
+   </div></details>
+
+\- 여기서부턴 IE 관련(IE는 지원종료)
+
+1. 핵(Hack)
+2. IE용 주석을 이용한 방법 (Conditional comments)
+3. 메타 태그를 이용한 IE모드
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[크로스 브라우징(cross browsing)이란?](https://tlsdnjs12.tistory.com/m/57)<br/>

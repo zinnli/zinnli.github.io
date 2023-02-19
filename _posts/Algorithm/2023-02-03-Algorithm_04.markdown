@@ -1,0 +1,56 @@
+---
+layout: post
+title: 230203_Algorithm | 나머지가 1이 되는 수 찾기(Lv.1)
+date: 2023-02-03 15:30:30 +0900
+categories: [Algorithm, Lv.1]
+---
+
+# 나머지가 1이 되는 수 찾기(Lv.1)
+
+<br/>
+
+문제 설명
+
+- 자연수 n이 매개변수
+- n을 x로 나눈 나머지가 1이 되도록하는 가장 작은 자연수 x를 return
+
+<br/>
+
+제한사항
+
+- 3 ≤ n ≤ 1,000,000
+
+<br/>
+
+입출력 예시
+<br/>
+
+| n   | result |
+| --- | ------ |
+| 10  | 3      |
+| 12  | 11     |
+
+<br/>
+
+```javascript
+function solution(n) {
+  for (let x = 0; x < n; x++) {
+    if (n % x === 1) {
+      return x;
+    }
+  }
+
+  return x;
+}
+}
+```
+
+<br/>
+
+---
+
+<br/>
+
+### 나름 풀이
+
+n까지 반복문을 돌리고 그 안에서 나머지가 1인 것만 뽑아내기

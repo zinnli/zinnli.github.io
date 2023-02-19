@@ -2,13 +2,13 @@
 #  Icons from <https://fontawesome.com/>
 
 platforms:
-  - type: Twitter
-    icon: "fab fa-twitter"
-    link: "https://twitter.com/intent/tweet?text=TITLE&url=URL"
+  - type: Github
+    icon: "fab fa-github"
+    link: "https://github.com/zinnli"
 
-  - type: Facebook
-    icon: "fab fa-facebook-square"
-    link: "https://www.facebook.com/sharer/sharer.php?title=TITLE&u=URL"
+  - type: Instagram
+    icon: "fab fa-instagram"
+    link: "https://instagram.com/zinn__lii?igshid=MDM4ZDc5MmU="
 
   - type: Telegram
     icon: "fab fa-telegram"

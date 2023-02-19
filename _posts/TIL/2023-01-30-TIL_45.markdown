@@ -1,0 +1,98 @@
+---
+layout: post
+title: 230130_TIL | react-query 공부 시작
+date: 2023-01-30 21:50:30 +0900
+categories: [I Learn, TIL]
+---
+
+<br/>
+
+## 오늘한 일
+
+- [Udemy] react-query 강의 듣는 중
+
+  <br/>
+
+## 내일 할 일
+
+- [Udemy] react-query 3강까지 듣기
+
+<br/>
+
+**오늘의 배운 점**
+<br/>
+
+<img src="https://user-images.githubusercontent.com/102575747/215546261-feda09bd-ae87-47a7-b32f-a926d10c9cc7.PNG" alt="trouble" width="700"/><br/>
+
+udemy에서 구매했던 react-query 강의를 보는 중인데, 자꾸 위의 이미지의 오류가 떠서 당황했다. 이전에도 동일한 오류가 났던 것 같긴 한데..
+
+1. 가장 쉬운 해결 방법은 npm-start 뒤에 오류에서 나와있는 것처럼
+
+   ```bash
+   npm start --location-global
+   ```
+
+   의 형태로 진행했지만, 할 때마다 저렇게 입력하는 건 비효율적이라고 생각해서 추가적인 내용들을 찾아봤다.<br/><br/>
+
+2. 찾아본 바로는 npm의 버전에 따른 오류같은데 영어가 많이 부족해서 확실하게 이해한 건지 모르겠다.<br/><br/>
+
+   1. <https://velog.io/@do_ng_iill/npm-WARN-config-global-global-local-are-deprecated.-Use-locationglobal-instead.-%ED%95%B4%EA%B2%B0><br/>
+      → 주로 나온 방법<br/><br/>
+      위의 방법으로 진행하면 npm upgrade를 통해 해결하는 것 같았는데 저 방법이 나에게는 통하지 않았다.<br/>
+
+      ```bash
+      PS C:\Windows\system32> npm-windows-upgrade
+      npm-windows-upgrade v6.0.1
+      node:events:505
+            throw er; // Unhandled 'error' event
+            ^
+
+      Error: spawn powershell.exe ENOENT
+          at Process.ChildProcess._handle.onexit (node:internal/child_process:283:19)
+          at onErrorNT (node:internal/child_process:478:16)
+          at processTicksAndRejections (node:internal/process/task_queues:83:21)
+      Emitted 'error' event on ChildProcess instance at:
+          at Process.ChildProcess._handle.onexit (node:internal/child_process:289:12)
+          at onErrorNT (node:internal/child_process:478:16)
+          at processTicksAndRejections (node:internal/process/task_queues:83:21) {
+        errno: -4058,
+        code: 'ENOENT',
+        syscall: 'spawn powershell.exe',
+        path: 'powershell.exe',
+        spawnargs: [ '-NoProfile', '-NoLogo', 'Get-ExecutionPolicy' ]
+      }
+      ```
+
+      자꾸 상단의 오류를 뱉어냈는데... 이유를 모르겠어서 다른 방법을 찾아본 결과로는<br/><br/>
+
+   2. <https://github.com/npm/cli/issues/4980><br/>
+      → 여기 방법 중 하나인<br/><br/>
+
+      npm.cmd 파일에 직접 접근해서 수정해주는 방식으로 진행했다.
+
+      ```bash
+      is solved by editing C:\Program Files\nodejs\npm.cmd
+      on line 12
+      replacing prefix -g by prefix --location=global
+      ```
+
+      위의 형태<br/><br/>
+
+→ 사실 처음에 --location-global만 입력했을 때 다시 npm start를 하면 오류?같은걸 뱉어내면서도 올바르게 작동이 하기는 했다. 그래서 사실 2-1이나 2-2를 통해 올바르게 해결했는지는 잘 모르겠다. 내일 다시 공부하면서 적용해보는 게 좋을 듯 하다. 명확한 이유와 해결방법을 찾고 싶었지만, 영어가 많이 부족한지라.. 외국분들이 하시는 이야기를 완벽하게 이해하지 못해서 어려웠다. 대략적으로 이런 느낌이 아닐까..?하고 추측하는 정도. 항상 할게 많구만.. 신난다 신나..
+
+<br/>
+<hr>
+
+<br/>
+
+사실 한동안 한 것도 없는데 번아웃이 심하게 왔다. 아마 3-4달 가량 급하게 공부를 해오다보니 생긴 문제인 것 같은데, 그냥 손에 아무 것도 잡히지 않아서 그냥 의자에 앉아만 있었던 것 같다. <br/>그래서 동기부여할 겸 멋사에서 진행한 컨퍼런스에 다녀왔는데, 확실히 동기부여가 됐다. 추가로 서울 나들이 겸 해서 좋아하는 운동도 하고 나니 리프레시가 제대로 된 것 같다. 아마 제주도 여행으로는 많이 부족했던 듯.. <br/>이제 마음 제대로 잡고 하나씩 해결해 나가야할 것 같다. 일단 첫 번째는 사이드 프로젝트부터. 방법은 이전에 취대반 멘토님이 알려주신 방법대로..<br/><br/>
+
+일단 계획은 <br/>
+
+1. 아침부터 1시까지 CS 공부(알고리즘 및 CS 명확하게 공부하기 → 예전에 스터디했던 부족한 부분 채우기) : 4-5시간 이내
+2. 점심 이후에 개인 공부(공부하고 싶었던 강의 듣기) : 4-5시간 이내
+3. 저녁 이후 사이드 프로젝트 빨리 완성하기 : 5시간 이상 몰입해보기
+
+<br/>
+
+이쯤되면 한달 논거니까 제대로 다시 해보자!

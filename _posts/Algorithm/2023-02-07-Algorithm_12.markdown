@@ -1,0 +1,61 @@
+---
+layout: post
+title: 230207_Algorithm | 3진법 뒤집기(Lv.1)
+date: 2023-02-07 12:30:30 +0900
+categories: [Algorithm, Lv.1]
+---
+
+# 3진법 뒤집기 (Lv.1)
+
+<br/>
+
+### 문제 설명
+
+- 자연수 n이 매개변수
+- n을 3진법 상에서 앞뒤로 뒤집은 후, 이를 다시 10진법으로 표현한 수를 return
+
+<br/>
+
+### 제한사항
+
+- n은 1 이상 100,000,000 이하인 자연수
+
+<br/>
+
+### 입출력 예시
+
+<br/>
+
+| n   | result |
+| --- | ------ |
+| 45  | 7      |
+| 125 | 229    |
+
+<br/>
+
+```javascript
+function solution(n) {
+  var answer = 0;
+  answer = n.toString(3).split("").reverse().join("");
+  return parseInt(answer, 3);
+}
+
+// 다른사람의 답안
+const solution = (n) => {
+  return parseInt([...n.toString(3)].reverse().join(""), 3);
+};
+```
+
+<br/>
+
+---
+
+<br/>
+
+### 나름 풀이
+
+- 3진법으로 변경 → 문자열 배열로 변경하여 뒤집기 → 다시 합치기 → parseInt를 통해 10진법으로 변경
+
+\*\* 중요한 메소드
+
+- parseInt() : 함수는 문자열 인자를 파싱하여 특정 진수(수의 진법 체계에서 기준이 되는 값)의 정수를 반환

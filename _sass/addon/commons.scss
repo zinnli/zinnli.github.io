@@ -2,6 +2,20 @@
   The common styles
 */
 
+@font-face {
+  font-family: "SeoulNamsanM";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SeoulNamsanM.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GangwonEduSaeeum_OTFMediumA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 html {
   @media (prefers-color-scheme: light) {
     &:not([data-mode]),
@@ -25,15 +39,19 @@ html {
     }
   }
 
-  font-size: 16px;
+  font-size: 0.9em;
 }
 
 body {
   background: var(--body-bg);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
-  font-family: "Source Sans Pro", "Microsoft Yahei", sans-serif;
+  font-family: "SeoulNamsanM", sans-serif;
   line-height: 1.75;
+}
+
+.utterances {
+  max-width: 1000px;
 }
 
 /* --- Typography --- */
@@ -115,13 +133,21 @@ img {
   }
 
   @-webkit-keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
@@ -213,7 +239,8 @@ footer {
   }
 }
 
-i { /* fontawesome icons */
+i {
+  /* fontawesome icons */
   &.far,
   &.fas {
     @extend %no-cursor;
@@ -336,7 +363,7 @@ i { /* fontawesome icons */
 
   /* [scroll-focus] added by `smooth-scroll.js` */
   @at-root sup:target:not([scroll-focus]),
-  sup[scroll-focus=true] > a#{&} {
+    sup[scroll-focus="true"] > a#{&} {
     background-color: var(--footnote-target-bg);
   }
 }
@@ -389,7 +416,7 @@ i { /* fontawesome icons */
         }
       }
     } /* tbody */
-  }/* table */
+  } /* table */
 }
 
 /* --- post --- */
@@ -485,7 +512,8 @@ i { /* fontawesome icons */
       list-style-type: none;
       padding-left: 0;
 
-      > i { /* checkbox icon */
+      > i {
+        /* checkbox icon */
         width: 2rem;
         margin-left: -1.25rem;
         color: var(--checkbox-color);
@@ -565,13 +593,25 @@ i { /* fontawesome icons */
   }
 
   @-webkit-keyframes shimmer {
-    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
-    100% { -webkit-transform: translateX(100%); transform: translateX(100%); }
+    0% {
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+    100% {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
   }
 
   @keyframes shimmer {
-    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
-    100% { -webkit-transform: translateX(100%); transform: translateX(100%); }
+    0% {
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+    100% {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
   }
 }
 
@@ -637,7 +677,8 @@ i { /* fontawesome icons */
   @include no-text-decoration;
 }
 
-.tooltip-inner { /* Overrided BS4 Tooltip */
+.tooltip-inner {
+  /* Overrided BS4 Tooltip */
   font-size: 0.7rem;
   max-width: 220px;
   text-align: left;
@@ -706,8 +747,8 @@ $sidebar-display: "sidebar-display";
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
   a {
     @extend %sidebar-links;
@@ -722,8 +763,8 @@ $sidebar-display: "sidebar-display";
   #avatar {
     > a {
       display: block;
-      width: 6rem;
-      height: 6rem;
+      width: 10rem;
+      height: 10rem;
       border-radius: 50%;
       border: 2px solid rgba(222, 222, 222, 0.7);
       overflow: hidden;
@@ -815,7 +856,8 @@ $sidebar-display: "sidebar-display";
           width: 100%;
         }
 
-        &::after { /* the cursor */
+        &::after {
+          /* the cursor */
           display: table;
           visibility: hidden;
           content: "";
@@ -837,7 +879,8 @@ $sidebar-display: "sidebar-display";
 
     @for $i from 1 through $tab-count {
       $offset: $tab-count - $i;
-      $top: (-$offset * $tab-height) + (($tab-height - $tab-cursor-height) * 0.5);
+      $top: (-$offset * $tab-height) +
+        (($tab-height - $tab-cursor-height) * 0.5);
 
       @if $i < $tab-count {
         > li.active:nth-child(#{$i}),
@@ -947,7 +990,8 @@ $sidebar-display: "sidebar-display";
 }
 
 #topbar {
-  i { /* icons */
+  i {
+    /* icons */
     color: #999999;
   }
 
@@ -991,7 +1035,8 @@ $sidebar-display: "sidebar-display";
   }
 }
 
-#search-cancel { /* 'Cancel' link */
+#search-cancel {
+  /* 'Cancel' link */
   color: var(--link-color);
   margin-left: 1rem;
   display: none;
@@ -1012,9 +1057,15 @@ $sidebar-display: "sidebar-display";
     background: center;
 
     &.form-control {
-      &::-moz-placeholder { @include input-placeholder; }
-      &::-webkit-input-placeholder { @include input-placeholder; }
-      &::placeholder { @include input-placeholder; }
+      &::-moz-placeholder {
+        @include input-placeholder;
+      }
+      &::-webkit-input-placeholder {
+        @include input-placeholder;
+      }
+      &::placeholder {
+        @include input-placeholder;
+      }
     }
   }
 }
@@ -1068,7 +1119,8 @@ $sidebar-display: "sidebar-display";
       margin-bottom: 1rem;
     }
 
-    i { /* icons */
+    i {
+      /* icons */
       color: #818182;
       margin-right: 0.15rem;
       font-size: 80%;
@@ -1266,7 +1318,9 @@ $sidebar-display: "sidebar-display";
   }
 
   #core-wrapper {
-    min-height: calc(100vh - #{$topbar-height} - #{$footer-height-mobile}) !important;
+    min-height: calc(
+      100vh - #{$topbar-height} - #{$footer-height-mobile}
+    ) !important;
 
     h1 {
       margin-top: 2.2rem;
@@ -1284,8 +1338,8 @@ $sidebar-display: "sidebar-display";
   }
 
   #avatar > a {
-    width: 5rem;
-    height: 5rem;
+    width: 10rem;
+    height: 10rem;
   }
 
   .site-subtitle {
@@ -1600,7 +1654,9 @@ $sidebar-display: "sidebar-display";
   }
 
   #search-wrapper {
-    margin-right: calc(#{$main-content-max-width} * 0.25 - #{$search-max-width});
+    margin-right: calc(
+      #{$main-content-max-width} * 0.25 - #{$search-max-width}
+    );
   }
 
   #topbar,
@@ -1615,7 +1671,9 @@ $sidebar-display: "sidebar-display";
   }
 
   #back-to-top {
-    right: calc((100vw - #{$sidebar-width-large} - #{$main-content-max-width}) / 2 + 2rem);
+    right: calc(
+      (100vw - #{$sidebar-width-large} - #{$main-content-max-width}) / 2 + 2rem
+    );
   }
 
   #sidebar {
@@ -1637,11 +1695,12 @@ $sidebar-display: "sidebar-display";
         @extend %profile-ml;
 
         > a {
-          width: 6.2rem;
-          height: 6.2rem;
+          width: 10rem;
+          height: 10rem;
 
           &.mx-auto {
             margin-left: 0 !important;
+            margin-bottom: 2rem;
           }
         }
       }

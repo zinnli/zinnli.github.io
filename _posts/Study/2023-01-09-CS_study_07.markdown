@@ -1,0 +1,105 @@
+---
+layout: post
+title: Study | CS 프로토콜(전송)
+date: 2023-01-09 12:30:30 +0900
+categories: [Study]
+---
+
+# CS 프로토콜(전송)
+
+> #### 목차
+>
+> 1. TCP와 UDP 설명과 비교
+> 2. TCP 3way handshaking 설명과 그 이유
+> 3. TCP가 신뢰성을 보장하는 방법
+
+<br/>
+
+### 1. TCP와 UDP 설명과 비교
+
+<img src="https://velog.velcdn.com/images/devharrypmw/post/9d4bc5ee-b7ce-458a-9379-3550eabccceb/image.png" alt="OSI 7계층과 TCP/IP 4계층" width="600"/><br/>
+
+- TCP와 UDP는 OSI 7 계층들 중 TCP/IP의 전송 계층에서 사용되는 프로토콜
+
+  \* 전송 계층 : 송신자와 수신자를 연결하는 통신서비스를 제공하는 계층<br/>(데이터의 전달을 담당하며 전달되는 패킷의 오류를 검사하고 재전송 요구 등의 제어를 담당)<br/> \* 패킷(Packer) : 인터넷 내에서 데이터 전송을 위한 라우팅을 효율적으로 하기 위해 나누어진 조각(→ 우편 패키지)<br/>
+
+1. `TCP(Transmission Control Protocol)` : **연결 지향적** 프로토콜(클라이언트와 서버가 연결된 상태에서 데이터를 주고받는 프로토콜) ...ex) 파일전송
+
+   - **연결형 서비스**로 가상 회선 방식을 제공(연결이 성공해야 통신이 가능함)
+     - 3-way handshaking 과정을 통해 연결을 설정하고,
+     - 4-way handshaking 과정을 통해 연결을 해제한다.
+   - **흐름 제어(Flow control)**
+     - 데이터 처리 속도를 조절하여 수신자의 버퍼 오버플로우를 방지
+   - **혼잡 제어(Congestion control)**
+     - 네트워크 내의 패킷 수가 과도하게 증가하지 않도록 방지
+   - **높은 신뢰성을 보장**
+     - 신뢰성이 높은 전송을 하기 때문에 UDP보다 속도가 느림
+   - 전이중(Full-Duplex), 점대점(Point to Point) 방식
+     - **전이중(Full-Duplex)** : 전송이 양방향으로 동시에 일어날 수 있다
+     - **점대점(Point to Point)** : 각 연결이 정확히 2개의 종단점을 가지고 있다<br/><br/>
+
+2. `UDP(User Datagram Protocol)` : **비연결형** 프로토콜(연속성 있는 전송이 필요할 때 사용하는 프로토콜) ...ex) 실시간 서비스(Streaming)
+
+   - **비연결형 서비스**로 데이터그램 방식을 제공
+     - 데이터의 전송 순서가 바뀔 수 있음
+   - 데이터 **수신 여부를 확인하지 않음**
+     - TCP의 3-way handshaking과 같은 과정 X
+   - **신뢰성이 낮음**
+     - 흐름 제어(flow control)가 없어서 제대로 전송되었는지, 오류가 없는지 확인할 수 없음
+   - TCP보다 **속도가 빠름**
+   - 1:1 & 1:N & N:N 통신이 가능<br/><br/>
+
+3. **TCP와 UDP 비교하기**
+
+   | 프로토콜 종류  |        TCP         |            UDP            |
+   | :------------: | :----------------: | :-----------------------: |
+   |   연결 방식    |   연결형 서비스    |      비연결형 서비스      |
+   | 패킷 교환 방식 |   가상 회선 방식   |      데이터그램 방식      |
+   |   전송 순서    |   전송 순서 보장   | 전송 순서가 바뀔 수 있음  |
+   | 수신 여부 확인 | 수신 여부를 확인함 | 수신 여부를 확인하지 않음 |
+   |   통신 방식    |      1:1 통신      |  1:1 OR 1:N OR N:N 통신   |
+   |     신뢰성     |        높다        |           낮다            |
+   |      속도      |       느리다       |          빠르다           |
+
+<br/>
+
+### 2. TCP 3way handshaking 설명과 그 이유
+
+1. **TCP 3way handshaking 과정**<br/>
+   <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fn67R1%2FbtrsWKQUJ3d%2FwhIVLuEpUWoMXod0fFTfPK%2Fimg.png" alt="3way handshaking" width="600"/><br/>
+
+   1. Client에서 Server에 연결 요청을 하기위해 SYN 데이터를 보내고 SYN_SENT 상태로 대기한다.
+   2. Server에서 해당 포트는 LISTEN 상태에서 SYN 데이터를 받고 SYN-RECEIVED로 상태가 변경된다.
+   3. 그리고 요청을 정상적으로 받았다는 대답(ACK)와 Client도 포트를 열어달라는 SYN 을 같이 보낸다.
+   4. Client에서는 SYN+ACK 를 받고 ESTABLISHED로 상태를 변경하고 서버에 ACK 를 전송한다.
+   5. ACK를 받은 서버는 상태가 ESTABLSHED로 변경된다.<br/><br/>
+
+   \* 상태설명
+
+   - SYN(synchronize sequence numbers) - 연결 확인을 보내는 무작위의 숫자 값 (내 말 들려?) -- 요청
+   - ACK(acknowledgements) - Client 혹은 Server로부터 받은 SYN에 1을 더해 SYN을 잘 받았다는 ACK (잘 들려!) -- 응답
+   - CLOSED : 연결 수립을 시작하기 전의 기본 상태 (연결 없음)
+   - LISTEN : 포트가 열린 상태로 연결 요청 대기 중
+   - SYN-SENT : SYN을 요청한 상태
+   - SYN-RECEIVED : SYN 요청을 받고 상대방의 응답을 기다리는 중
+   - ESTABLISHED : 연결 수립이 완료된 상태, 서로 데이터를 교환할 수 있다.
+
+  <br/>
+
+### 3. TCP가 신뢰성을 보장하는 방법
+
+- `TCP 재전송`으로 신뢰성을 보장함
+- TCP는 그 특성상 자신이 보낸 데이터에 대해서 상대방이 받았다는 의미의 응답 패킷을 다시 받아야 통신이 정상적으로 이뤄졌다고 생각함 <br/>→ 응답 패킷을 받지 못한 경우 : 패킷이 유실되었다고 판단하여 보냈던 패킷을 다시 한 번 보냄 = 이 과정이 TCP 재전송
+- if) 수신자가 송신자에게 ACK, NAK도 못보내는 상황 <br/> : timeout된 시점에서 다시 TCP Segment를 보내주게 됨(퍼포먼스 성능의 저하가 있을 수 있으므로 조심해야함)
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[TCP와 UDP 1](https://dev-coco.tistory.com/144)<br/>
+[TCP와 UDP 2](https://akdl911215.tistory.com/411)<br/>
+[패킷이란?](https://kongit.tistory.com/entry/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%ED%8C%A8%ED%82%B7Network-Packet%EC%9D%B4%EB%9E%80-%EC%A0%95%EC%9D%98-%ED%8C%A8%ED%82%B7-%EC%86%90%EC%8B%A4)<br/>
+[TCP가 신뢰성을 보장하는 방법](https://velog.io/@sms8377/Network-TCP%EC%9D%98-%EC%9E%AC%EC%A0%84%EC%86%A1%EA%B3%BC-%ED%83%80%EC%9E%84-%EC%95%84%EC%9B%83)

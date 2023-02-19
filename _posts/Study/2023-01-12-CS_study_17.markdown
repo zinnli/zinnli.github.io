@@ -1,0 +1,56 @@
+---
+layout: post
+title: Study | 브라우저 렌더링
+date: 2023-01-12 12:30:30 +0900
+categories: [Study]
+---
+
+# 브라우저 렌더링
+
+> #### 목차
+>
+> 1. 브라우저 렌더링 과정
+> 2. 리플로우와 리페인트
+
+<br/>
+
+### 1. 브라우저 렌더링 과정
+
+<img src="https://junilhwang.github.io/TIL/assets/1.257affbd.png" alt="brower-render" width="800"/> <br/>
+
+1.  `파싱` : 브라우저가 HTML을 파싱하고 읽어들이는 과정(HTML을 통해 DOM 객체 트리 구성)
+2.  `스타일` : DOM Tree/CSSOM Tree가 생성되면 스타일을 매칭시켜주는 과정을 거쳐 Render Tree(실제로 화면에 그려질 Tree)를 구성함 ex) display, ...
+3.  `레이아웃` : 기기의 뷰포트 내에서 노드의 정확한 위치와 크기를 계산하는 과정(경우에 따라 reflow라고도 함)
+4.  `페인트`(=래스터화) : Rendering Tree의 각 노드를 화면의 실제 픽셀로 변환하는 마지막 단계 ex) 위치와 관계없는 CSS 속성을 적용함
+5.  `합성` : 화면에 표시하기 위해 페이지에서 페인트된 부분을 합치는 과정 ex) transform, opacity, ...
+    여기까지의 과정(스타일~합성) = 렌더링<br/>
+    (이후 JS, CSS를 통해 DOM이나 CSS에 변화가 생길 경우 reflow or repaint가 반복됨)<br/>
+
+\* 파싱 : 브라우저가 코드를 이해하고 사용할 수 있는 구조로 변환하는 것
+<br/>
+
+### 2. 리플로우와 리페인트
+
+\* 자바스크립트가 DOM, CSSOM을 변경하는 경우 리렌더링
+
+- 리플로우(reflow): 레이아웃 계산을 다시 하는 것
+  - 변경사항을 반영하기 위해서 렌더링 트리를 생성하고 레이아웃 과정을 다시 수행
+- 리페인트(repaint): 재결합된 렌더 트리를 기반으로 다시 페인트를 하는 것
+
+  - 리플로우 결과를 화면에 그려지기 위해서는 다시 페인팅 단계를 수행
+
+- 리플로우 → 리페인트
+
+  1. 리플로우가 발생하면 리페인트는 필수
+  2. 레이아웃에 영향을 미치지 않는 경우(단순 색변경) : 리페인트만 수행
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[브라우저 로딩과정](https://junilhwang.github.io/TIL/Javascript/Design/Vanilla-JS-Virtual-DOM/#_1-%E1%84%91%E1%85%A1%E1%84%89%E1%85%B5%E1%86%BC)<br/>
+[브라우저 렌더링 디테일](https://velog.io/@zaman17/%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91%EB%8C%80%EB%B9%84-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80-%EB%A0%8C%EB%8D%94%EB%A7%81-%EC%88%9C%EC%84%9C%EC%99%80-%EC%9B%90%EB%A6%AC)<br/>
+[리플로우와 리페인팅](https://medium.com/%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98%ED%92%88%EA%B2%A9/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%9D%98-%EB%A0%8C%EB%8D%94%EB%A7%81-%EA%B3%BC%EC%A0%95-5c01c4158ce)<br/>
