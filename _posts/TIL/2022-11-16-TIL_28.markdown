@@ -3,6 +3,7 @@ layout: post
 title: 221116_TIL | 옵셔널체이닝
 date: 2022-11-16 21:50:30 +0900
 categories: [I Learn, TIL]
+tag: [final-project, optional-chaining]
 ---
 
 <br/>

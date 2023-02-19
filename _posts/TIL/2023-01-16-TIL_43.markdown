@@ -3,6 +3,7 @@ layout: post
 title: 230116_TIL | 스터디 위주로 하니까 TIL 쓸만한 게 없다
 date: 2023-01-16 21:50:30 +0900
 categories: [I Learn, TIL]
+tag: [gitblog, fail]
 ---
 
 <br/>

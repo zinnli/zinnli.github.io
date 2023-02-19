@@ -3,6 +3,7 @@ layout: post
 title: 230202_TIL | 면접 :(
 date: 2023-02-02 21:50:30 +0900
 categories: [I Learn, TIL]
+tag: [interview]
 ---
 
 <br/>

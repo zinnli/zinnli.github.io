@@ -3,6 +3,7 @@ layout: post
 title: 221007_TIL | React redux
 date: 2022-10-07 23:30:30 +0900
 categories: [I Learn, TIL]
+tag: [redux]
 ---
 
 <br/>

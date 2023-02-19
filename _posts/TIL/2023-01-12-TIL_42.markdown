@@ -3,6 +3,7 @@ layout: post
 title: 230112_TIL | 모의 면접 합격(일단은..?)
 date: 2023-01-12 21:50:30 +0900
 categories: [I Learn, TIL]
+tag: [interview]
 ---
 
 <br/>

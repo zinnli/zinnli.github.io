@@ -3,6 +3,7 @@ layout: post
 title: 221211_WIL | 실전프로젝트 진행중(5주차)
 date: 2022-12-11 21:30:30 +0900
 categories: [I Learn, WIL]
+tag: [final-project, CRUD]
 ---
 
 # 221211_WIL

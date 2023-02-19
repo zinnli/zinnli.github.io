@@ -3,6 +3,7 @@ layout: post
 title: 221012_TIL | redux 개인과제 상세페이지 오류 해결!
 date: 2022-10-12 23:30:30 +0900
 categories: [I Learn, TIL]
+tag: [redux]
 ---
 
 <br/>

@@ -3,6 +3,7 @@ layout: post
 title: 221103_TIL | 클론 프로젝트 끝!
 date: 2022-11-03 21:50:30 +0900
 categories: [I Learn, TIL]
+tag: [clone-project, content-type]
 ---
 
 <br/>
