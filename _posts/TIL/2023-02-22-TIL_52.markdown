@@ -1,0 +1,64 @@
+---
+layout: post
+title: 230222_TIL | 맥 세팅
+date: 2023-02-22 21:50:30 +0900
+categories: [I Learn, TIL]
+tag: [mac, gitblog, github, jekyll]
+pin: true
+---
+
+<br/>
+
+## 오늘한 일
+
+- mac 세팅(homebrew, git 설치)
+- jekyll 설치
+
+<br/>
+
+**오늘의 정리**
+<br/>
+
+1. 맥에 git 설치하기(설치할 때 컴퓨터 비밀번호가 있어야함 <br/>\: password 입력할 때 컴퓨터 password 입력)
+
+   - 맥북 git 설치 [스파르타코딩클럽 - git](https://www.notion.so/Git-1-3cb2c0d54a9743898d2420d8e075a286)
+
+   - [homebrew 세팅1](https://abbo.tistory.com/124)
+   - [homebrew 세팅2](https://designdepot.tistory.com/209)
+
+   - [mac 터미널 명령어](https://yozm.wishket.com/magazine/detail/746/)
+
+2. jekyll 설치
+
+   - 설치 진행 순서
+
+     1. Homebrew 설치
+     2. ruby 설치
+        - 여기서 중요하게 느낀 부분 : rbenv global 3.1.3(버전은 맞춰서)<br/> → 이걸 global로 주지 않으면 추적을 못하는 것 같다.
+     3. bundler 설치
+
+        ```bash
+        $ bundle add webrick
+        ```
+
+        - webrick의 경우 jekyll을 web으로 띄워주는 역할을 한다고 함
+
+     4. jekyll 설치<br/><br/>
+
+   - [jekyll 환경 세팅 - 주로 참고](https://danaing.github.io/etc/2022/03/14/M1-mac-jekyll-setting.html)
+   - [jekyll 환경 세팅 - 서브 참고 1](https://frhyme.github.io/blog/install_jekyll_again/)
+   - [jekyll 환경 세팅 - 서브 참고 2](https://abbo.tistory.com/142)
+   - [vim으로 환경변수 설정](https://d-dual.tistory.com/8)
+   - [경로오류 - zsh:command not found](https://young1403.tistory.com/70)
+
+<br/>
+
+<hr>
+<br/>
+
+어제 하루종일 집보고 부산왔다. 내가 현재 얻을 수 있는 집 중에서 제일 나은 것 같은 곳을 찾아서 그냥 바로 계약하고 왔다. 부디.. 별 문제 없기를 ㅠㅠ <br/>그리고 지난 번에 배송 받았던 맥에 문제가 있었어서 반품하고 어제 원하는 컬러였던 스그로 다시 주문했었는데, 하루만에 배송이 와서 오늘 점검까지 완료했다! 점검하다보니 잘못된 파일로 확인을 해서 문제가 있다고 판단을 했던걸 알게 되었다. <br/>민망하군.. 그리고 막상 보니까 실물은 개인적으로 골드가 나았던 것 같다 희희.. 이미 지나간 일이니까~ 만족하고 사용해야지<br/>
+
+[맥북 점검 참고](https://youtu.be/_CGQF4SuAoA)<br/><br/>
+
+그리고 맥북 첫 환경 세팅을 했는데, vscode와 git, jekyll까지 설치했다. <br/>jekyll 설치하는데 지난 번에 윈도우에서 처음 설치할 때도 고생을 많이 했는데, 이번에는 생각보단 덜 고생했다. 윈도우라도 한 번 해봐서 그런가..? 좀 생각해서 세팅해서 그런가 ㅎㅎ.. <br/>아무튼 이제 이사가면 현재 사용 중인 데탑을 못가져갈 것 같아서(오래되서 가져가다가 고장날 것 같았다.) 새로 맥북을 구매한 건데 빨리 적응했으면 좋겠다. 이번엔 vscode 사용하면서 단축키도 좀 수월하게 사용했으면 좋겠는데.. 입사 전까지 정리하고 싶은 건 너무 많지만 시간이 없어서 너무 아쉽다. 그래도 꾸준히 하나씩 하다보면 언젠간 능숙해지겠지!<br/>
+화이쇼~!
