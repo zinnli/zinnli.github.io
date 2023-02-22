@@ -10,9 +10,9 @@ platforms:
     icon: "fab fa-instagram"
     link: "https://instagram.com/zinn__lii?igshid=MDM4ZDc5MmU="
 
-  - type: Telegram
-    icon: "fab fa-telegram"
-    link: "https://t.me/share/url?url=URL&text=TITLE"
+  # - type: Telegram
+  #   icon: "fab fa-telegram"
+  #   link: "https://t.me/share/url?url=URL&text=TITLE"
 
   # Uncomment below if you need to.
   #
