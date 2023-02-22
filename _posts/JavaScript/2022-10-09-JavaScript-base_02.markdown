@@ -3,6 +3,7 @@ layout: post
 title: JavaScript | DOM, Serverless
 date: 2022-10-09 22:00:30 +0900
 categories: [JavaScript]
+tag: [dom, serverless]
 ---
 
 # - DOM, Serverless -

@@ -3,6 +3,7 @@ layout: post
 title: HTML | 폰트 변경
 date: 2022-10-09 13:30:30 +0900
 categories: [HTML/CSS]
+tag: [font]
 ---
 
 내가 아는 두가지 폰트 사이트

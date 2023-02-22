@@ -3,6 +3,7 @@ layout: post
 title: Java Script |  ES6 정리
 date: 2022-10-02 14:00:30 +0900
 categories: [JavaScript]
+tag: [es6]
 ---
 
 # ES와 ES6에 대해서

@@ -3,6 +3,7 @@ layout: post
 title: Java Script | JS 클로저
 date: 2023-01-08 12:30:30 +0900
 categories: [JavaScript]
+tag: [closure]
 ---
 
 # 클로저 🌊

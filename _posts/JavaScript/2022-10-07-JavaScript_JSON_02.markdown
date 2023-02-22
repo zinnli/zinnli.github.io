@@ -3,6 +3,7 @@ layout: post
 title: Java Script | JSON 정리
 date: 2022-10-07 14:00:30 +0900
 categories: [JavaScript]
+tag: [json, object literal]
 ---
 
 # JSON(JavaScript Object Notation)

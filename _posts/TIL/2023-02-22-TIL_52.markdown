@@ -25,7 +25,6 @@ pin: true
 
    - [homebrew 세팅1](https://abbo.tistory.com/124)
    - [homebrew 세팅2](https://designdepot.tistory.com/209)
-
    - [mac 터미널 명령어](https://yozm.wishket.com/magazine/detail/746/)
 
 2. jekyll 설치

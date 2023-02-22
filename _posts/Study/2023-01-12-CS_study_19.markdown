@@ -3,6 +3,7 @@ layout: post
 title: Study | SPA와 MPA
 date: 2023-01-12 12:30:30 +0900
 categories: [Study]
+tag: [spa, mpa]
 ---
 
 # SPA와 MPA

@@ -3,6 +3,7 @@ layout: post
 title: Java Script | JS DOM
 date: 2022-12-15 12:30:30 +0900
 categories: [JavaScript]
+tag: [dom]
 ---
 
 # DOM

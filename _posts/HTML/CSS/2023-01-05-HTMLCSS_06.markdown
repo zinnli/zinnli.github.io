@@ -3,6 +3,7 @@ layout: post
 title: HTML | 시맨틱 마크업
 date: 2023-01-04 13:30:30 +0900
 categories: [HTML/CSS]
+tag: [sematic markup]
 ---
 
 # 시맨틱 마크업

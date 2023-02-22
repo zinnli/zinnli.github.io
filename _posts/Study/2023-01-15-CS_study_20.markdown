@@ -3,6 +3,7 @@ layout: post
 title: Study | ESLint와 Prettier
 date: 2023-01-15 12:30:30 +0900
 categories: [Study]
+tag: [eslint, prettier]
 ---
 
 # ESLint와 Prettier

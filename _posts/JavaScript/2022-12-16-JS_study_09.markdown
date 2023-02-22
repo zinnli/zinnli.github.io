@@ -3,6 +3,7 @@ layout: post
 title: Java Script | JS 비동기 프로그래밍
 date: 2022-12-16 12:30:30 +0900
 categories: [JavaScript]
+tag: [asynchronous, synchronous, programming, event loop, queue]
 ---
 
 # 비동기 프로그래밍

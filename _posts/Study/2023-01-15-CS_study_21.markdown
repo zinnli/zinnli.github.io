@@ -3,6 +3,7 @@ layout: post
 title: Study | SSR, CSR, SSG
 date: 2023-01-15 12:30:30 +0900
 categories: [Study]
+tag: [ssr, csr, ssg]
 ---
 
 # SSR, CSR, SSG

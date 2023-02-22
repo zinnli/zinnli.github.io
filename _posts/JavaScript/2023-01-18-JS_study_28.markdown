@@ -3,6 +3,7 @@ layout: post
 title: Java Script | 콜스택과 힙
 date: 2023-01-18 12:30:30 +0900
 categories: [JavaScript]
+tag: [callstack, heap, primitive, reference, type]
 ---
 
 # 콜스택과 힙

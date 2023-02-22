@@ -3,6 +3,7 @@ layout: post
 title: Java Script | 함수
 date: 2023-01-01 21:30:30 +0900
 categories: [JavaScript]
+tag: [function, declaration, expression]
 ---
 
 # 함수

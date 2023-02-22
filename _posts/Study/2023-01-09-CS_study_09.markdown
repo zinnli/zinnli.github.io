@@ -3,6 +3,7 @@ layout: post
 title: Study | CS 웹 프로토콜
 date: 2023-01-09 12:30:30 +0900
 categories: [Study]
+tag: [web protocol, protocol, tcp/ip, http]
 ---
 
 # CS 웹 프로토콜

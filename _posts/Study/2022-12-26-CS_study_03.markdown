@@ -3,6 +3,7 @@ layout: post
 title: Study | CS 프로세스와 스레드
 date: 2022-12-26 21:30:30 +0900
 categories: [Study]
+tag: [process, thread]
 ---
 
 # Process & Thread

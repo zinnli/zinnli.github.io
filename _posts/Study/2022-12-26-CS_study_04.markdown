@@ -3,6 +3,7 @@ layout: post
 title: Study | CS CORS
 date: 2022-12-26 21:30:30 +0900
 categories: [Study]
+tag: [cors]
 ---
 
 # CORS 🌊

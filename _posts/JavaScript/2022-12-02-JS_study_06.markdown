@@ -3,6 +3,7 @@ layout: post
 title: Java Script | JS Execution Context
 date: 2022-12-02 12:30:30 +0900
 categories: [JavaScript]
+tag: [execution context, context]
 ---
 
 # Execution Context

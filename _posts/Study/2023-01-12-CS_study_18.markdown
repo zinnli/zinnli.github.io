@@ -3,6 +3,7 @@ layout: post
 title: Study | DOM과 BOM
 date: 2023-01-12 12:30:30 +0900
 categories: [Study]
+tag: [dom, bom]
 ---
 
 # DOM과 BOM

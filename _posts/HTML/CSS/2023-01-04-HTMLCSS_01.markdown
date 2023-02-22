@@ -3,6 +3,7 @@ layout: post
 title: HTML | 반응형과 상대 길이 단위
 date: 2023-01-04 13:30:30 +0900
 categories: [HTML/CSS]
+tag: [responsive, length]
 ---
 
 # 반응형과 상대 길이 단위

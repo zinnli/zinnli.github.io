@@ -3,6 +3,7 @@ layout: post
 title: Study | 자료구조 이진 탐색
 date: 2023-01-11 12:30:30 +0900
 categories: [Study]
+tag: [binary search, time complexity]
 ---
 
 # 자료구조 이진 탐색

@@ -3,6 +3,7 @@ layout: post
 title: Study | CS TypeScript와 JavaScript (+ 프로그래밍)
 date: 2022-11-26 17:30:30 +0900
 categories: [Study]
+tag: [typescript, javascript, programming]
 ---
 
 # TypeScript와 JavaScript (+ 프로그래밍)

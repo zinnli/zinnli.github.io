@@ -3,6 +3,7 @@ layout: post
 title: Java Script | Java Script 함수 기본
 date: 2022-09-30 23:30:30 +0900
 categories: [JavaScript]
+tag: [function]
 ---
 
 # [도서] 나혼자 공부하는 자바스크립트

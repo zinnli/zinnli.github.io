@@ -3,6 +3,7 @@ layout: post
 title: HTML | flexbox
 date: 2023-01-04 13:30:30 +0900
 categories: [HTML/CSS]
+tag: [flex, grid]
 ---
 
 # flexbox
