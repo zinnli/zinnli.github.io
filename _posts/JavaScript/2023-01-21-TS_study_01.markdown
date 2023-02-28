@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Type Script | 기본
-date: 2023-02-28 12:30:30 +0900
+date: 2023-03-28 12:30:30 +0900
 categories: [JavaScript, TypeScript]
 tag: [typescript]
 ---
