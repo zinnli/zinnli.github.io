@@ -1,0 +1,38 @@
+---
+layout: post
+title: Study | 서브 도메인과 서브 폴더
+date: 2023-03-06 12:30:30 +0900
+categories: [Study]
+tag: [domain, subdomain, subfolder]
+---
+
+# Rest API
+
+### 서브 도메인
+
+ex) login.domain.com : 여기서 login 부분이 서브 도메인
+
+- 각각의 도메인으로 새로운 토픽을 관리할 때 사용(메인 서비스의 내용과 상관관계가 있지만, 이를 명확하게 구분짓고 싶을 때 사용)
+- 개발이 용이함
+- 큰 회사일수록 서브도메인 사용이 효율적임
+- 비교적 체계화된 웹사이트
+- 대표적인 예시 : Disney
+
+### 서브 폴더 (= 하위 경로)
+
+ex) domain.com/login
+
+- 여러 서비스들을 호스트 도메인 아래로 연결시켜 관리함
+- 서브 폴더의 내용은 주로 도메인과 연관성이 강하게 있으면 좋음
+- 마케팅에 용이(SEO 측면에서는 서브 폴더가 용이함 / 서브 도메인의 경우 각각의 SEO 설정 및 관리가 받침되어야 함)
+- 검색엔진 최적화(이런 견해가 대다수이나 구글의 공식 답변에서는 똑같다고 함)
+
+<br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[서브도메인과 서브폴더1](https://blog.performars.com/ko/%EC%84%9C%EB%B8%8C%EB%8F%84%EB%A9%94%EC%9D%B8vs%EC%84%9C%EB%B8%8C%ED%8F%B4%EB%8D%94)<br/>
+[서브도메인과 서브폴더2](https://shylog.com/seo-subdomain-vs-subfolders/)
