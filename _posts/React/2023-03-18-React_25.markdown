@@ -84,18 +84,22 @@ categories: [React]
 
 ### 나머지 parttern~~(이 부분은 추가로 더 공부하고 각각 정리 예정)~~
 
-1. Control props pattern : 컴포넌트를 제어 컴포넌트로 변환하고 외부 상태는 사용자가 컴포넌트의 기본 동작을 변경하는 사용자 지정 로직을 삽입하도록 허용하는 "single source of truth"로 사용됨
+1. Control props pattern <br/>
+   \: 컴포넌트를 제어 컴포넌트로 변환하고 외부 상태는 사용자가 컴포넌트의 기본 동작을 변경하는 사용자 지정 로직을 삽입하도록 허용하는 "single source of truth"로 사용됨
    - Inversion of Control : 2/4
    - Integration complexity : 1/4
-2. Custom hook pattern : 메인 로직이 사용자의 custom hook으로 전달되고 이 hook은 사용자가 접근할 수 있고, 여러 내부 로직(States, Handler)을 노출함으로써 컴포넌트의 제어를 쉬워지게 함
+2. Custom hook pattern <br/>
+   \: 메인 로직이 사용자의 custom hook으로 전달되고 이 hook은 사용자가 접근할 수 있고, 여러 내부 로직(States, Handler)을 노출함으로써 컴포넌트의 제어를 쉬워지게 함
    - Inversion of Control : 2/4
    - Integration complexity : 2/4
-3. Props getters pattern : 제어권 면에서는 강력하나 컴포넌트를 통합하기는 어려운 방식
+3. Props getters pattern <br/>
+   \: 제어권 면에서는 강력하나 컴포넌트를 통합하기는 어려운 방식
    - 사용자는 props를 직접 다루고 스스로 로직을 다시 만들어야하는 복잡성을 감추기 위해 기본 props를 노출하는 대신 props getter의 목록을 제공함
    - 여기서 getter는 많은 props를 반환하는 함수이며 사용자가 올바른 JSX 요소에 쉽게 연결할 수 있도록 의미있는 이름을 제공함
      - Inversion of Control : 3/4
      - Integration complexity : 3/4
-4. State reducer pattern : 사용자에게 컴포넌트 내부의 동작 방식을 변경할 수 있는 방법을 제공
+4. State reducer pattern <br/>
+   \: 사용자에게 컴포넌트 내부의 동작 방식을 변경할 수 있는 방법을 제공
    - Custom hook 패턴과 유사하나, 사용자가 훅에 전달하는 reducer를 정의하고 이 reducer는 컴포넌트 내부 행동을 오버로드함
      - Inversion of Control : 4/4
      - Integration complexity : 4/4
@@ -107,7 +111,7 @@ categories: [React]
 <br/><br/>
 출처<br/>
 
-[리액트 디자인 패턴](https://javascript.plainenglish.io/5-advanced-react-patterns-a6b7624267a6)
-[리액트 디자인 패턴 - 한글버전](https://cocobi.tistory.com/120)
-[리액트 디자인 패턴 - 예시 1](https://github.com/alexis-regnaud/advanced-react-patterns)
+[리액트 디자인 패턴](https://javascript.plainenglish.io/5-advanced-react-patterns-a6b7624267a6)<br/>
+[리액트 디자인 패턴 - 한글버전](https://cocobi.tistory.com/120)<br/>
+[리액트 디자인 패턴 - 예시 1](https://github.com/alexis-regnaud/advanced-react-patterns)<br/>
 [리액트 디자인패턴 : Compound Components (컴파운드 컴포넌트 패턴) - 예시 2](https://itchallenger.tistory.com/266)
