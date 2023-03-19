@@ -1,0 +1,115 @@
+---
+layout: post
+title: 230319_WIL | 작고 귀여운 내 멘탈
+date: 2023-03-19 21:30:30 +0900
+categories: [I Learn, WIL]
+tag: [react, typescript, compound-component, uuid, atomic-design, deeplink]
+---
+
+# 230319_WIL
+
+<br/>
+
+## **이번주 한 일**
+
+- 회사 랜딩 페이지 하나 끝났다
+- 재사용 컴포넌트를 어떻게 만드는게 효율적일까
+- 선임님이 내준 과제하면서 들은 키워드 정리<br/>(선임님이 알려주신 키워드 + 동기분이 알려주신 키워드)
+  - compound-component
+  - uuid
+  - atomic-design
+  - 딥링크
+  - table에 관하여<br/>
+    ++ 쿼링함수???(라는 걸 들었던 것 같은데 찾아도 안나온다 뭐였지.. 적어놨는데 잘못 적은듯)
+
+<br/>
+
+### **이번주의 정리**
+
+1. [**compound-component**](https://zinnli.github.io/posts/React_25/)<br/>
+   \: 컴포넌트에 선언적 서브 컴포넌트 API를 제공하는 방법
+
+   - 커스터마이징이 용이하고 관심사를 분리하여 이해가 쉬운 API를 갖춘 컴포넌트를 만들 때 유용하다는 장점을 지니고 있는 리액트 디자인 패턴 중 하나의 패턴이다(자세한 건 링크 참고)
+   - compound component의 경우는 직접 하나를 만들어 보는 것이 좋을듯. 다른 사람들의 코드를 보고 이해는 했지만 직접 만들어라고 하면 못 만들 것 같다.
+
+2. [**uuid**](https://zinnli.github.io/posts/JS_study_29/)<br/>
+   \: Universally Unique IDentifier의 약자로 전세계에 하나밖에 없는 Id라는 뜻(자세한 건 링크 참고)
+
+3. **atomic-design**
+
+   <details>
+   <summary>이미지 보면 이해하기 좋음! + 각 요소들 설명</summary>
+   <div markdown='1'>
+
+   <img src="https://pbs.twimg.com/media/FBv5YqaXEBIrVnq?format=jpg&name=small" width="700" /><br/>
+   출처 : <https://twitter.com/brad_frost/status/1449026849246482434>
+
+   - Atoms : 더 이상 쪼갤 수 없는 디자인의 최소 단위
+   - Molecules : Atoms를 모아서 만들어져 최소 한 가지 기능은 수행함
+   - Organisms : Molecules + Atoms를 모아서 만들며 사용자에게 의미와 역할이 존재하는 단위
+   - Template : 아직 데이터는 연결되어있지 않은 최종 레이아웃의 형태로 여러 개의 Organisms로 구성됨
+   - Page : Template에 실제 Data가 결합이 되어 사용자에게 전달이 되는 최종 디자인의 형태
+
+   </div>
+   </details>
+
+   - 여러 블로그들의 경험담을 비교해 봤을 때, 작은 프로젝트에서는 충분히 진행해볼만한 디자인 패턴이지만, 큰 규모의 프로젝트에서는 많은 고민이 필요할 것 같다는 생각이 드는 주제였음
+
+4. **딥링크**
+   \: 모바일 환경의 웹 또는 다른 앱에서 url을 클릭했을 때 앱을 실행시키고 특정 페이지로 이동하도록 하는 기능
+
+   - 웹에서 딥링크를 선택했을 때 -> 앱이 설치되어있는 경우 : 앱을 바로 실행 <br/> 앱이 설치되어 있지 않은 경우 : 플레이스토어 or 앱스토어의 앱 상세페이지로 연결
+   - 구현 방식 : setTimeout으로 일정 시간동안 앱이 실행되지 않는다면, 설치 페이지로 이동함
+
+5. **table** <br/>
+   \: 행과 열로 이루어진 html 요소<br/>
+   (++ 정보 전달이 메인(인데 행과 열로 이루어진?)인 자료에서 사용하는 것이 좋을 것 같다 -- 이건 내생각!)
+
+   - **caption** : 표의 목적에 대해 명확하고 상세한 설명을 포함하는 요소로서, 사용자가 표 콘테츠를 확인할지, 넘어가지리 결정할 때 도움을 줄 수 있음
+   - 헤더 요소의 **scope** : 복잡한 표에서 범위를 명시하여 특정 헤더와 연관된 칸에 대한 정보 제공 가능(읽는 방향 파악하기 좋음)
+   - 위의 두가지 요소(caption, scope는 사용자 경험(+SEO)에 도움을 줌)
+
+    <details>
+    <summary>사용 방법은 아래의 코드 참고</summary>
+    <div markdown="1">
+      ```html
+      <table>
+        <caption>
+          Color names and values
+        </caption>
+        <tbody>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">HEX</th>
+            <th scope="col">HSLa</th>
+            <th scope="col">RGBa</th>
+          </tr>
+          <tr>
+            <th scope="row">Teal</th>
+            <td><code>#51F6F6</code></td>
+            <td><code>hsla(180, 90%, 64%, 1)</code></td>
+            <td><code>rgba(81, 246, 246, 1)</code></td>
+          </tr>
+          <tr>
+            <th scope="row">Goldenrod</th>
+            <td><code>#F6BC57</code></td>
+            <td><code>hsla(38, 90%, 65%, 1)</code></td>
+            <td><code>rgba(246, 188, 87, 1)</code></td>
+          </tr>
+        </tbody>
+      </table>
+      ```
+    </div>
+    </details>
+
+<br/>
+<hr>
+<br/>
+
+어느때보다 기가 많이 죽었던 일주일.. 아직 많이 부족하구나라는 생각을 백만스물다섯번은 한 것 같다 희희.. 잘하고 싶은데 아직 잘 모르는 내용들도 많고, 아직 활용함에 있어서 실력적으로 부족한 점이 많아서 스트레스를 많이 받고 있다. 잘하고는 싶은데 어떤 걸 어떤 식으로 공부해야할지에 대해 아직 방향을 못정한 것 같다. 현재로써는 할 수 있는 건 강의들 듣고 공식문서를 반복적으로 보는 정도?? 이제 일하고 오면 매일 조금씩이라도 코드를 짜보는 연습을 해야할 것 같다. 주말엔 이론 정리 위주로 하고?.. 얼마 전에 받았던 과제도 선임님이 말씀하셨던 메인 기능인 재활용 가능한 컴포넌트에 대해 먼저 한 번 더 정리해서 해당 부분부터 다시 짜보고, 이후에는 예전에 html과 css로만 작업했던 포트폴리오를 수정해볼까 싶다. 사프는 지금 다들 연락이 제대로 안되서...<br/> 하나하나에 일희일비 하지말고 중심을 잘 잡는게 현재의 나에게 제일 중요한 문제인 것 같다. 현재를 받아들이고 성장해보자!!!! 으샤룽!<br/><br/>
+
+[compound-component](https://zinnli.github.io/posts/React_25/)<br/>
+[uuid](https://zinnli.github.io/posts/JS_study_29/)<br/>
+[Atomic Design Pattern의 Best Practice 여정기](https://yozm.wishket.com/magazine/detail/1531/)<br/>
+[[javascript] 딥링크(Deeplink)](https://ahnsisters.tistory.com/65)<br/>
+[mdn 공식문서 - table](https://developer.mozilla.org/ko/docs/Web/HTML/Element/table)

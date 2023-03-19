@@ -1,0 +1,123 @@
+---
+layout: post
+title: Java Script | UUID
+date: 2023-03-18 12:30:30 +0900
+categories: [JavaScript]
+tag: [UUID, Key]
+---
+
+# UUID
+
+> #### 목차 <br/>
+>
+> 1. UUID란
+> 2. UUID 버전
+> 3. UUID 사용법
+
+<br/>
+
+## 1. **UUID란**
+
+\: Universally Unique IDentifier(범용고유식별자)의 약자로 전세계에 하나밖에 없는 Id라는 뜻
+
+- 어떤 개체(데이터)를 고유하게 식별하는 데 사용되는 표준
+- 네트워크 상에서 서로 모르는 개체들을 식별하기 위해서는 각각의 고유한 이름이 필요한데, UUID 표준에 따라 이름을 부여하면 실제 사용 상에서 중복될 가능성이 적기 때문에 많이 사용되고 있음
+
+## 2. **UUID 버전**
+
+- 버전 1 (MAC 주소) : 타임 스탬프(시간) 기준으로 생성(앞부분은 타임스탬프 기준 + 뒷부분은 Mac주소가 저장됨)
+- 버전 2 (DCE 보안) : 타임스탬프 기반이나 DCE 환경을 위한 UUID
+- 버전 3 (MD5 해시) : MD5 해시 기준으로 생성
+- **버전 4 (랜덤)** : 랜덤값을 기반으로 생성 => 주로 사용(무난)
+- 버전 5 (SHA-1 해시) : SHA-1 해시 기준으로 생성
+
+  - 단어 정리
+    - [Mac 주소](https://zinnli.github.io/posts/CS_study_09/) : 각 네트워크 카드에 할당된 고유 식별 주소
+    - DCE(Distributed Computing Environment)
+
+## 3. **UUID 사용법**
+
+1. **UUID 라이브러리**
+
+   ```bash
+   # npm
+   npm install uuid
+   # v4 만 설치
+   npm install uuid4
+
+   # yarn
+   yarn add uuid
+   ```
+
+   - 버전에 따른 사용법은 [여기](https://inpa.tistory.com/entry/NODE-%F0%9F%93%9A-UUID-%EB%AA%A8%EB%93%88#thankYou) 참고
+   - 주로 사용된다고 하는 UUID 라이브러리 **v4의 사용법**
+
+     ```javascript
+     import { v4 } from 'uuid';
+
+     //기본 설정으로 생성
+     console.log(v4());
+
+     //설정을 붙여서 생성
+     let options = {
+        random: // 16개의 랜덤 바이트값
+        rng: // random 변수를 대체할 16개의 랜덤 바이트값을 반환하는 함수
+     }
+     console.log(v4(options));
+     ```
+
+2. **Crypto.getRandomValues()**
+
+   - `Math.random()`을 사용하지 않는 이유는?
+     - 일반적으로 random한 숫자를 생성할 때는 Math.random을 주로 사용했는데, 이 함수의 경우 안전한 난수를 제공하지 않기 때문에 보안과 관련된 것에는 이 함수를 사용하면 안된다고 함([여기](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Math/random) 참고)
+   - 그래서 사용하는 것이 아래의 `Crypto.getRandomValues()`
+
+     - 이 메소드는 암호학적으로 강력한 난수를 생성할 수 있음(매개변수로 제공한 배열을 무작위 숫자로 채움)
+     - 안전하지 않은 컨텍스트에서 사용할 수 있는 인터페이스의 유일한 메소드라고 볼 수 있음
+     - 아래의 예시 참고!
+
+     ```javascript
+     //형태
+     getRandomValues(typedArray);
+
+     //예시
+     var array = new Uint32Array(10);
+     window.crypto.getRandomValues(array);
+
+     console.log("random numbers:");
+     for (var i = 0; i < array.length; i++) {
+       console.log(array[i]);
+     }
+     ```
+
+   - 그런데 공식문서 상에서는 이 메소드를 암호화 키를 생성하는 데 사용하지말라고 함(보안 컨텍스트에서 실행되는 것이 보장되지 않음)
+   - 공식문서에서는 암호화 생성 시에는 `SubtleCrypto.generateKey()`를 사용하는 것을 추천함
+
+3. **Crypto.randomUUID()**
+
+   - 이 기능은 보안 컨텍스트(HTTPS)에서만 사용 가능하다고 함
+   - 이 메소드는 암호화 보안 난수 생성기를 사용하여 Crypto v4 UUID를 생성하는데 사용됨
+   - 아래의 예시 참고!
+
+     ```javascript
+     let uuid = self.crypto.randomUUID();
+     console.log(uuid);
+     ```
+
+4. 사용법 추가 사항
+
+   - `crypto.getRandomValues()` 와 `crypto.randomUUID()` 는 지원 브라우저가 다르기 때문에 지원하는 브라우저 버전을 확인 후 사용하는 것이 좋음
+   - 선택 시에는 보안 컨텍스트 여부에 따라 선택하는 것도 좋은 방법임(공식문서 바탕으로 내 생각)
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[javascript에서 UUID 생성하는 방법](https://yjh5369.tistory.com/entry/javascript%EC%97%90%EC%84%9C-UUID-%EC%83%9D%EC%84%B1%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95) <br/>
+[[NODE] 📚 UUID 모듈 사용법](https://inpa.tistory.com/entry/NODE-%F0%9F%93%9A-UUID-%EB%AA%A8%EB%93%88) <br/>
+[mdn 공식 문서 - Math.random()](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Math/random) <br/>
+[mdn 공식 문서 - Crypto.randomUUID()](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) <br/>
+[mdn 공식 문서 - Crypto.getRandomValues()](https://developer.mozilla.org/ko/docs/Web/API/Crypto/getRandomValues)
