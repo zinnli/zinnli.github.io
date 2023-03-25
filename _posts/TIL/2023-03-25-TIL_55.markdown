@@ -1,0 +1,86 @@
+---
+layout: post
+title: 230325_TIL | Google Search Console / Web push
+date: 2023-03-25 21:50:30 +0900
+categories: [I Learn, TIL]
+tag: [gitblog, google-search-console, web-push, FCM]
+---
+
+<br/>
+
+### **오늘의 정리**
+
+### 1. **Google Search Console**
+
+- 어제 회사 스크럼 회의 때 `google search console` 이야기가 나왔었는데, 이전에 search console에 연결해놨던 깃블로그가 생각났다. 확인해보니 설정한지 한달이 넘었는데 크롤링이 아예 안되는 귀여운 나의 깃블로그..
+
+- 색인생성 -> Sitemaps에는 제출된 사이트맵이 상태가 성공으로 뜨고 있었는데 검색이 1도 안되고 있었다.
+
+  ```bash
+  User-agent: *
+  Disallow: /norobots/
+  Sitemap: {{ '/sitemap.xml' | absolute_url }}
+  ```
+
+  원래 설정되어있던 robots.txt<br/>
+  -> 내가 봤을 땐 여기가 문제라고 생각했다.<br/>
+
+  https://zinnli.github.io/robots.txt 를 url에 입력해보면, 아래처럼 뜨고 있었다.
+
+  ```bash
+  User-agent: *
+  Disallow: /norobots/
+  Sitemap: /sitemap.xml
+  ```
+
+  <br/>
+
+  찾아본 결과로는 [검색엔진 색인 최적화](https://extrememanual.net/10728)에서 나와있는 정보를 바탕으로 하여 robots.txt를 수정했다.
+
+  1. User-agent : 검색엔진 로봇 이름으로 \*기호는 모든 검색엔진 로봇에 대한 접근을 허용한다고 함
+  2. Disallow : 크롤링을 허용하지 않을 페이지 설정
+  3. Allow : 접근을 허용할 페이지를 설정(미선언 시 기본적으로 검색엔진 로봇은 허용으로 간주함)
+  4. Sitemap : 사이트맵 주소를 지정해서 크롤링 로봇이 따라갈 수 있게 설정함
+
+  ```bash
+  User-agent: *
+  Allow : /
+  Sitemap: https://zinnli.github.io/sitemap.xml
+  ```
+
+  각각에 대한 부분을 하나씩 테스트해보고 싶긴 했지만, 구글 검색 엔진 자체가 허가?나는데까지 시간이 너무 오래 걸리는 문제가 있었고, 각각을 테스트해보기까지는 너무 오랜 시간이 걸릴 것 같다는 판단이 섰다.<br/>
+
+  현재 상태는 아래처럼 크롤링이 가능하다고 설정이 되어있긴 한데,<br/>
+
+ <img src="https://user-images.githubusercontent.com/102575747/227700196-fc0628a8-768f-4fa5-aca9-aba89e658eb7.png" width="400" />
+  <br/>
+
+색인 부분을 확인해보니까 페이지 색인 생성이 되지않고 있다. 데이터를 처리하는 중이기 때문에 며칠 후에 다시 확인을 해보라고 올라와있는데, 이건 위에서 말한 시간적인 문제가 해결해줄 거라고 생각한다.. 2주정도만 다시 기다려보고 안되면 새로운 방법을 찾아봐야겠다. 어렵네 증말!!~!!~
+
+### 2. **Web push 알람**(이후에 따로 깔끔하게 정리할 예정)
+
+- 웹 푸시 발표 때문에 공부하고 있는데 어렵다
+- 현재 firebase를 통한 web push 알람을 진행해보고 있는 중인데 방향을 잃어서 고민하다가 일단 코드부터 시도를 해보는 게 나을 것 같아서 짜보는 중!
+- firebase를 통한 알람들은 주로 여기를 참고 했는데 1번을 메인으로 해서 콘솔 찍히는걸 확인하면서 진행했다. 그런데 알람 자체가 안떠서 뭐지??하다가 코드를 추가해야하나보다! 하고 있었는데, 찾아보니 알림 테스트를 하면 해결되는 부분이었다.(firebase 사이트에 잘 나와있다!)
+
+  1. [Web Push \| React + FCM 구현하기(feat.pwa, service worker)](https://velog.io/@heelieben/FCM-React-Web-Push-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-feat.-pwa-service-worker)
+  2. [firebase 문서 내의 클라우드 메세징](https://firebase.google.com/docs/cloud-messaging/concept-options?hl=ko)
+  3. [FCM을 활용한 웹 푸시 구현 - javascript](https://dongsik93.github.io/til/2019/07/31/til-etc-fcm/)
+  4. [[FCM] Firebase Cloud Messaging 으로 웹에서 푸시알림 구현하기 (React 클라이언트)](https://anywaydevlog.tistory.com/93)
+  5. [[React, PWA] 클라이언트에서 웹 푸시(fcm) 설정하기](https://lemontia.tistory.com/1047)
+
+- 추가로 이대로만 하면 알림 자체가 뜨지 않는 문제가 있는데, 위 web push에 대해 동기분과 함께 준비를 하고 있던터라 작은 도움을 받아,
+  <chrome://flags/#enable-system-notifications> 이 친구를 `disabled` 처리를 해줘야 올바르게 뜬다는 사실을 알게 되었다. <br/> 테스트 해본다고 default 상태로도 확인해봤는데 20분동안 안뜨는걸 보고 안되겠구나^^하고 받아들였다. 알림 처리의 상태도 확인하고 있었는데 계속 "활성" 상태이다가, enable-system-notifications를 disable 처리를 하는 순간 바로 완료 처리로 바꼈다..
+
+- 아래는 테스트 리스트들..! 듀얼 모니터로 작업중인데 좌상단에 테스트했던 내용으로 팝업? 알림? 이 뜨는 걸 확인할 수 있었고, 다른 탭을 보고있거나 하면 바로 텍스트에 접근이 되지 않아서 좀 더 확인을 해봐야할 것 같다.
+
+<img src="https://user-images.githubusercontent.com/102575747/227727231-f1674e66-7cf8-43d6-a31c-4820a93da9b8.png" width="600" />
+
+- push API에 대한 정보는 아직 어려워서 fcm으로 먼저 파악하려고 진행한 내용인데, 찾아보니 [web-push라는 npm package](https://s0n9h2.tistory.com/m/124)도 있는 것 같아서 참고해서 진행해볼 생각!
+
+  <br/>
+
+<hr>
+<br/>
+
+갑자기 삘 꽂혀서 search console 찾아봤다. 월요일엔 웹 푸시 관련해서 발표 준비해야하는데, 코드가 아직 좀 어렵다. 내일은 진짜 열심히 해야지.. 히히 주말이 되니까 나도 모르게 뒹굴거리게 된다.. 정신차리자궁 :(
