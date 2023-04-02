@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Type Script | 기본
-date: 2023-03-28 12:30:30 +0900
+date: 2023-04-10 12:30:30 +0900
 categories: [JavaScript, TypeScript]
 tag: [typescript]
 ---
@@ -47,5 +47,5 @@ let 현징 = true;
 <br/> <br/>
 출처<br/>
 
-[[React] 불변성이란? 불변성을 지켜야 하는 이유](https://narup.tistory.com/268)<br/>
-[[javascript] 콜스택/메모리힙 구조, 데이터 저장/참조 원리](https://charming-kyu.tistory.com/19)<br/>
+<!-- [[React] 불변성이란? 불변성을 지켜야 하는 이유](https://narup.tistory.com/268)<br/>
+[[javascript] 콜스택/메모리힙 구조, 데이터 저장/참조 원리](https://charming-kyu.tistory.com/19)<br/> -->

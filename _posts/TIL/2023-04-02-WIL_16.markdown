@@ -1,0 +1,161 @@
+---
+layout: post
+title: 230402_WIL | 이번주 정리!
+date: 2023-04-02 17:30:30 +0900
+categories: [I Learn, WIL]
+tag: [react, typescript, 커링함수, keyof, typeof, nextjs, isr]
+---
+
+# 230402_WIL
+
+<br/>
+
+## **이번주 한 일**
+
+- 회사에서 js로 진행했던 프로젝트를 ts로 바꾸고 있는데, 선임님이 any로 임의로 오류만 잡아둔 내용을, 각 기능에 알맞는 타입으로 넣어주고 있다.<br/>(너무 어렵다.. 하루에 다섯번씩 마음속으로 울었다 ㅎ)
+- typescript에서 union type 과 intersection type에 대해 잘못된 블로그 글들이 많아서 파악을 잘못했다. 어렵다.
+- keyof , typeof 사용법 파악 중인데 조금 어렵다.
+- FCM 준비해서 파트장님, 선임님 앞에서 발표??했다.<br/>(함께 준비했던 연구원님이 준비를 너무 많이 해주셔서 버스탔다. 항상 내가 생각한 것보다 두걸음씩 더 준비하신다. 멋있다.)
+- 커링함수 쓰는 법을 이제 이해했다. 쿼링인줄 알았는데 커링이었다.
+- next.js 스터디를 하면서 ISR에 대해 들었는데, 생소하다.
+- git pull 하는 부분에서 자꾸 오류가 났는데 선임님이 방법을 알려주셨다! 진짜 짱멋있다!
+- 주말동안 양심없이 너무 쉬었다. 정신 차리자!
+
+<br/>
+
+### **이번주의 정리**
+
+#### 1. **Typescript**
+
+- union과 intersection type <br/>\: 이게 헷갈린 이유가, 작업하다가 union(\|)과 intersetcion type(&)에 대한 잘못된 블로그를 보게 되서 생긴 일이었는데, 사실 위 내용이 은근 헷갈린다. [typescript 공식문서 참고](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html)
+  - [여기는 좀 디테일하게 설명해뒀다.](https://stackoverflow.com/questions/38855908/naming-of-typescript-union-and-intersection-types) (이해한 줄 알았는데 이거 보고 나니까 헷갈린다. 나중에 다시 정리해야겠다....)
+- typepof, keyof
+
+  - typeof : 객체 데이터를 객체 타입으로 변환해주는 연산자
+
+  ```javascript
+  const obj = {
+    purple: "grape",
+    blue: "blueberry",
+    pink: "peach",
+  };
+
+  type Fruit = typeof obj;
+
+  // type Fruit = {
+  //   purple: string,
+  //   blue: string,
+  //   pink: string,
+  // };
+  ```
+
+  - keyof : 객체 형태의 타입을 따로 속성들만 뽑아 모아 유니온 타입으로 만들어주는 연산자
+
+  ```javascript
+  type Type ={
+    name : string;
+    age: number;
+    job : boolean;
+
+    type Union = keyof Type;
+
+    // type Union = name | age | job
+  }
+  ```
+
+  - keyof typeof : 객체의 일부분만 가져와서 타입으로 사용하고 싶을 때 사용하는 방법
+
+  ```javascript
+  const obj = {
+    purple: "grape",
+    blue: "blueberry",
+    pink: "peach",
+  };
+
+  type Fruit = keyof typeof obj;
+
+  type Fruit = "purple" | "blue" | "pink"
+  ```
+
+#### 2. [**커링함수**](https://tibetsandfox.tistory.com/32)
+
+```javascript
+//일반 함수
+const handler = (name) => {
+  alert(name);
+};
+return <button onClick={() => handler("hi")}>test</button>;
+
+//커링 함수
+const handler = (name) => () => {
+  alert(name);
+};
+return <button onClick={handler("hi")}>test</button>;
+```
+
+#### 3. **ISR**(Incremental Static Re-Generation)
+
+- 일정 주기마다 데이터의 최신 여부를 검사하고 업데이트된 데이터로 페이지를 다시 생성함
+
+#### 4. **git pull 오류 해결**
+
+<details>
+<summary>오류 내용</summary>
+<div markdown="1">
+
+```bash
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint:
+hint:   git config pull.rebase false  # merge
+hint:   git config pull.rebase true   # rebase : 이거 잘못썼다가 브랜치에서 이전에 커밋한 내역이 싹 다 날라갔었음
+hint:   git config pull.ff only       # fast-forward only : 이 부분도 항상 먹히지 않았다.
+hint:
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+fatal: Need to specify how to reconcile divergent branches.
+```
+
+</div>
+</details>
+
+- 위의 토글 내의 내용처럼 오류가 반복적으로 났었고, hint 내용의 내용을 바탕으로 보면, hint에 나와있는 코드를 입력해두면 된다는 내용이었다.
+- 찾아본 결과로는 아래의 코드를 입력해주는 것을 제일 추천했는데, 이 코드를 입력해도 git pull이 안되는 상황은 해결되지 않았다.(설명을 많이 찾아봤는데 잘 이해가 되지 않았다.)[git pull hint 참고](https://minikuma-laboratory.tistory.com/27)
+
+```bash
+git config pull.ff only
+```
+
+- 내가 이해했던 ff only는 A(먼저 커밋한 내역)와 B(이제 커밋할 내역)의 커밋 내용이 있을 때, B가 A에 포함되는 커밋내역일 때만 pull이 진행되는??? 그런 내용으로 이했다.
+- 그런데 내가 겪었던 문제는 내가 메인에서 브랜치를 생성하는 시점으로 봤을 때, <br/> 이전에 생성했던 브랜치가 메인에 머지를 하고 나면, 그 내역을 pull 받고 싶은데, 그 부분이 안되는 문제였기때문에, 애초부터 ff-only는 나한테 맞는 방법이 아니였던 것 같다고 파악했다.
+
+- 선임님이 알려주신 방법 : [같은 해결방법을 제안하는 블로그를 찾았다!](https://dbdbd.tistory.com/392) ==> 성공!(근데 머지하라고 뜸)
+
+```bash
+git config pull.rebase false
+```
+
+#### 5. 이건 진짜 모르겠음
+
+  <img src="https://user-images.githubusercontent.com/102575747/229355413-71a1b310-c962-4f4e-9fc3-5a97bf3f4283.png" width=700 />
+
+- 언제서부턴가 자꾸 뜨는 에러?코드
+- 구글링해봐도 잘 안나오고, 막상 저 에러코드가 뜨는데 pull, push, merge 다 문제 없이 진행된다. 근데 항상뜸. 왜죠?
+
+<br/>
+<hr>
+<br/>
+
+일주일동안 타입스크립트때문에 스트레스를 어마무시하게 받았다. 자꾸 현타오고.. 내가 이것밖에 안되나.. 하는 생각을 백만번한 것 같다. 추가로 타 프로젝트의 컴포넌트를 참고해서 똑같이 만들면 된다는 업무를 주셨는데, 해당 부분도 이해가 느려서 엄청 오래걸렸다. 이때까지 얼마나 엉망으로 코드를 짜왔는지 알 수 있는 기회였다.. 사실 다시 만들어보라고 해도 시간이 오래 걸릴 것 같다. 이런 걱정을 한다면 공부를 하는게 옳겠지만, 이번 주말은 진짜 아무고토 안하고 보냈다. 그냥 리얼 휴식..희희.. 그래도 어려웠던 부분들은 소소하게 정리하고 넘어가야 다음에도 같은 실수를 안하니까...... 너무 소소하군 <br/>이제 정리나 공부를 할 때 좀 더 깊고, 직접 코드를 짜보면서 공부하는게 리얼로 중요한 것 같다. 사실 예시 코드? 테스트 코드???짜는게 조금 어렵다. 올바르게 작동하는지 체크하기 위해서 짜는 코드들이 즉각적으로 이해가 잘 되지않고, 한참 봐서야 겨우 이해하는..???? 이런 내가 너무 부끄럽지만..... 계속하면 좋아지지 않을까 하는 자그마한 생각^^ 이제 내일부터는 원티드 프리온보딩 강의도 시작해서 공부하는 시간을 좀 더 늘리게 될 것 같다. 그리고 ts 정리하려고 md 파일은 만들어놓고 생각보다 내용이 너무 광범위해서 계속 만드는 걸 미루게 된다. 정신차리자!!!!!!<br/><br/>
+
+[typescript 공식문서 참고](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html)<br/>
+[stack overflow - union, intersection](https://stackoverflow.com/questions/38855908/naming-of-typescript-union-and-intersection-types)<br/>
+[객체를 타입으로 변환 - keyof / typeof 사용법](https://inpa.tistory.com/entry/TS-%F0%9F%93%98-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-keyof-typeof-%EC%82%AC%EC%9A%A9%EB%B2%95)<br/>
+[커링함수](https://tibetsandfox.tistory.com/32)<br/>
+[Incremental Static Generation이란?](https://merrily-code.tistory.com/173)<br/>
+[NextJS와 ISR](https://velog.io/@seungchan__y/NextJS%EC%99%80-ISR)<br/>
+[git pull hint 참고](https://minikuma-laboratory.tistory.com/27)<br/>
+[git pull 에러 # merge # rebase # fast-forward only](https://dbdbd.tistory.com/392)
