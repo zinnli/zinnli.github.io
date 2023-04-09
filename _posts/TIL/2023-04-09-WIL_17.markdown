@@ -1,0 +1,224 @@
+---
+layout: post
+title: 230409_WIL | 4월 1주차!
+date: 2023-04-09 17:30:30 +0900
+categories: [I Learn, WIL]
+tag: [react, react-hook-form, custom-hook, object]
+---
+
+# 230409_WIL
+
+<br/>
+
+## **이번주 한 일**
+
+- react-hook-form 사용(회사 프로젝트)
+- custom-hook 공부
+- 객체합치기
+
+<br/>
+
+### **이번주의 정리**
+
+#### 1. [**react-hook-form**](https://react-hook-form.com/api/useform/)
+
+1. 설치
+
+   ```bash
+   npm i react-hook-form
+   yarn add react-hook-form
+   ```
+
+2. 사용법(대표적인 몇가지!)
+
+   - **register** : input에서 값을 불러오기 위한 함수로 다른 옵션을 이횽하면 input의 유효성 검사도 쉽게 할 수 있음
+   - **watch** : input의 입력값을 실시간으로 알 수 있게 해줌
+   - **handleSubmit** : form을 서버로 제출할 때 사용
+   - **onError** : form에서 에러났을 때 실행되는 함수
+   - **setError** : error를 수동으로 설정할 수 있음
+   - **clearErrors** : error를 수동으로 지울 수 있음
+
+3. 예시
+   <details>
+   <summary>예시!!!</summary>
+   <div markdown="1">
+
+   ```javascript
+   export default function App() {
+     const { register, handleSubmit, errors } = useForm();
+     const onSubmit = (data) => {
+       console.log(data);
+     };
+     const onError = (error) => {
+       console.log(error);
+     };
+
+     return (
+       <div className="App">
+         <form onSubmit={handleSubmit(onSubmit, onError)}>
+           <label htmlFor="password">비밀번호</label>
+           <input
+             id="password"
+             type="password"
+             placeholder="password"
+             {...register("password", {
+               pattern: {
+                 value:
+                   /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/,
+                 message: "비밀번호 형식을 확인해주세요.",
+               },
+             })}
+           />
+           <button>테스트</button>
+         </form>
+         {errors && <h1>{errors?.passowrd?.message}</h1>}
+       </div>
+     );
+   }
+   ```
+
+   </div>
+   </details>
+
+#### 2. **custom-hook**
+
+1. 특징
+
+   - Hook 규칙의 위반 여부를 체크하기 위해 custom hook은 "use"로 시작되어야 함
+   - 각각의 hook에 대한 호출은 서로 독립된 state를 받음
+   - 로직 공유의 유연성을 제공
+
+2. 예시
+
+   - [공식문서 custom hook](https://ko.reactjs.org/docs/hooks-overview.html#building-your-own-hooks)을 보고 테스트를 해보려고 했는데, ChatAPI 문제로 일단 다른 간단한 예시로 변경했다.
+   - 공식문서 해석은 [여기](https://velog.io/@minai/React-Hooks-Custom%ED%95%98%EA%B8%B0)가 잘해두셨다.
+
+      <details>
+      <summary>간단한 예시</summary>
+      <div markdown="1">
+
+     ```javascript
+
+     //Inputs.jsx
+
+     export default function inputs(){
+       const userName = useInputs();
+       const userEmail = useInputs();
+
+     return (
+       <>
+       <input type="text" id="userName" {...userName}/>
+       {userName.value}
+       <input type="email" id="userEmail" {...userEmail}/>
+       {userEmail.value}
+       </>
+     )
+     }
+
+     //useInputs.js
+     import { useState } from "react";
+
+     export default function useInputs() {
+       const [value, setValue] = useState("");
+       const onChange = (e) => setValue(e.target.value);
+
+       return { value, onChange };
+     }
+
+     ```
+
+      </div>
+      </details>
+
+#### 3. **객체합치기**
+
+- 객체 속성에 접근하는 방법
+
+  - 점 표기법 : key값을 그대로 적어주는 형식
+  - 대괄호 표기법 : key값을 문자열로 적어주는 형식
+
+    ```javascript
+    object.person;
+    object["person"];
+    ```
+
+- 두개의 객체를 합칠 때(같은 키를 가지고 있는 두개의 객체)
+
+  - 각각의 객체 형태로 하여, 공통되는 key의 value를 객체로 설정해준다.(예시 참고)
+  <details>
+  <summary>객체 합치기 예시</summary>
+  <div markdown="1">
+
+  ```typescript
+  // Fruits component
+  const Fruits = () => {
+    //합치기 전
+    const FRUIT_COLOR = {
+      banana: "yellow",
+      orange: "orange",
+      apple: "red",
+    } as const;
+
+    const FRUIT_COUNT = {
+      banana: 5,
+      orange: 2,
+      apple: 1,
+    } as const;
+
+    return <Fruit fruitColor={FRUIT_COLOR} fruitCount={FRUIT_COUNT} />;
+
+    //합친 후
+    const FRUIT_LIST = {
+      //공통되는 key인 banana, orange, apple -> 각 value들을 key:value 형태로 공통 key의 value로 넣어준다.
+      banana: { color: "yellow", count: 5 },
+      orange: {
+        color: "orange",
+        count: 2,
+      },
+      apple: { color: "red", count: 1 },
+    } as const;
+
+    return <Fruit fruitList={FRUIT_LIST} />;
+  };
+
+  //Fruit component
+
+  interface FruitProps {
+    fruitList: { [key: string]: { color: string; count: number } };
+  }
+
+  const Fruit = ({ fruitList }: FruitProps) => {
+    return (
+      <>
+        <div role="fruitlist">
+          {Object.entries(fruitList).map(([key, { color }], i) => (
+            <li key={i} role="none">
+              <button role="fruit" type="button">
+                {color}
+              </button>
+              {fruitList[key].count}
+            </li>
+          ))}
+        </div>
+      </>
+    );
+  };
+
+  export default Fruit;
+  ```
+
+  </div>
+  </details>
+
+<br/>
+<hr>
+<br/>
+
+이번주는 월요일부터 나홀로 대환장 파티를 찍었다. 회사 프로젝트를 하는데 자꾸 막혀서 마음속으로 눈물 줄줄 흘렸다. 원티드 프리온보딩에서 Virtual DOM 강의 한다고 해서 들으려고 했는데 월요일부터 프로젝트에 문제가 많아서 자체 야근하고 정신차리고 보니, 이미 강의가 한창 진행 중인 상태였던지라.. 그냥 포기하고 프로젝트 작업했다. <br/>
+뭔가 급박하게 일주일이 지나간 느낌인데.. 부디 다음주엔 별 일 없기를 온 힘을 다해 비는 중<br/><br/>
+
+[react-hook-form](https://react-hook-form.com/api/useform/)<br/>
+[react-hook-form 사용하기](https://velog.io/@kihyun/React-Hook-Form-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)<br/>
+[[React] React Hook Form (v7)알아보기](https://wonillism.tistory.com/279)<br/>
+[JavaScript | 객체 속성에 접근하는 방법 (점 표기법 / 대괄호 표기법)](https://3d-yeju.tistory.com/28)<br/>
+[객체](https://ko.javascript.info/object)
