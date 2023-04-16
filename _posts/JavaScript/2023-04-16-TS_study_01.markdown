@@ -1,0 +1,365 @@
+---
+layout: post
+title: Type Script | Basic + Everyday Types
+date: 2023-04-16 12:30:30 +0900
+categories: [Programming Language, TypeScript]
+tag: [typescript, basic, types]
+---
+
+> #### 목차 <br/>
+>
+> 1. [Basic](#1-basic)
+> 2. [Everyday Types](#2-everyday-types)
+
+<br/>
+
+## 1. **Basic**
+
+- **정적 타입 검사**
+  - 코드를 실행했을 때 바로 오류가 확인된다면 신속한 처리로 해당 문제를 해결할 수 있겠지만, 만약 미처 발견하지 못한 오류를 뒤늦게 확인하게 된다면 상당한 규모의 리팩토링을 거치고 새 코드를 취가하면서 의도치 않게 코드를 파헤치게 될수도 있음
+  - 위의 상황을 대비하기 위해, 코드를 실행하기 전에 버그를 미리 발견할 수 있는 `Typescript`와 같은 정적 타입 검사기를 사용함
+  - 정적 타입 시스템은 우리가 작성한 프로그램에서 사용된 값들의 형태와 동작을 설명함
+- **예외가 아닌 실행 실패**
+  - 런타임 오류의 경우, 예기치 못한 문제가 발생했을 때 `JavaScript`가 어떻게 대응해야하는지 [ECMAScript 명세](https://tc39.es/ecma262/)에서 명시적인 절차를 제공하기 때문에 발생하는 오류임 <br/>ex) 명세에 따르면 호출 가능하지 않은 것에 대하여 호출을 시도할 경우 오류가 발생하는데, 이 때 `JavaScript`는 `undefined`를 반환함
+    - 정적 타입 시스템은 어떤 코드가 오류를 발생시키지 않는 “유효한” `JavaScript` 코드일지라도, 정적 타입 시스템 내에서 오류로 간주되는 경우라면 이를 알려주어야 함
+    - `TypeScript`는 겉으로 드러나지 않는 버그를 잡아내줌(오타, 호출되지 않은 함수, 기본적인 논리 오류 등이 있음)
+- **프로그래밍 도구로서의 타입**
+  - `TypeScript`는 코드 상에서 실수를 저지르는 그 순간에 바로 버그를 잡아줌
+  - `TypeScript`는 코드 수정에 활용될 수 있고, 코드를 입력할 때 오류 메세지를 제공하거나 코드 완성 기능을 제공할 수 있음
+- **tsc, TypeScript 컴파일러**
+
+  - 설치 방법
+    ```bash
+    // typescript 컴파일러 tsc 전역 설치
+    npm install -g typescript
+    ```
+  - 타입 검사 오류 예시
+
+    ```typescript
+    // 아래는 실무 수준에서 범용적으로 쓰이는 환영 함수입니다
+    function greet(person, date) {
+    console.log(`Hello ${person}, today is ${date}!`);
+    }
+    greet("Brendan");
+
+    // tsc hello.ts 실행
+    Expected 2 arguments, but got 1.
+    ```
+
+  - `TypeScript`의 엄격한 동작을 원하는 경우 아래와 같은 컴파일러 옵션을 사용하면 됨(에러가 있을 때 컴파일이 안되도록 하기 위한 옵션)
+    ```bash
+    tsc --noEmitOnError hello.ts
+    ```
+
+- **명시적 타입**
+  - 명시적인 타입 표기를 항상 작성할 필요가 없으며, `TypeScript`는 생략된 타입 정보를 추론할 수 있음
+  - 타입 시스템이 알아서 올바른 타입을 알아낼 수 있다면 타입 표기는 굳이 적지 않는 것이 좋음
+- **지워진 타입**
+
+  - `TypeScript`를 수정 없이 그대로 실행할 수 있는 브라우저나 런타임은 현재 존재하지 않으며, 대부분의 `TypeScript` 전용코드는 제거되며 마찬가지로 타입 표기 또한 완전히 지워짐
+  - 예시
+
+    ```typescript
+    function greet(person: string, date: Date) {
+      console.log(`Hello ${person}, today is ${date.toDateString()}!`);
+    }
+
+    greet("Maddison", new Date());
+    ```
+
+    - 위의 greet 함수를 tsc로 컴파일하여 `JavaScript` 출력을 했을 때 아래처럼 타입 표기는 완전히 지워짐
+
+    ```javascript
+    "use strict";
+    function greet(person, date) {
+      console.log(
+        "Hello ".concat(person, ", today is ").concat(date.toDateString(), "!")
+      );
+    }
+    greet("Maddison", new Date());
+    ```
+
+- **엄격도**
+  - `TypeScript`에는 켜고 끌 수 있는 타임 검사 엄격도 플래그가 몇가지 존재함
+  - CLI에서 `--strict` 플래그를 설정하거나 `tsconfig.json`에 `"strict": true`를 추가하면 모든 플래그를 동시에 활성화하게 됨<br/>(각각의 플래그를 개별적으로 끌수도 있음)
+    - **noImplicitAny**
+      - `any`로 암묵적으로 추론되는 변수에 대하여 오류 발생
+    - **strictNullChecks**
+      - `null`과 `undefined`를 보다 명시적으로 처리하며 `null` 및 `undefined` 처리를 잊었는지 여부에 대해 확인해줌
+
+<br/>
+
+## 2. **Everyday Types**
+
+### 1. **원시타입**
+
+- `string` : 문자열 값
+- `number` : 숫자(모든 수는 단순히 number에 해당)
+- `boolean` : true / false라는 두 가지 값만 가짐
+
+### 2. **배열**
+
+- 배열 타입을 지정할 때 사용하는 형식
+  - 숫자 배열
+    - number[] / Array<number>
+  - 문자열 배열
+    - string[] / Array<string>
+
+### 3. **any**
+
+\: 특정 값으로 인하여 타입 검사 오류가 발생하는 것을 원하지 않을 때 사용할 수 있음
+
+- 어떤 값의 타입이 `any`이면, 해당 값에 대하여 임의의 속성에 접근/함수인 것처럼 호출/다른 임의 타입의 값에 할당 등의 구문적으로 유효한 것이라면 무엇이든 할 수 있음
+
+### 4. **변수에 대한 타입 표기**
+
+- `const`, `var`, `let` 을 사용하여 변수를 선언할 때, 변수의 타입을 명시적으로 지정하기 위하여 타입 표기를 추가할 수 있음(선택사항)
+- 대부분의 경우 타입 표기는 필요하지 않으며, 가능하다면 `TypeScript`는 자동으로 코드 내의 타입을 추론하고자 함
+
+  ```typescript
+  let myName: string = "Alice";
+
+  // 타입 표기가 필요하지 않습니다. 'myName'은 'string' 타입으로 추론됩니다.
+  let myName = "Alice";
+  ```
+
+### 5. **함수**
+
+\: `JavaScript`에서 데이터를 주고 받는 주요 수단이며 `TypeScript`에서는 함수의 입력 및 출력 타입을 지정할 수 있음
+
+- **매개변수 타입 표기** : 매개변수 타입은 매개변수 이름 뒤에 표기함
+
+  - 함수를 선언할 때, 함수가 허용할 매개변수 타입을 선언하기 위하여 각 매개변수 뒤에 타입을 표기할 수 있음
+  - 매개변수에 타입이 표기되었다면 해당 함수에 대한 인자는 검사가 이루어짐<br/>매개 변수에 타입을 표기하지 않았더라도 `TypeScript`는 올바른 개수의 인자가 전달되었는지의 여부는 검사함
+
+- **반환 타입 표기** : 반환 타입은 매개변수 목록 뒤에 표기함
+
+  - 반환 타입은 표기하지 않아도 되는 것이 일반적임(해당 함수에 들어있는 `return`문을 바탕으로 반환 타입을 추론하기 때문)
+
+    ```typescript
+    // 매개변수 타입 표기
+    function greet(name: string): string {
+      // 반환 타입 표기
+      console.log("Hello, " + name.toUpperCase() + "!!");
+    }
+    ```
+
+- **익명 함수**
+
+  - 함수가 코드상에서 위치한 곳을 보고 해당 함수가 어떻게 호출될지 알아낼 수 있다면, `TypeScript`는 해당 함수의 매개 변수에 자동으로 타입을 부여함
+
+    ```typescript
+    // 아래 코드에는 타입 표기가 전혀 없지만, TypeScript는 버그를 감지할 수 있습니다.
+    const names = ["Alice", "Bob", "Eve"];
+
+    // 함수에 대한 문맥적 타입 부여
+    names.forEach(function (s) {
+      console.log(s.toUppercase());
+      //Error : Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
+    });
+
+    // 화살표 함수에도 문맥적 타입 부여는 적용됩니다
+    names.forEach((s) => {
+      console.log(s.toUppercase());
+      // Error : Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
+    });
+    ```
+
+    - 문맥적 타입 부여 : 함수가 실행되는 문맥을 통하여 해당 함수가 가져야하는 타입을 알 수 있음
+
+### 6. **객체 타입**
+
+\: 객체 타입을 정의하려면, 해당 객체의 프로퍼티들과 각 프로퍼티의 타입들을 나열하기만 하면 됨
+
+- 각 프로퍼티의 타입 표기 또한 선택 사항이며 만약 타입 지정을 하지 않는다면, 해당 프로퍼티는 `any`타입으로 간주됨
+
+  ```typescript
+  // 매개 변수의 타입은 객체로 표기되고 있습니다.
+  function printCoord(pt: { x: number; y: number }) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+  }
+  printCoord({ x: 3, y: 7 });
+  ```
+
+- **옵셔널 프로퍼티**
+  - 객체 타입은 일부 또는 모든 프로퍼티의 타입을 선택적인 타입, 즉 옵셔널로 지정할 수 있으며 이 형태는 프로퍼티 이름 뒤에 `?`를 붙이면 됨
+  - 존재하지 않는 프로퍼티에 접근했을 때, 런타임 오류가 발생하지 않고 `undefined` 값을 얻게 됨
+
+### 7. **유니온 타입**
+
+\: `TypeScript`의 타입 시스템에서는 기존의 타입을 기반으로 다양한 연산자를 사용하여 새로운 타입을 만들 수 있음
+
+- 각각의 타입들을 가지는 값들에 대하여 합집합을 취하여 구성됨(교집합과 헷갈리지 말 것!)
+
+- **유니언 타입 정의하기**
+  - 타입을 조합하는 방법 중 하나로, 서로 다른 두개 이상의 타입들을 사용하여 만드는 것
+  - 타입 조합에 사용된 타입 중 무엇이든 하나를 타입으로 가질 수 있으며 조합에 사용된 각 타입을 유니언 타입의 멤버라고 부름
+- **유니언 타입 사용하기**
+
+  - 유니언 타입의 멤버 중 하나에 해당하는 타입을 제공하면 유니언 타입을 사용할 수 있음
+  - `TypeScript`에서 유니언을 다룰 때는 해당 유니언 타입의 모든 멤버에 대하여 유효한 작업일 때에만 허용됨
+
+    ```typescript
+    function printId(id: number | string) {
+      console.log(id.toUpperCase());
+      // Error : Property 'toUpperCase' does not exist on type 'string | number'.
+      // Error : Property 'toUpperCase' does not exist on type 'number'.
+      // toUpperCase는 string 타입에만 유효한 메소드이기때문에 오류가 발생
+    }
+    ```
+
+  - 위의 예시와 같은 문제점을 해결하기 위해<br/> 코드상에서 유니언을 좁혀야하며, 좁히기란 `TypeScript`가 코드 구조를 바탕으로 어떤 값을 보다 구체적인 타입으로 추론할 수 있을 때 발생
+    - typeof, Array.isArray, slice 메소드 활용 등 - [예시참고](https://www.typescriptlang.org/ko/docs/handbook/2/everyday-types.html#%EC%9C%A0%EB%8B%88%EC%96%B8-%ED%83%80%EC%9E%85-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
+
+### 8. **타입 별칭**(Type Aliases)
+
+- 똑같은 타입을 한 번 이상 재사용하거나 또 다른 이름으로 부르고 싶은 경우에 사용하며, 타입을 위한 이름을 제공함
+
+  ```typescript
+  type Point = {
+    x: number;
+    y: number;
+  };
+
+  // 앞서 사용한 예제와 동일한 코드입니다
+  function printCoord(pt: Point) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+  }
+
+  printCoord({ x: 100, y: 100 });
+  ```
+
+### 9. **인터페이스**
+
+- 객체 타입을 만드는 또 다른 방법
+- 타입이 없는 임의의 익명 객체를 사용하는 것처럼 동작함
+
+  ```typescript
+  interface Point = {
+    x: number;
+    y: number;
+  };
+
+  function printCoord(pt: Point) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+  }
+
+  printCoord({ x: 100, y: 100 });
+  ```
+
+### 10. [**타입 별칭과 인터페이스의 차이점**](https://www.typescriptlang.org/ko/docs/handbook/2/everyday-types.html#%ED%83%80%EC%9E%85-%EB%B3%84%EC%B9%AD%EA%B3%BC-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+
+- `interface`가 가지는 대부분의 기능은 `type`에서도 동일하게 사용 가능함
+
+  - `type` : 새 프로퍼티를 추가하도록 개방될 수 없음
+  - `interface` : 항상 확장될 수 있음
+
+  |             interface              |                 type                  |
+  | :--------------------------------: | :-----------------------------------: |
+  | 인터페이스 확장 (ex. extends 사용) | 교집합을 통하여 타입 확장(ex. & 사용) |
+  | 기존의 인터페이스에 새 필드를 추가 |    타입은 생성된 뒤 달라질 수 없음    |
+
+- 우선 `interface`를 사용하고 이 후 문제가 발생했을 때 `type` 사용하는 것을 추천함
+
+### 11. **타입 단언**
+
+- 타입을 좀 더 구체적으로 명시하는 방법
+- 타입 단언은 컴파일러에 의하여 제거되며 코드의 런타임 동작에는 영향을 주지 않음(타입 단언이 틀렸더라도 예외가 발생하거나 `null`이 생성되지 않음)
+- `TypeScript`에서는 보다 구체적인 또는 덜 구체적인 버전의 타입으로 변환하는 타입 단언만이 허용되며 불가능한 강제 변환을 방지함<br/>유효할 수 있는 강제 변환이 허용되지 않기 때문에 이러한 경우에는 두번의 단언을 사용할 수 있음
+
+  ```typescript
+  const x = "hello" as number;
+  // 불가능한 강제변환
+  // Error : Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+
+  const a = expr as any as T;
+  // 유효할 수 있는 강제 변환이나 허용 되지 않을 때 : any로 우선 변환한 뒤, 그 다음 원하는 타입으로 변환
+  ```
+
+### 12. **리터럴 타입**
+
+- 구체적인 문자열과 숫자 값을 타입 위치에서 지정할 수 있음
+- 리터럴 타입은 그 자체만으로는 그다지 유의미하지 않으며, 유니언과 함께 사용하면 보다 유용한 개념들을 표현할 수 있게 됨
+- 예를 들어 특정 종류의 값들만을 인자로 받을 수 있는 함수를 정의하는 경우가 있으며 리터럴이 아닌 타입과도 함께 사용할 수 있음
+
+  ```typescript
+  function printText(s: string, alignment: "left" | "right" | "center") {
+    // ...
+  }
+  printText("Hello, world", "left");
+  printText("G'day, mate", "centre");
+  // Error : Argument of type '"centre"' is not assignable to parameter of type '"left" | "right" | "center"'.
+  ```
+
+- **리터럴 추론**
+
+  - 객체를 사용하여 변수를 초기화하면 `TypeScript`는 해당 객체의 프로퍼티는 이후에 그 값이 변화할 수 있다고 가정함
+
+    ```typescript
+    const req = { url: "https://example.com", method: "GET" };
+    handleRequest(req.url, req.method);
+    // Error : Argument of type 'string' is not assignable to parameter of type '"GET" | "POST"'.
+    // 여기서의 req.method는 string으로 추론되지 "GET"으로 추론되지 않으며 새로운 문자열이 대입될 수 있기 때문에 TypeScript는 위 코드에 오류가 있다고 판단함
+    ```
+
+  - 위의 문제를 해결하기 위한 방법
+
+    1. 둘 중 한 위치에 타입 단언을 추가하여 추론 방식을 변경할 수 있음
+    2. `as const` 를 사용하여 객체 전체를 리터럴 타입으로 변환할 수 있음
+
+    ```typescript
+    //1. 수정 1, 2 중 한 위치에 타입 단언 사용
+    // 수정 1:
+    const req = { url: "https://example.com", method: "GET" as "GET" };
+    // 수정 2
+    handleRequest(req.url, req.method as "GET");
+
+    //2. as const 사용
+    const req = { url: "https://example.com", method: "GET" } as const;
+    handleRequest(req.url, req.method);
+    ```
+
+### 13. **null과 undefined**
+
+- `JavaScript`에는 빈 값 또는 초기화되지 않은 값을 가리키는 두 가지 원시값이 존재함(= null, undefined)
+- 각 타입의 동작 방식은 `strictNullChecks` 옵션 설정 여부에 따라 달라짐
+
+  - **`strictNullChecks` 설정되지 않았을 때**
+    - `null` 또는 `undefined`일 수 있더라도 해당 값에 평소와 같이 접근할 수 있으며, `null`과 `undefined`는 모든 타입의 변수에 대입될 수 있음
+    - `null` 검사의 부재는 버그의 주요 원인이 되기도 하지만, 별다른 이유가 없다면 코드 전반에 걸쳐 `strictNullChecks` 옵션 설정을 항상 권장함
+  - **`strictNullChecks` 설정되었을 때**
+
+    - 어떤 값이 `null` 또는 `undefined`일 때, 해당 값과 함께 메서드 또는 프로퍼티를 사용하기에 앞서 해당 값을 테스트해야 하며 좁히기를 통해 `null`일 수 있는 값에 대한 검사를 수행할 수 있음
+      - **`null` 아님 단언 연산자(접미사 !)**
+        - `TypeScript`에서는 명시적인 검사를 하지 않고도 타입에서 `null`과 `undefined`를 제거할 수 있는 특별한 구문을 제공하며 표현식 뒤에 !를 작성하면 해당 값이 `null` 또는 `undefined`가 아니라고 타입 단언할 수 있음
+        - 다른 타입 단언과 마찬가지로 이 구문은 코드의 런타임 동작을 변화시키지 않으므로, ! 연산자는 반드시 해당 값이 `null` 또는 `undefined`가 아닌 경우에만 사용해야 함
+
+    ```typescript
+    // 1. 타입 좁히기
+    function doSomething(x: string | undefined) {
+      if (x === undefined) {
+        // 아무 것도 하지 않는다
+      } else {
+        console.log("Hello, " + x.toUpperCase());
+      }
+    }
+
+    // 2. 접미사 ! 사용
+    function liveDangerously(x?: number | undefined) {
+      // 오류 없음
+      console.log(x!.toFixed());
+    }
+    ```
+
+<br/>
+
+<hr/>
+
+<br/> <br/>
+출처<br/>
+
+[Typescript 공식문서 - Basic](https://www.typescriptlang.org/ko/docs/handbook/2/basic-types.html)<br/>
+[Typescript 공식문서 - Everyday Types](https://www.typescriptlang.org/ko/docs/handbook/2/everyday-types.html)
