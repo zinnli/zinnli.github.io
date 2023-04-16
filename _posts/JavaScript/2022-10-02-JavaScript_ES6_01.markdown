@@ -2,11 +2,11 @@
 layout: post
 title: Java Script |  ES6 정리
 date: 2022-10-02 14:00:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [es6]
 ---
 
-# ES와 ES6에 대해서
+## ES와 ES6에 대해서
 
 ES = ECMAScript 의 약자<br/>
 

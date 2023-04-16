@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Java Script | JS DOM
+title: Java Script | DOM
 date: 2022-12-15 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [dom]
 ---
-
-# DOM
 
 > #### 목차 <br/>
 >

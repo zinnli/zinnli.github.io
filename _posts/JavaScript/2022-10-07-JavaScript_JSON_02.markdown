@@ -2,11 +2,11 @@
 layout: post
 title: Java Script | JSON 정리
 date: 2022-10-07 14:00:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [json, object literal]
 ---
 
-# JSON(JavaScript Object Notation)
+## JSON(JavaScript Object Notation)
 
 : 애플리케이션 간에 `객체 데이터를 주고받는` 경량 텍스트 포맷
 

@@ -2,11 +2,9 @@
 layout: post
 title: Java Script | pass by value, pass by reference
 date: 2023-01-17 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [pass, value, reference, primitive, type]
 ---
-
-# pass by value, pass by reference
 
 > #### 목차 <br/>
 >

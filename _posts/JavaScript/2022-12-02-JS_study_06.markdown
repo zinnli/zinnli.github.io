@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Java Script | JS Execution Context
+title: Java Script | Execution Context
 date: 2022-12-02 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [execution context, context]
 ---
-
-# Execution Context
 
 > #### 목차 <br/>
 >

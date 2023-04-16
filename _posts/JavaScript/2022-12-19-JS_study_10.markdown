@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Java Script | JS Promise
+title: Java Script | Promise
 date: 2022-12-19 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [promise, callback, static]
 ---
-
-# Promise
 
 > #### 목차 <br/>
 >

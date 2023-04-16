@@ -2,11 +2,9 @@
 layout: post
 title: Java Script | 얕은 복사와 깊은 복사
 date: 2023-01-17 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [shallow, deep, copy, primitive, reference]
 ---
-
-# 얕은 복사와 깊은 복사
 
 > #### 목차 <br/>
 >

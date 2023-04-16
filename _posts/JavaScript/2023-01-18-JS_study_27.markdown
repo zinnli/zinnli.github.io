@@ -2,11 +2,9 @@
 layout: post
 title: Java Script | 클래스
 date: 2023-01-18 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [class, object oriented, constructor]
 ---
-
-# 클래스 🌊
 
 > #### 목차 <br/>
 >

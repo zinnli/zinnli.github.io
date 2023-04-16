@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Java Script | JS Spread 문법
+title: Java Script | Spread 문법
 date: 2022-12-05 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [spread, immutable]
 ---
-
-# Spread 문법
 
 > #### 목차 <br/>
 >

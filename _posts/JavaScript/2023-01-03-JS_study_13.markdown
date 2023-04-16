@@ -2,11 +2,9 @@
 layout: post
 title: Java Script | 생성자 함수에 의한 객체 생성
 date: 2023-01-03 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [constructor, function, instance]
 ---
-
-# 생성자 함수에 의한 객체 생성
 
 > #### 목차 <br/>
 >

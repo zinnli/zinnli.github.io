@@ -2,11 +2,9 @@
 layout: post
 title: Java Script | async await
 date: 2023-01-04 12:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [async await, promise]
 ---
-
-# async await
 
 > #### 목차 <br/>
 >

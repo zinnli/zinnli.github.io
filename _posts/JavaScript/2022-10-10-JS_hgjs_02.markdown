@@ -2,11 +2,11 @@
 layout: post
 title: Java Script | Java Script 구문 오류와 예외
 date: 2022-10-10 23:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [error]
 ---
 
-# [도서] 나혼자 공부하는 자바스크립트
+## [도서] 나혼자 공부하는 자바스크립트
 
 ## [ 08-1 구문오류와 예외 ]
 

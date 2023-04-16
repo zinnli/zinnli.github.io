@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Java Script | JS Scope
+title: Java Script | Scope
 date: 2022-11-29 17:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [scope, global, local]
 ---
-
-# Scope
 
 > #### 목차 <br/>
 >

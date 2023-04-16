@@ -2,11 +2,11 @@
 layout: post
 title: Java Script | Java Script 함수 기본
 date: 2022-09-30 23:30:30 +0900
-categories: [JavaScript]
+categories: [Programming Language, JavaScript]
 tag: [function]
 ---
 
-# [도서] 나혼자 공부하는 자바스크립트
+## [도서] 나혼자 공부하는 자바스크립트
 
 <br/>
 **핵심 키워드** <br/> #익명함수 #선억적함수 #매개변수 #리턴값 #가변 매개변수 함수 #전개 연산자 #기본 매개변수
