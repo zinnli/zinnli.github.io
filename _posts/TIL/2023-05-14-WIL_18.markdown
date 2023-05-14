@@ -1,0 +1,92 @@
+---
+layout: post
+title: 230514_WIL | 5월 2주차
+date: 2023-05-14 12:30:30 +0900
+categories: [I Learn, WIL]
+tag:
+  [
+    react,
+    react-hook-form,
+    custom-hook,
+    type,
+    numble-challenge,
+    styled-components,
+  ]
+---
+
+# 230514_WIL
+
+<br/>
+
+## **이번주 한 일**
+
+- react-hook-form 사용(회사 프로젝트)
+- custom-hook 공부 (=> 직접 만들라고 하면 못만들 것 같은데 어떤 시스템인지는 이해했다)
+- 넘블 챌린지 진행 중(자체 와이어프레임 만들어서 진행중) <br/>==> 현재 전반적인 레이아웃 + 로그인/회원가입까지 구현 완료했다
+
+<br/>
+
+### **이번주의 정리**
+
+#### 1. styled-components 오류(ts 사용시에는 npm i styled-components 사용하지 말자)
+
+- 프로젝트를 처음부터 세팅해서 하는게 너무 오랜만이라 조금 헷갈렸다.
+
+1. 세팅하다보니까 생겼던 문제가 styled-components에서 props에서 생기는 오류가 있었는데, 아래의 코드처럼 오류가 콘솔에 찍혔다. <br/>`isError`라는 이름으로 props를 사용하고 있었는데, 콘솔에 찍힌 내용으로 봐서는 소문자로 작성하라는 것 같았다. 이해가 1도 안됐지만, 소문자로 작성했고 문제는 여전히 발생하고 있었다
+
+   ```bash
+   react-dom.development.js:86 warning:
+   react does not recognize the `iserror` prop on a dom element.
+   if you intentionally want it to appear in the dom as a custom attribute,
+   spell it as lowercase `iserror` instead.
+   if you accidentally passed it from a parent component, remove it from the dom element
+   ```
+
+2. 두번쨰로 발생한 문젠데, 분명히 이전에 다른 프로젝트에서는 제대로 동작했는데 위와 같은 오류가 반복적으로 발생했다.
+
+   ```bash
+   warning: received `false` for a non-boolean attribute `error`.
+   if you want to write it to the dom, pass a string instead:
+   error="false" or error={value.tostring()}.
+   if you used to conditionally omit it with error={condition && value},
+   pass error={condition ? value : undefined} instead.
+   ```
+
+3. 구글링을 반복하다보니까, 뭔가 버전 문제인 것 같다는 생각이 들어, `node_modules`를 삭제 후 styled-components를 다운그레이드하고 재설치 해봤는데 이번에는 아래와 같은 오류가 반복적으로 vscode의 라이브러리 import 옆에 찍혀나왔다^^!
+
+   ```bash
+   styled-components 설치 모듈 "styled-components"에 대한 선언 파일을 찾을 수 없습니다.
+   ```
+
+4. 반복적으로 구글링 해 본 결과 -> ts에서 사용하는 경우 타입 지정의 문제 때문에 발생하는 문제라는 것을 알게 되었고, 아래와 같은 방법으로 재설치하니까 정상적으로 작동했다. [여기참고했다](https://garniel23.tistory.com/m/entry/%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0-styled-components-Could-not-find-declaration-file)
+
+   ```bash
+   npm i --save-dev @types/styled-components
+   ```
+
+#### 2. theme 사용하기
+
+- 이전에 컬러를 저장해놓고 꺼내서 사용할 때는 제대로 이해하지 못하고 사용을 했었는데, ~~(그냥 야매로 globalStyle에 넣어서 사용했었다..키키..)~~ 이번에는 회사에서처럼 theme에 color와 font들을 넣어놓고 뽑아서 사용하고 싶었는데, 그냥 `ThemeProvider theme={theme}`로만 사용하면 프로퍼티를 추론해주지 않았다.
+
+- 그래서 찾은 방법은 `theme.d.ts`로 선언을 해주고 사용하는 방법! [참고 1](https://velog.io/@perfumellim/TIL-styled-components-%EA%B3%B5%ED%86%B5-%EC%8A%A4%ED%83%80%EC%9D%BC-%EC%86%8D%EC%84%B1%EC%9D%84typescript%EB%A1%9C-%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B0) [참고 2](https://happysisyphe.tistory.com/50)
+  - d.ts를 통해 타입을 정의하고, declare module을 통해 내부에 정의한 코드를 참조할 수 있게 해준다고 한다.
+
+#### 3. 그리고 이번주의 프로젝트를 진행하면서 했던 바보짓^^!!!!
+
+- 처음 api를 호출하면서 생긴 문제로 -> api 호출은 제대로 되는데, 계속해서 ws로 네트워크에서 requests가 찍히는 문제가 있었다.
+- 찾아봐도 나에게 맞는 해결방법을 찾지 못했고, 원래 주어진 api 중 채팅 기능도 있었기때문에, 웹소켓 관련하여 추가 작업이 필요한 내용이 있었는가에 대해 고민을 많이 했었는데, 해결방법은 무척 간단했다.
+- 네트워크 트래픽을 설정하는 부분이 `slow3G`로 되어있었던 것..!~~(로딩이 오래걸린다고 생각하긴 했지만, slow3G로 해둔 건 1도 기억못했다)~~
+- ws가 반복적으로 뜨는 이유는 아직 확실하게는 모르겠지만, default 상태인 no Throttling으로 수정하니 문제없이 작동되어서, 일단 프로젝트가 끝난 이후에 조금 더 체크해볼 예정이다. 2시간동안 해결방법 찾았는데 완전 내실수..⭐️
+
+<br/>
+<hr>
+<br/>
+
+이번 주 동안 열심히 했는데 먼가 결과물은 없는.. 무언가.. 이것도 쌓이면 탄탄해질 것이라 믿고.. 원래 react-query 강의를 먼저 듣고 나서 적용해보려고 했는데, 넘블 챌린지도 2주라는 일정이 있다보니, 최대한 먼저 쳐내야할 것 같아서 공부는 뒤로 미루고 먼저 적용해보는 것부터 진행하기로 했다. 화이팅화이팅~!~!~!
+
+주말은 하루가 36시간이었으면 좋겠다.. 나 시간 좀만 더 죠..
+
+<br/><br/>
+[[에러 해결] styled-components Could not find declaration file](https://garniel23.tistory.com/m/entry/%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0-styled-components-Could-not-find-declaration-file)<br/>
+[[TIL] styled-components 공통 스타일 속성을 typescript로 세팅하기](https://velog.io/@perfumellim/TIL-styled-components-%EA%B3%B5%ED%86%B5-%EC%8A%A4%ED%83%80%EC%9D%BC-%EC%86%8D%EC%84%B1%EC%9D%84typescript%EB%A1%9C-%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B0)<br/>
+[선언병합을 활용하여 CSS in JS의 theme 타입 추론하기](https://happysisyphe.tistory.com/50)<br/>
