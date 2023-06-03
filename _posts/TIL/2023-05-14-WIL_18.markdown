@@ -4,14 +4,7 @@ title: 230514_WIL | 5월 2주차
 date: 2023-05-14 12:30:30 +0900
 categories: [I Learn, WIL]
 tag:
-  [
-    react,
-    react-hook-form,
-    custom-hook,
-    type,
-    numble-challenge,
-    styled-components,
-  ]
+  [react, reacthookform, custom-hook, type, numble-challenge, styled-components]
 ---
 
 # 230514_WIL

@@ -4,7 +4,6 @@ title: 221223_WIL | 항해 종료
 date: 2022-12-23 21:30:30 +0900
 categories: [I Learn, WIL]
 tag: [hanghae99]
-pin: true
 ---
 
 # 221223_WIL

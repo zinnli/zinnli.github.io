@@ -4,7 +4,6 @@ title: 230222_TIL | 맥 세팅
 date: 2023-02-22 21:50:30 +0900
 categories: [I Learn, TIL]
 tag: [mac, gitblog, github, jekyll]
-pin: true
 ---
 
 <br/>

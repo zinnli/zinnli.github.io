@@ -3,7 +3,7 @@ layout: post
 title: Study | Rest API
 date: 2023-01-15 12:30:30 +0900
 categories: [Study]
-tag: [restAPI, restful, http]
+tag: [restapi, restful, http]
 ---
 
 # Rest API

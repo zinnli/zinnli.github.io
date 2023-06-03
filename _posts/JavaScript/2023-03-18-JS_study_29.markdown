@@ -3,7 +3,7 @@ layout: post
 title: Java Script | UUID
 date: 2023-03-18 12:30:30 +0900
 categories: [Programming Language, JavaScript]
-tag: [UUID, Key]
+tag: [uuid, Key]
 ---
 
 > #### 목차 <br/>
