@@ -1,0 +1,102 @@
+---
+layout: post
+title: 230604_WIL | 6월 1주차
+date: 2023-06-04 12:30:30 +0900
+categories: [I Learn, WIL]
+tag: [react, react-query, typescript]
+---
+
+# 230604_WIL
+
+<br/>
+
+## **이번주 한 일**
+
+- 2주전에 진행했던 넘블 챌린지 피드백
+- 깃블로그 오류 해결
+- error boundary, suspense , axios interceptor
+
+<br/>
+
+### **이번주의 정리**
+
+#### 1. 넘블 챌린지 피드백
+
+- 5월 3주차 주말까지 넘블 챌린지를 진행했고, 2주동안 api 유지해준다고 하셔서 추가 작업을 하려고 했는데 이미지와 같은 에러가 계속 발생해서 작업을 추가로 하지 못했다. api를 주신 측에서는 서버를 열어놓으셨다고 하셨는데 나의 경우는 자꾸 이미지와 같은 오류가 발생하여 구글링을 해봤지만 결국 해결하지 못했다.. 수정하고 싶은 부분 엄청 많았는데 :( ..
+
+<img src="https://github.com/zinnli/zinnli.github.io/assets/102575747/c4bfe49e-15ba-41c2-a818-f01b6c29787d"/>
+
+- 일단 node_modules 삭제 후 재설치도 해봤는데, 안됐다. 개인적으로는 서버에서 생긴 오류같긴 한데, 내 잘못일까봐 더 못 여쭤봤다.. 소심킹^^...(테스트용 api도 동일한 오류 발생했다.)
+- 엉망진창 대환장 코드였지만, 그래도 순위권에 들어서 피드백을 받을 수 있게 되었다.<br/>일단 2위 자랑하고.. 키키
+
+<img src="https://github.com/zinnli/zinnli.github.io/assets/102575747/8c04819f-8701-4d0b-98e4-411c5c1b4989" />
+
+<details>
+<summary>전달받은 피드백 사항 리스트</summary>
+<div markdown="1">
+
+(회사에서 선임님들께서 주셨던 피드백 사항과 유사했다) <br/>~~진짜 솔직히 적용하려고 생각했던 부분들이 대다수였는데, 시간문제 때문에 미처 반영하지 못한 부분들이 너무 많았다. 너무 속상..~~
+
+- **구현성** : 기능이 미완성된 부분들이 몇가지 있었음
+- **가독성**
+  - 이름이 너무 넓은 의미를 담고 있어 여러 변수나 컴포넌트의 이름이 모호함
+- **규칙**
+  - TypeScript와 마크업은 잘 사용했으나 다만 네이밍이 아쉬움
+  - 마크업에서 또한 일부 tag 의 일부 속성이 누락됨 (예시 - img tag 의 alt)
+  - 구조
+    - 모달을 담았으면 폴더 이름을 modal이라고 하면 좋을 것 같음
+      - potal로 나누게 되면, dropbox나 tooltip을 포탈로 만들었을 때 potal > dropbox, tooltop, modal이 되어버려서 해당 컴포넌트 위치를 찾기 어려울 것 같음
+- **배포 시 HTTP 요청이 HTTPS 로 넘어가는 부분**
+  - 문제
+  - 해결
+- <https://github.com/zinnli/dating-app/blob/main/src/apis/axios.ts#L11>
+- axios instance intercepter에서 reqeust.use만 사용을 했는데, **response.use로 공통 에러를 핸들링** 할 수 있음
+  - 참고자료 <https://velog.io/@pandati0710/axios-intercepter%EB%A1%9C-error-handling-%ED%95%98%EA%B8%B0>
+- **파일 구조**
+  - components 하위에 domain 라는 이름의 폴더가 어색함
+  - <https://github.com/zinnli/dating-app/tree/main/src/types>
+- **React Query**
+  - <https://github.com/zinnli/dating-app/blob/main/src/App.tsx#L8>
+    - query client setting을 활용해보는 것이 좋음
+  - **tanstack query**
+    - react-query는 버전 4로 올라가면서 이름이 tanstack query로 변경되었음
+    - 참고자료 <https://www.npmjs.com/package/@tanstack/react-query>
+  - <https://github.com/zinnli/dating-app/blob/main/src/pages/Register.tsx#L68>
+  - 정규식 패턴이나 에러 메세지는 상수로 따로 빼서 관리해주시면 더 깔끔할 것 같음
+- **suspense, error boundary**
+  - react query와 함께, suspense와 error boundary를 사용하면 에러에 대한 페이지 처리를 더 용이하게 할 수 있음
+  - <https://fe-developers.kakaoent.com/2022/221110-error-boundary/>
+- **styled component**
+  - 페이지에 대한 styled component 코드는 분리하는 것이 좋음
+  - <https://github.com/zinnli/dating-app/blob/main/src/pages/Mypage.tsx#L46>
+    - 공통 컴포넌트를 잘 만들어서 활용하면 좋을 것 같음
+
+</div>
+</details>
+
+#### 2. 깃블로그 오류 해결
+
+- 구글 서치 콘솔에 올리면서 `sitemap`이랑 `robots.txt` 확인했었는데, 계속해서 `확인된 문제는 '발견됨 - 현재 색인이 생성되지 않음'입니다.` 만 뜨고 검색오류도 계속해서 발생해서 `robots.txt`를 수정한 적이 있었는데, 어느 순간부터 아래의 이미지와 같은 오류가 발생했다. 업로드나 빌드 후에 게시물을 보는데에는 오류가 없다보니 귀찮아서 냅두다가.. 드디어 2달?만에 해결했다.
+
+<img src="https://github.com/zinnli/zinnli.github.io/assets/102575747/b8c2d085-9d61-4c18-a817-826b216abc27" />
+
+1. `bundle add webrick` 처리 해보기 [Jekyll serve fails on Ruby 3.0](https://github.com/jekyll/jekyll/issues/8523)
+
+   - 해결 x
+   - 확인해보니 예전 버전에서 해결할 수 있는 방법인 것 같았고, 혹시나 싶어서 시도해봤지만 해결 실패~
+
+2. 대문자 -> 소문자로 변경 [Jekyll 4 Conflict errors](https://www.kidsil.net/2022/10/jekyll-conflict-error/)
+
+   - 해결 o
+   - 이전에 깃블로그 테마 변경 시 tags에 대문자 사용하지말라고 되어있었는데 잊어버리고 대문자써서 생긴 문제였던 것 같다.
+   - 근데 이 부분을 수정하고 나서도 같은 문제가 남아있었는데, 해당 부분은 같은 이름으로 되어있는 파일들이 문제인 것 같아서, md파일 삭제해주는 것으로 해결했다.(에러가 발생하지 않는지 확인은 했음!)
+
+<br/>
+<hr>
+<br/>
+
+error boundary 테스트 해보고 있는데, 없는 페이지나 axios error 발생 시 해당하는 오류가 발생하도록 하고 싶은데 현재 발생하지않아서 머리 쥐어뜯는 중..<br/>
+<https://fe-developers.kakaoent.com/2022/221110-error-boundary/> 여기에 있는 코드를 참고해서 하고 있는데, axios error의 경우 이전에 하던 프로젝트는 서버가 다 내려가있는 상태다보니 확인하기 어려울 것 같아서 이후에 프로젝트 하나 더 만들어서 진행해보려고 생각중이다.<br/>
+suspense와 interceptor의 경우도 사용방법은 확인해둔 상태인데 적용은 아직 못했다. 개인 프로젝트 하나 만들어놓는게 편할듯..<br/>
+솔직히 지지난주에 진행했던 넘블 챌린지의 경우 적용하고 싶은 내용들은 많았는데, 초반 세팅에 기간을 너무 많이 잡아먹힌데다가 개인적으로 해야할 일이 있어서 생각보다 많은 시간을 투자하지 못했다. 처음 시작할 때 목표는 스켈레톤 적용하는 것까지였고 챌린지 종료 이후에도 2주간 서버를 열어두신다고 해서 그 기간동안 계속 테스트했는데 결국 api 연결에서 오류가 계속 발생해서 결국 진행하지 못했다. 처음엔 담당자분에게 연락드렸는데 서버 열어두셨다고 하셔서.. 근데 내껀 되지않고 :(... 아쉽지만 또 다른 프로젝트 할 때는 초반 세팅 그만큼 빨리 끝내고 작업 제대로 진행할 수 있지 않을까 하고 생각한다. 챌린지 오픈하면 또 해야지..!<br/>
+recoil이나 react-query 캐싱 처리의 경우는 지금 조금씩 계속 공부하고 있는 중이라, 강의 마저 듣고 정리해야지..!하고 생각 중. next 강의 듣던 것도 마저 들어야하는데 할게 너무 많다..!
