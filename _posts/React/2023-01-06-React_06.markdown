@@ -1,11 +1,13 @@
 ---
 layout: post
 title: React | Component
-date: 2023-01-06 12:00:30 +0900
+date: 2023-06-11 12:00:30 +0900
 categories: [React]
 ---
 
 # React
+
+(230611 제어, 비제어 컴포넌트 추가)
 
 > #### 목차 <br/>
 >
@@ -53,16 +55,78 @@ categories: [React]
 ### 3. 제어컴포넌트와 비제어 컴포넌트
 
 1. `제어 컴포넌트` : 제어 컴포넌트는 사용자의 입력을 기반으로 자신의 state를 관리하고 업데이트함
+
    - React에서는 변경할 수 있는 state가 일반적으로 컴포넌트의 state 속성에 유지되며 setState()에 의해 업데이트됨
    - 제어 컴포넌트는 사용자가 입력한 값과 저장되는 값이 실시간으로 동기화됨
    - 사용자가 입력을 하는 액션을 취할때마다 리렌더링을 발생
    - 제어 컴포넌트의 값은 항상 최신값을 유지
    - 단점
+
      - 필요한 리렌더링, 불필요한 api요청으로 인한 자원 낭비 문제
+
+   <details>
+   <summary>예시</summary>
+   <div markdown="1">
+
+   ![제어컴포넌트](https://github.com/zinnli/zinnli.github.io/assets/102575747/78708cc9-d0cc-4977-ad6b-6245e30bf409)
+
+   ```javascript
+   export default function App() {
+     const [inputValue, setInputValue] = useState("");
+
+     const onChange = (e) => {
+       setInput(e.target.value);
+     };
+
+     return (
+       <div className="App">
+         <input type="text" onChange={onChange} />
+       </div>
+     );
+   }
+   ```
+
+   - React에 의해 값이 제어되는 형태 => 사용자가 입력한 값과 저장되는 값이 실시간으로 동기화됨
+
+   </div>
+   </details>
+   <br/>
+
 2. `비제어 컴포넌트` : 폼을 제출할때 (submit button)을 클릭할 때 요소 내부의 값을 얻어오는 Vanila JS와 유사한 동작 방식
-   - 제어 컴포넌트 방식에서 사용한 setState()를 쓰지 않고 ref를 사용해서 값을 얻음
-   - 값이 실시간으로 동기화 되지 않음
-   - 사용자가 직접 트리거 하기 전까지는 리렌더링을 발생시키지도 않고 값을 동기화 시키지도 않음<br/>
+
+- 제어 컴포넌트 방식에서 사용한 setState()를 쓰지 않고 ref를 사용해서 값을 얻음
+- 값이 실시간으로 동기화 되지 않음
+- 사용자가 직접 트리거 하기 전까지는 리렌더링을 발생시키지도 않고 값을 동기화 시키지도 않음<br/>
+
+   <details>
+   <summary>예시</summary>
+   <div markdown="1">
+
+  ![비제어](https://github.com/zinnli/zinnli.github.io/assets/102575747/ce053543-578a-49e7-8322-630e08e76541)
+
+  ```javascript
+  export default function App() {
+    const inputRef = useRef(); // ref 사용
+    const onClick = () => {
+      console.log(inputRef.current.value);
+    };
+
+    return (
+      <div>
+        <input type="text" ref={inputRef} />
+        <button onClick={onClick}>Add</button>
+      </div>
+    );
+  }
+  ```
+
+  - 사용자가 직접 트리거하기 전까지는 리렌더링/실시간동기화 X
+  - useRef()는 순수 자바스크립트 객체를 생성하며 매번 렌더링을 할 때 동일한 ref 객체를 제공함
+  - React가 DOM 노드에 ref를 attach하거나 detach할 때 어떠한 코드를 실행하고 싶다면 [콜백 ref](https://ko.legacy.reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node)를 사용하는 것이 좋음
+
+   </div>
+   </details>
+   <br/>
 
 → 즉각적으로, 실시간으로 값에 대한 피드백이 필요하다 : 제어 컴포넌트 사용<br/>
 → 즉각적인 피드백이 불필요하고 제출시에만 값이 필요하다, 불필요한 렌더링과 값 동기화가 싫다 : 비제어 컴포넌트 사용<br/><br/>
@@ -108,4 +172,7 @@ categories: [React]
 [엘리먼트와 컴포넌트의 차이점](https://velog.io/@codns1223/Element%EC%99%80-Component%EC%9D%98-%EC%B0%A8%EC%9D%B4)<br/>
 [리액트에서 컴포넌트 생성법](https://velog.io/@younoah/React-component)<br/>
 [제어, 비제어 컴포넌트](https://zinnli.github.io/react/2023/01/06/React_06.html)<br/>
-[Pure Compoenent](https://ryublock.tistory.com/38)
+[Pure Compoenent](https://ryublock.tistory.com/38)<br/>
+[React: 제어 컴포넌트와 비제어 컴포넌트의 차이점](https://velog.io/@yukyung/React-%EC%A0%9C%EC%96%B4-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EC%99%80-%EB%B9%84%EC%A0%9C%EC%96%B4-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90-%ED%86%BA%EC%95%84%EB%B3%B4%EA%B8%B0)<br/>
+[10. useRef 로 특정 DOM 선택하기](https://react.vlpt.us/basic/10-useRef.html)<br/>
+[Hooks API Reference](https://ko.legacy.reactjs.org/docs/hooks-reference.html#useref)
