@@ -1,0 +1,881 @@
+---
+layout: post
+title: Study | TDD - Jest
+date: 2023-07-02 12:30:30 +0900
+categories: [Study]
+tag: [TDD, Jest, Expect]
+---
+
+# Expect
+
+- 다양한 항목의 유효성 검사를 할 수 있는 `Matchers`에 대한 엑세스 제공함
+
+```tsx
+import { expect, jest, test } from "@jest/globals";
+```
+
+# Expect
+
+### `expect(value)`
+
+값을 테스트할 때마다 사용되는 함수로 그 자체로만 사용하지 않음
+`matcher`함수와 함께 `expect`를 사용하여 값이 특정 조건을 충족하는지 확인할 수 있음
+
+```javascript
+//bestLaCroixFlavor.test.js
+test("the best flavor is grapefruit", () => {
+  expect(bestLaCroixFlavor()).toBe("grapefruit"); //tobe는 matcher 함수에 해당
+});
+```
+
+- `expect`의 인수는 코드가 생성하는 값이어야 하며 `matcher`에 대한 모든 인수는 올바른 값이어야 함
+- 혼합하여 사용하게 되면 ⇒ 작동은 되지만 실패한 테스트의 error message 발생
+- fail 예시
+
+  ```javascript
+  //src/bestLaCroixFlavor.js
+  function bestLaCroixFlavor() {
+    return "grapefruit";
+  }
+  module.exports = bestLaCroixFlavor;
+
+  //src/bestLaCroixFlavor.test.js
+  const bestLaCroixFlavor = require("./bestLaCroixFlavor");
+
+  test("the best flavor is not coconut", () => {
+    expect(bestLaCroixFlavor()).toBe("coconut");
+  });
+  ```
+
+  ```bash
+  FAIL  src/bestLaCroixFlavor.test.js
+    ✕ the best flavor is not coconut (4 ms)
+
+    ● the best flavor is not coconut
+
+      expect(received).toBe(expected) // Object.is equality
+
+      Expected: "coconut"
+      Received: "grapefruit"
+
+        2 |
+        3 | test("the best flavor is not coconut", () => {
+      > 4 |   expect(bestLaCroixFlavor()).toBe("coconut");
+          |                               ^
+        5 | });
+        6 |
+
+        at Object.<anonymous> (src/bestLaCroixFlavor.test.js:4:31)
+
+  Test Suites: 1 failed, 1 total
+  Tests:       1 failed, 1 total
+  Snapshots:   0 total
+  Time:        0.299 s, estimated 1 s
+  Ran all test suites.
+  ```
+
+# Modifiers
+
+### `.not`
+
+- 원하는 값의 반대를 테스트하는 경우 사용
+  ```javascript
+  //bestLaCroixFlavor.test.js
+  test("the best flavor is not coconut", () => {
+    expect(bestLaCroixFlavor()).not.toBe("coconut");
+  });
+  ```
+
+### `.resolves`
+
+- `Promise`가 성공적으로 `resolves`되었을 때, 예상되는 값을 검증하는 데 사용
+  `promise`가 거절되면 `assertion`이 실패
+
+  ```javascript
+  test("resolves to lemon", () => {
+    // make sure to add a return statement
+    return expect(Promise.resolve("lemon")).resolves.toBe("lemon");
+  });
+  ```
+
+  - 위의 예시는 `Promise`가 확인되고 결과값이 “lemon”인지 테스트함
+    `async/await`를 `.resolves`와 함께 사용할 수 있음
+
+  ```javascript
+  test("resolves to lemon", async () => {
+    await expect(Promise.resolve("lemon")).resolves.toBe("lemon");
+    await expect(Promise.resolve("lemon")).resolves.not.toBe("octopus");
+  });
+  ```
+
+### `.rejects`
+
+- `Promise`가 거부되었을 때, 예상되는 에러를 검증하는 데 사용
+  `promise`가 이행되면 `assertion`은 실패함
+
+  ```javascript
+  test("rejects to octopus", () => {
+    // make sure to add a return statement
+    return expect(Promise.reject(new Error("octopus"))).rejects.toThrow(
+      "octopus"
+    );
+  });
+  ```
+
+- `async/await`를 `.reject`와 함께 사용할 수 있음
+
+  ```javascript
+  test("rejects to octopus", async () => {
+    await expect(Promise.reject(new Error("octopus"))).rejects.toThrow(
+      "octopus"
+    );
+  });
+  ```
+
+# Matchers
+
+### `.toBe(value)`
+
+- `.toBe`를 사용하여 기본 값을 비교하거나 개체 인스턴스의 참조 id를 확인함
+  값을 비교하기 위해 `Object.is`를 호출하는데, 이는 ===(완전 항등 연산자)보다 테스트에 좋음
+
+  ````javascript
+  const can = {
+  name: 'pamplemousse',
+  ounces: 12,
+  };
+
+      describe('the can', () => {
+        test('has 12 ounces', () => {
+          expect(can.ounces).toBe(12);
+        });
+
+        test('has a sophisticated name', () => {
+          expect(can.name).toBe('pamplemousse');
+        });
+
+      	test("has 12 ounces", () => {//위와 같은 결과값이지만 테스트에는 아래가 더 테스트에는 좋음
+          expect(Object.is(can.ounces, 12)).toBe(true);
+        });
+      });
+      ```
+
+  ````
+
+- 부동 소수점 숫자와 함께 `.toBe`를 사용 비추
+  예를 들어 반올림으로 인해 JavaScript에서 0.2 + 0.1은 정확히 0.3과 같지 않음
+  ⇒ 부동 소수점 숫자가 있는 경우 `.toBeCloseTo`를 사용하는 것을 추천
+
+\*(이중등호(==), 삼중등호(===), Object.is() 비교 https://mine-it-record.tistory.com/446)
+
+## ToHave
+
+### .toHaveBeenCalled()
+
+alias: `.toBeCalled()`
+
+- 함수가 호출 되었는지 여부를 테스트
+
+  ```javascript
+  function drinkAll(callback, flavour) {
+    if (flavour !== "octopus") {
+      callback(flavour);
+    }
+  }
+
+  describe("drinkAll", () => {
+    test("drinks something lemon-flavoured", () => {
+      const drink = jest.fn();
+      drinkAll(drink, "lemon");
+      expect(drink).toHaveBeenCalled();
+    });
+
+    test("does not drink something octopus-flavoured", () => {
+      const drink = jest.fn();
+      drinkAll(drink, "octopus");
+      expect(drink).not.toHaveBeenCalled();
+    });
+  });
+  ```
+
+### .toHaveBeenCalledTimes(number)
+
+alias: `.toBeCalledTimes(number)`
+
+- 함수가 설정한 숫자만큼 호출 되었는지 테스트
+  ```javascript
+  test("drinkEach drinks each drink", () => {
+    const drink = jest.fn();
+    drinkEach(drink, ["lemon", "octopus"]);
+    expect(drink).toHaveBeenCalledTimes(2);
+  });
+  ```
+
+### **.toHaveBeenCalledWith(arg1, arg2, ...)**
+
+alias: `.toBeCalledWith()`
+
+- 함수가 설정한 인수로 호출 되었는지 테스트
+  인수가 다르면 테스트 실패
+  ```javascript
+  test("registration applies correctly to orange La Croix", () => {
+    const beverage = new LaCroix("orange");
+    register(beverage);
+    const f = jest.fn();
+    applyToAll(f);
+    expect(f).toHaveBeenCalledWith(beverage);
+  });
+  ```
+
+### .toHaveBeenLastCalledWith(arg1, arg2, …)
+
+alias: `.lastCalledWith(arg1, arg2, ...)`
+
+- 함수의 마지막 호출이 주어진 인수로 이루어졌는지 확인하는 데 사용
+  마지막 호출에 사용된 인수가 다르면 테스트 실패
+  ```javascript
+  test("applying to all flavors does mango last", () => {
+    const drink = jest.fn();
+    applyToAllFlavors(drink);
+    expect(drink).toHaveBeenLastCalledWith("mango");
+  });
+  ```
+
+### **.toHaveBeenNthCalledWith(nthCall, arg1, arg2, ....)**
+
+alias: `.nthCalledWith(nthCall, arg1, arg2, ...)`
+
+- 함수의 n번째 호출이 주어진 인수로 이루어졌는지 확인하는 데 사용
+  n번째 호출에 사용된 인수가 다르면 테스트 실패
+
+  ```javascript
+  test("drinkEach drinks each drink", () => {
+    const drink = jest.fn();
+    drinkEach(drink, ["lemon", "octopus"]);
+    expect(drink).toHaveBeenNthCalledWith(1, "lemon");
+    expect(drink).toHaveBeenNthCalledWith(2, "octopus");
+  });
+  ```
+
+### **.toHaveReturned()**
+
+alias: `.toReturn()`
+
+- 함수가 오류없이 반환되는지 테스트
+
+  ```javascript
+  test("drinks returns", () => {
+    const drink = jest.fn(() => true);
+
+    drink();
+
+    expect(drink).toHaveReturned();
+  });
+  ```
+
+### .**toHaveReturnedTimes(number)**
+
+alias: `.toReturnTimes(number)`
+
+- 함수가 지정한 횟수만큼 오류없이 반환되는지 테스트 (호출 횟수는 포함하지 않음)
+
+  ```javascript
+  test("drink returns twice", () => {
+    const drink = jest.fn(() => true);
+
+    drink();
+    drink();
+
+    expect(drink).toHaveReturnedTimes(2); //오류없이 return을 무사히 마친 횟수 -> 2회인가?
+  });
+  ```
+
+### **.toHaveReturnWith(number)**
+
+alias: `.toReturnWith(value)`
+
+- 함수가 지정한 값을 반환하는지 테스트
+
+  ```javascript
+  test("drink returns La Croix", () => {
+    const beverage = { name: "La Croix" };
+    const drink = jest.fn((beverage) => beverage.name);
+
+    drink(beverage);
+
+    expect(drink).toHaveReturnedWith("La Croix");
+  });
+  ```
+
+### .toHaveLastReturnedWith(value)
+
+alias: `.lastReturnedWith(value)`
+
+- 함수가 지정한 값을 마지막으로 반환하는지 테스트
+
+  ```javascript
+  test("drink returns La Croix (Orange) last", () => {
+    const beverage1 = { name: "La Croix (Lemon)" };
+    const beverage2 = { name: "La Croix (Orange)" };
+    const drink = jest.fn((beverage) => beverage.name);
+
+    drink(beverage1);
+    drink(beverage2);
+
+    expect(drink).toHaveLastReturnedWith("La Croix (Orange)");
+  });
+  ```
+
+### .toHaveNthReturnedWith(nthCall, value)
+
+alias: `.nthReturnedWith(nthCall, value)`
+
+- 함수가 지정한 값을 n번째 호출에서 반환하는지 테스트 (여기서 n은 양의 정수)
+
+  ```javascript
+  test("drink returns expected nth calls", () => {
+    const beverage1 = { name: "La Croix (Lemon)" };
+    const beverage2 = { name: "La Croix (Orange)" };
+    const drink = jest.fn((beverage) => beverage.name);
+
+    drink(beverage1);
+    drink(beverage2);
+
+    expect(drink).toHaveNthReturnedWith(1, "La Croix (Lemon)");
+    expect(drink).toHaveNthReturnedWith(2, "La Croix (Orange)");
+  });
+  ```
+
+### .toHaveLength(number)
+
+- 배열이나 문자열의 길이를 테스트
+  ```javascript
+  expect([1, 2, 3]).toHaveLength(3);
+  expect("abc").toHaveLength(3);
+  expect("").not.toHaveLength(5);
+  ```
+
+### **.toHaveProperty(keyPath, value?)**
+
+- 객체에 해당 key:value 값이 있는지 테스트
+
+  ```javascript
+  // Object containing house features to be tested
+  const houseForSale = {
+    bath: true,
+    bedrooms: 4,
+    kitchen: {
+      amenities: ["oven", "stove", "washer"],
+      area: 20,
+      wallColor: "white",
+      "nice.oven": true,
+    },
+    livingroom: {
+      amenities: [
+        {
+          couch: [
+            ["large", { dimensions: [20, 20] }],
+            ["small", { dimensions: [10, 10] }],
+          ],
+        },
+      ],
+    },
+    "ceiling.height": 2,
+  };
+
+  test("this house has my desired features", () => {
+    // Example Referencing
+    expect(houseForSale).toHaveProperty("bath");
+    expect(houseForSale).toHaveProperty("bedrooms", 4);
+
+    expect(houseForSale).not.toHaveProperty("pool");
+
+    // Deep referencing using dot notation
+    expect(houseForSale).toHaveProperty("kitchen.area", 20);
+    expect(houseForSale).toHaveProperty("kitchen.amenities", [
+      "oven",
+      "stove",
+      "washer",
+    ]);
+
+    expect(houseForSale).not.toHaveProperty("kitchen.open");
+
+    // Deep referencing using an array containing the keyPath
+    expect(houseForSale).toHaveProperty(["kitchen", "area"], 20);
+    expect(houseForSale).toHaveProperty(
+      ["kitchen", "amenities"],
+      ["oven", "stove", "washer"]
+    );
+    expect(houseForSale).toHaveProperty(["kitchen", "amenities", 0], "oven");
+    expect(houseForSale).toHaveProperty(
+      "livingroom.amenities[0].couch[0][1].dimensions[0]",
+      20
+    );
+    expect(houseForSale).toHaveProperty(["kitchen", "nice.oven"]);
+    expect(houseForSale).not.toHaveProperty(["kitchen", "open"]);
+
+    // Referencing keys with dot in the key itself
+    expect(houseForSale).toHaveProperty(["ceiling.height"], "tall");
+  });
+  ```
+
+## 자료형
+
+### **.toBeCloseTo(number, numDigits?)**
+
+- 선택사항인 numDigits 인수는 소수점 뒤의 numDigits 자릿수까지 비교하여 같은지 비교함
+
+  ```javascript
+  test("adding works sanely with decimals", () => {
+    expect(0.2 + 0.1).toBe(0.3); // Fails!
+  });
+
+  test("adding works sanely with decimals", () => {
+    expect(0.2 + 0.1).toBeCloseTo(0.3, 5); //5번째 자릿수까지 비교
+  });
+  ```
+
+### **.toBeDefined() , .toBeUndefined()**
+
+1. `.toBeDefined()` : expect의 값이 정의되었는지 확인
+2. `.toBeUndefined()` : expect의 값이 undefined인지 확인
+
+- 예시
+
+  ```javascript
+  //1. expect의 값이 정의되었는지 확인
+  test(".toBeDefined()", () => {
+    const value = "defined";
+    expect(value).toBeDefined();
+  });
+
+  //2. expect의 값이 undefined인지 확인
+  test(".toBeUndefined()", () => {
+    const value = undefined;
+    expect(value).toBeUndefined();
+  });
+  ```
+
+### **.toBeFalsy() , .toBeTruthy() , .toBeNull() , .tobeNaN()**
+
+1. `.toBeFalsy()` : 0, false, null, undefined, “”, NaN의 경우 거짓으로 간주하며 거짓인지 확인
+2. `.toBeTruthy()` : 위의 6가지 falsy 경우를 제외하고 모두 참으로 간주하며 참인지 확인
+3. `.toBeNull()` : expect의 값이 null인지 확인
+4. `.toBeNaN()` : expect의 값이 NaN인지 확인
+
+- 전체 예시
+
+  ```javascript
+
+  //1. expect의 값이 아래의 6가지의 경우 falsy => 테스트 통과
+  test(".toBeFalsy()", () => {
+    expect(0).toBeFalsy();
+    expect(false).toBeFalsy();
+    expect(null).toBeFalsy();
+    expect(undefined).toBeFalsy();
+    expect('').toBeFalsy();
+    expect(NaN).toBeFalsy();
+  })`
+
+  //2. 위의 6가지 falsy 경우를 제외하고 모두 truthy
+  test('.toBeTruthy()', () => {
+    const value = true;
+    expect(value).toBeTruthy();
+  });
+
+  //3. expect의 값이 null인지 확인
+  test('.toBeNull()', () => {
+    const value = null;
+    expect(value).toBeNull();
+  });
+
+  //4. expect의 값이 NaN인지 확인
+  test('.toBeNaN()', () => {
+    const value = NaN;
+    expect(value).toBeNaN();
+  });
+  ```
+
+- `.toBeNull()` / `.toBeUndefined()` 의 경우<br/>
+  `.toBe(null)` / `.toBe(undefined)`로도 작성할 수 있으나 어떠한 값이 `null` / `undefined`임을 체크하는 경우에는 `.toBeNull()` / `.toBeUndefined()` 이 더 좋음
+
+### **.toBeGreaterThan(number | bigint)**
+
+- received가 expected의 값보다 큰지 확인하고 received가 더 크면 테스트 통과
+  ```javascript
+  test("ounces per can is more than 10", () => {
+    expect(ouncesPerCan()).toBeGreaterThan(10); //ouncesPerCan는 10 초과
+  });
+  ```
+
+### **.toBeGreaterThanOrEqual(number | bigint)**
+
+- received가 expected의 값보다 큰지 확인하고 received가 같거나 크면 테스트 통과
+  ```javascript
+  test("ounces per can is at least 12", () => {
+    expect(ouncesPerCan()).toBeGreaterThanOrEqual(12); //ouncesPerCan는 12 이상
+  });
+  ```
+
+### **.toBeLessThan(number | bigint)**
+
+- received가 expected의 값보다 작은지 확인하고 received가 더 작으면 테스트 통과
+  ```javascript
+  test("ounces per can is less than 20", () => {
+    expect(ouncesPerCan()).toBeLessThan(20); //ouncesPerCan는 20 미만
+  });
+  ```
+
+### **.toBeLessThanOrEqual(number | bigint)**
+
+- received가 expected의 값보다 작은지 확인하고 received가 같거나 작으면 테스트 통과
+  ```javascript
+  test("ounces per can is at most 12", () => {
+    expect(ouncesPerCan()).toBeLessThanOrEqual(12); //ouncesPerCan는 12 이하
+  });
+  ```
+
+### **.toBeInstanceOf(Class)**
+
+- 테스트에서 객체가 특정 클래스의 인스턴스인지 확인하는 데 사용하며 일치하는 경우 테스트 통과
+
+  ```javascript
+  class A {}
+
+  expect(new A()).toBeInstanceOf(A);
+  expect(() => {}).toBeInstanceOf(Function);
+  expect(new A()).toBeInstanceOf(Function); // throws
+  ```
+
+### \*\*.toContain(item)
+
+- 배열에서 item을 포함하고 있는지 확인하고 item이 포함되어있으면 테스트 통과
+  여기서 Item에는 문자열, sets, node lists, HTML collections와 같은 객체도 들어갈 수 있음
+  ```javascript
+  test("the flavor list contains lime", () => {
+    expect(getAllFlavors()).toContain("lime");
+  });
+  ```
+
+### **.toContainEqual(item)**
+
+- 배열에서 동일한 구조와 값을 가지는 객체가 포함되어있는지 확인할 수 있음
+  ```javascript
+  describe("my beverage", () => {
+    test("is delicious and not sour", () => {
+      const myBeverage = { delicious: true, sour: false };
+      expect(myBeverages()).toContainEqual(myBeverage);
+    });
+  });
+  ```
+
+### **.toEqual(value)**
+
+- 객체가 일치하는지 테스트 (객체 내부의 값이 동일한지 체크함)
+
+  ```javascript
+  const can1 = {
+    flavor: "grapefruit",
+    ounces: 12,
+  };
+  const can2 = {
+    flavor: "grapefruit",
+    ounces: 12,
+  };
+
+  describe("the La Croix cans on my desk", () => {
+    test("have all the same properties", () => {
+      expect(can1).toEqual(can2); // 객체의 내부의 값은 동일하기 때문에 테스트 통과
+    });
+    test("are not the exact same can", () => {
+      expect(can1).not.toBe(can2); // 동일한 객체가 아니기 때문에 테스트 통과
+    });
+  });
+  ```
+
+\* `**.toEqual()` / `.toStrictEqual()` 의 차이
+
+- `.toEqual()`은 `undefined` 속성과 배열의 빈공간을 무시하여 일치한 것으로 간주하기 때문에 완전히 동일한 값인지 비교를 하는 경우에는 `.toStrictEqual()`을 사용해야함
+
+```javascript
+test("두 객체 비교하기", () => {
+  const obj3 = { name: "John", age: 30, city: undefined };
+  const obj4 = { name: "John", age: 30 };
+  const obj5 = [, 1];
+
+  expect(obj3).toEqual(obj4); // Passes
+  expect(obj3).toStrictEqual(obj4); // Fails
+
+  expect(obj5).toEqual([undefined, 1]); // Passes
+  expect(obj5).toStrictEqual([undefined, 1]); // Fails
+});
+```
+
+\* **에러메세지 비교하기**
+
+`.toEqual()`를 이용하여 에러메세지를 직접 비교하는 것은 불가능하기 때문에
+`.toThrow()` / `.toThrowError`를 이용해야함
+
+- `.toThrow()` : 함수를 실행했을 때 발생한 에러를 확인하는 데 사용(인수 전달 시 특정 유형의 에러나 메세지를 검사할 수 있음)
+- `.toThrowError()` : 에러의 유형과 메세리를 함께 확인 가능
+
+```javascript
+function throwError() {
+  throw new Error("Something went wrong");
+}
+
+test("에러 메시지 비교", () => {
+  // 에러 메시지를 직접 비교할 수 없음
+  expect(throwError).toEqual(new Error("Something went wrong")); // Fails
+
+  // .toThrow .toThrowError를 사용하여 에러 메시지를 비교
+  expect(throwError).toThrow("Something went wrong"); // Passes
+  expect(throwError).toThrowError("Something went wrong"); // Passes
+});
+```
+
+### **.toMatch(regexp | string)**
+
+- 정규식에 대해 문자열을 테스트할 수 있으며 문자열이 해당 정규식에 맞을 때 테스트 통과
+
+  ```javascript
+  describe("an essay on the best flavor", () => {
+    test("mentions grapefruit", () => {
+      expect(essayOnTheBestFlavor()).toMatch(/grapefruit/);
+      expect(essayOnTheBestFlavor()).toMatch(new RegExp("grapefruit"));
+    });
+  });
+
+  describe("grapefruits are healthy", () => {
+    test("grapefruits are a fruit", () => {
+      expect("grapefruits").toMatch("fruit");
+    });
+  });
+  ```
+
+### \*\*.toMatchObject(object)
+
+- 객체 부분 속성에 대해 일치하는지 테스트
+
+  ```javascript
+  const houseForSale = {
+    bath: true,
+    bedrooms: 4,
+    kitchen: {
+      amenities: ["oven", "stove", "washer"],
+      area: 20,
+      wallColor: "white",
+    },
+  };
+  const desiredHouse = {
+    bath: true,
+    kitchen: {
+      amenities: ["oven", "stove", "washer"],
+      wallColor: expect.stringMatching(/white|yellow/),
+    },
+  };
+
+  test("the house has my desired features", () => {
+    expect(houseForSale).toMatchObject(desiredHouse);
+  });
+
+  describe("toMatchObject applied to arrays", () => {
+    test("the number of elements must match exactly", () => {
+      expect([{ foo: "bar" }, { baz: 1 }]).toMatchObject([
+        { foo: "bar" },
+        { baz: 1 },
+      ]);
+    });
+
+    test(".toMatchObject is called for each elements, so extra object properties are okay", () => {
+      expect([{ foo: "bar" }, { baz: 1, extra: "quux" }]).toMatchObject([
+        { foo: "bar" },
+        { baz: 1 },
+      ]);
+    });
+  });
+  ```
+
+## 스냅샷(Snapshot)
+
+성공하는 케이스를 찍어두고 비교
+
+### **.toMatchSnapshot(propertyMatchers?, hint?)**
+
+- 위 matcher 사용시 `.snap`로 snapshot 파일이 저장되는 방식의 스냅샷
+
+  ```javascript
+  // repeat.js
+
+  function repeat(word, times = 2) {
+    let words = [];
+    for (let i = 0; i < times; i++) {
+      words.push(word);
+    }
+    return words;
+  }
+  module.exports = repeat;
+
+  // repeat.test.js
+  // 별도의 파일 생성을 하여 저장하는 스냅샷
+  const repeat = require("./repeat");
+
+  test("repeats words three times", () => {
+    expect(repeat("Test", 3)).toMatchSnapshot();
+  });
+  ```
+
+- `hint` : 선택적으로 hint 문자열 인수를 제공할 수 있으며 이는 테스트 이름에 추가됨
+
+### **.toMatchInlineSnapshot(propertyMatchers?, inlineSnapshot)**
+
+- **별도의 파일 생성 없이** 테스트 코드에 스냅샷을 삽입하는 방식인 인라인(inline) 스냅샷
+
+  ```javascript
+  // 테스트코드에 snapshot에 삽입하는 인라인 스냅샷
+  const repeat = require("./repeat");
+
+  test("repeats words three times", () => {
+    expect(repeat("Test", 3)).toMatchInlineSnapshot();
+  });
+
+  // 위의 테스트 코드 실행 시 아래처럼 스냅샷이 코드에 추가됨
+  test("repeats words three times", () => {
+    expect(repeat("Test", 3)).toMatchInlineSnapshot(` 
+  Array [
+    "Test",
+    "Test",
+    "Test",
+  ]
+  `);
+  });
+  ```
+
+- 테스트 대상 값의 변경을 원하는 경우(inlineSnapshot에 반영되길 원할 때)
+  아래의 테스트 코드 실행시 피드백 참고
+
+  ```bash
+  ✕ repeats words three times (4 ms)
+
+    ● repeats words three times
+
+      expect(received).toMatchInlineSnapshot(snapshot)
+
+      Snapshot name: `repeats words three times 1`
+
+      - Snapshot  - 0
+      + Received  + 2
+
+        Array [
+          "Test",
+          "Test",
+          "Test",
+      +   "Test",
+      +   "Test",
+        ]
+
+        2 |
+        3 | test("repeats words three times", () => {
+      > 4 |   expect(repeat("Test", 5)).toMatchInlineSnapshot(`
+          |                             ^
+        5 | Array [
+        6 |   "Test",
+        7 |   "Test",
+
+        at Object.<anonymous> (src/repeat.test.js:4:29)
+
+   › 1 snapshot failed.
+  Snapshot Summary
+   › 1 snapshot failed from 1 test suite. Inspect your code changes or press `u` to update them.
+
+  Test Suites: 1 failed, 1 total
+  Tests:       1 failed, 1 total
+  Snapshots:   1 failed, 1 total
+  Time:        0.187 s, estimated 1 s
+  Ran all test suites.
+
+  Watch Usage: Press w to show more.
+  ```
+
+  **\*해결법**
+
+  ```bash
+  $ npx jest -u
+  $ u ("test": "jest --watchAll" 인 경우)
+   PASS  src/repeat.test.js (7.498 s)
+    ✓ repeats words three times (86 ms)
+
+   › 1 snapshot updated.
+  Snapshot Summary
+   › 1 snapshot updated from 1 test suite.
+
+  Test Suites: 1 passed, 1 total
+  Tests:       1 passed, 1 total
+  Snapshots:   1 updated, 1 total
+  Time:        11.583 s
+  Ran all test suites.
+  ```
+
+## Error
+
+### **.toThrow(error?)**
+
+alias: `.toThrowError(error?)`
+
+- 예외 발생 여부 테스트해야할 때 사용
+- `expect()`함수에 넘기는 테스트 대상을 함수로 한 번 감싸줘야함
+  ⇒ 감싸주지 않으면 테스트 실행 도중 그 예외가 발생하여 테스트는 항상 실패하게 됨
+- 인수 `error`는
+  - 문자열을 넘기면 에러메세지에 문자열이 포함되는지 체크
+  - 정규식을 넘기면 정규식 체크를 해줌
+  - 동일한 메세지를 가진 에러 객체가 발생하는지 체크
+
+```javascript
+// flavor이 "octopus"이면 에러발생
+function drinkFlavor(flavor) {
+  if (flavor === "octopus") {
+    throw new Error("flavor");
+  }
+  return flavor;
+}
+
+test("throws on octopus", () => {
+  expect(() => drinkFlavor("octopus")).toThrow();
+  expect(() => drinkFlavor("octopus")).toThrow("flavor");
+  expect(() => drinkFlavor("octopus")).toThrow(new Error("flavor"));
+});
+```
+
+### **.toThrowErrorMatchingSnapshot(hint?)**
+
+- 받은 값이 호출될 때 에러 스냅샷을 생성하거나 최근에 생성된 에러 스냅샷과 비교함
+  생성한 에러 스냅샷은 `.snap`으로 파일이 생성되어 따로 보관됨
+
+  ````javascript
+  function drinkFlavor(flavor) {
+  if (flavor === "octopus") {
+  throw new Error("yuck, octopus flavor");//스냅샷 생성 후 에러메세지 변경 시 테스트 실패
+  }
+  }
+
+      test("throws on octopus", () => {
+        expect(() => drinkFlavor("octopus")).toThrowErrorMatchingSnapshot();
+      });
+
+      //drinkFlavor.test.js.snap
+      exports[`throws on octopus 1`] = `"yuck, octopus flavor"`;
+      ```
+  ````
+
+### **.toThrowErrorMatchingInlineSnapshot(inlineSnapshot)**
+
+- 받은 값이 호출될 때 에러 스냅샷을 생성하거나 최근에 생성된 에러 스냅샷과 비교함
+  생성된 에러 스냅샷은 `matcher` 내부 인자에 스냅샷이 저장됨
+  <br/><br/>
+
+<hr/>
+
+<br/><br/>
+출처<br/>
+
+[Expect](https://jestjs.io/docs/expect)<br/>
