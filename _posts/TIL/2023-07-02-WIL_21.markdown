@@ -3,7 +3,7 @@ layout: post
 title: 230702_WIL | 7월 1주차
 date: 2023-07-02 12:30:30 +0900
 categories: [I Learn, WIL]
-tag: [react, react-query, typescript]
+tag: [react, storybook, heic]
 ---
 
 # 230702_WIL
