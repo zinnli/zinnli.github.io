@@ -1,0 +1,55 @@
+---
+layout: post
+title: 230730_WIL | 7월 5주차
+date: 2023-07-30 12:30:30 +0900
+categories: [I Learn, WIL]
+tag: [react, TDD, next, blog, typescript]
+---
+
+# 230730_WIL
+
+## **이번주 한 일**
+
+- 프리온보딩 사전과제 공부
+- next 블로그 만들기
+- 타입스크립트 공부중(이펙티브 타입스크립트)
+
+### **이번주의 정리**
+
+#### 1. next 블로그 만들기
+
+- [next docs](https://nextjs.org/learn/basics/data-fetching) 바탕으로 하여 제작하고 있는 중이다.
+- 이전에 스터디 때 공부해보긴 했는데 사실 직접 사용을 안해봤다보니 그냥 멀게 느껴져 따로 만져봐야 이해가 될 것 같다는 생각이 들어 프리온보딩에서 next 강의 들은 김에 위 프로젝트를 진행했다. (아직 수정할 게 많아서 틈틈히 추가해야겠지만.. 배포도 제대로 해본 적이 없어서 배포까지가 목표 / 배포까지 완료되면 next 블로그 만들었던 과정 정리 예정)
+
+  - 아래는 항상 헷갈리던 next api
+
+    - SSR : 유저가 페이지를 요청할 때마다 그에 맞는 HTML 문서를 생성해서 반환
+
+      - `getServerSideProps()` : **요청할 때마다** 데이터를 패치하는 함수
+
+    - SSG : 정적 생성된 정보를 각 요청에 동일한 정보로 반환하는 경우 주로 사용
+      - `getStaticProps()` : **빌드 시** 데이터를 패치하는 함수
+      - `getStaticPaths()` : 페이지의 동적 경로를 지정하는 함수
+
+#### 2. [TDD, 최적화 프리온보딩 사전과제](https://zinnli.github.io/posts/React_26/) 정리했다.
+
+이후에 강의 들으면서 내용은 위 게시물에 추가해나갈 예정이다!
+
+- 최대한 신뢰성 높아보이는 사이트들 위주로 찾아보긴 했는데, 디테일한 부분들(리액트 사용도구의 사용법이나 특징 일부분)은 강의 들으면서 추가하는 것이 좋을 것 같아 추가적으로 작성하지는 않았다. 원래는 해당 깃허브에 이슈로 남겨달라고 되어있었는데 민망해서 그냥 개인블로그에 작성했다.
+
+#### 3. 추가
+
+- [filter는 타입 필터링이 안된다](https://bakjuna.tistory.com/132)
+  - `type guard`를 사용으로 해결 가능
+  - 해당 문제를 발견했던 코드에서는 `.filter`로 `null`을 걸러주고 나서 `.map` 하는 형태였는데 `null` 타입이 걸러지지 않아 `map` 함수에서 `null`의 경우 `fast-return`하는 형식으로 수정했다.  
+    (null 값이 없는데도 `null` 타입을 같이 잡아줘야하는 문제가 있어서 위처럼 해결함)
+
+<br/>
+<hr>
+<br/>
+
+정신차리자!!
+
+[Next.js 정적 생성(Static Generation) - getStaticProps, getStaticPaths](https://hmk1022.tistory.com/entry/Nextjs-%EC%A0%95%EC%A0%81-%EC%83%9D%EC%84%B1Static-Generation-getStaticProps-getStaticPaths) - 예시와 함께 있어 이해하기 좋음<br/>
+[[Next.js] getStaticProps, getStaticPaths, getServerSideProps 란?](https://velog.io/@jwhan/nextjs-getStaticProps-getStaticPaths-getServerSideProps) - 정리 잘되어있다 <br/>
+[기술 블로그를 만들 때 고려해야 할 점](https://bepyan.github.io/blog/nextjs-blog/1-boilerplate)
