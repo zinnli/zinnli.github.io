@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 231022_WIL
+title: 231022_WIL | 10월 3주차
 date: 2023-10-22 12:30:30 +0900
 categories: [I Learn, WIL]
 tag: [react]
