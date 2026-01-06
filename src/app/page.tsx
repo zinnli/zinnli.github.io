@@ -18,7 +18,7 @@ const Blog = async () => {
       <div className="relative w-[100%] h-[180px] m-6 mt-10">
         <div className="absolute bottom-[20px] right-[20px] transform flex flex-col z-50">
           <span className="text-[30px] text-gray_bg italic font-black text-right leading-none z-50">
-            HYUNJIN
+            HYUN JIN
           </span>
           <span className="text-14 text-gray_bg font-black text-right">
             WEB FRONTEND DEVELOPER

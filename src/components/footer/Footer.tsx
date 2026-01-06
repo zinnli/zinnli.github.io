@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import InstaIcon from "../../assets/icons/ic_instagram";
+import InstaIcon from "../../assets/icons/ic_instagram.svg";
 import GithubIcon from "../../assets/icons/ic_github.svg";
 
 const Footer = () => {
