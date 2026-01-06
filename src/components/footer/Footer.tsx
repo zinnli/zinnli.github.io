@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import InstaIcon from "../../assets/icons/ic_instagram.svg";
+import InstaIcon from "../../assets/icons/ic_instagram";
 import GithubIcon from "../../assets/icons/ic_github.svg";
 
 const Footer = () => {
@@ -17,14 +17,14 @@ const Footer = () => {
         </Link>
         <Link
           className="hover:fill-primary"
-          href="https://www.instagram.com/hinen_il/"
+          href="https://www.instagram.com/hinen_li/"
           target="_blank"
         >
           <InstaIcon />
         </Link>
       </div>
       <span className="flex justify-center">
-        © 2025. Hinen all rights reserved.
+        © 2025. zinnli all rights reserved.
       </span>
     </footer>
   );

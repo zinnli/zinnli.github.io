@@ -5,7 +5,7 @@ import { List } from "@/components";
 import { getMarkdownInfos, getPostList, getPostPaths } from "@/lib/mdx";
 
 export const metadata: Metadata = {
-  title: "HINEN | POST",
+  title: "POST | zinnli.dev",
   description: "공부한 내용을 정리, 공유합니다.",
 };
 
