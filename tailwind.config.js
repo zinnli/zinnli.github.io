@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#FF8000",
-        primary_sub: "#FFBE87",
+        primary: "#409B13",
+        primary_sub: "#7ECE57",
         white: "#fafaf8",
         gray_bg: "#F2F2F2",
         black: "#1a1a1a",
@@ -60,8 +60,8 @@ module.exports = {
               position: "relative",
               bottom: 1,
               margin: "0 3px",
-              color: "#FF8000",
-              backgroundColor: "rgba(255,184,124,0.1)",
+              color: "#409B13",
+              backgroundColor: "rgba(126,206,87,0.1)",
               fontFamily: 'D2Coding, "D2 coding", monospace',
               borderRadius: 3,
               padding: "0.2em 0.4em",
