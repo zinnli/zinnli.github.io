@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#409B13",
-        primary_sub: "#7ECE57",
+        primary_sub: "#9BCD83",
         white: "#fafaf8",
         gray_bg: "#F2F2F2",
         black: "#1a1a1a",
@@ -61,7 +61,7 @@ module.exports = {
               bottom: 1,
               margin: "0 3px",
               color: "#409B13",
-              backgroundColor: "rgba(126,206,87,0.1)",
+              backgroundColor: "rgba(155,205,131,0.1)",
               fontFamily: 'D2Coding, "D2 coding", monospace',
               borderRadius: 3,
               padding: "0.2em 0.4em",
