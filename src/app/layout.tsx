@@ -3,19 +3,19 @@ import { Footer, Header } from "@/components";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "HINEN",
+  title: "zinnli.dev",
   description: "배운 것을 기록하는 개발 블로그입니다.",
   openGraph: {
-    title: "히넨로그",
+    title: "zinnli.dev",
     type: "website",
     url: "https://zinnli.github.io/",
-    siteName: "히넨로그",
+    siteName: "zinnli.dev",
     images: [
       {
         url: "https://zinnli.github.io/og_image.png",
         width: 800,
         height: 400,
-        alt: "히넨로그",
+        alt: "zinnli.dev",
       },
     ],
   },

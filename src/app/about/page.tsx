@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "HINEN | ABOUT",
+  title: "ABOUT | zinnli.dev",
   description: "저를 소개합니다.",
 };
 

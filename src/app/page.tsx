@@ -6,7 +6,7 @@ import { List } from "@/components";
 import { getPostList } from "@/lib/mdx";
 
 export const metadata: Metadata = {
-  title: "HINEN LOG",
+  title: "zinnli.dev",
   description: "배운 것을 기록하는 개발 블로그입니다.",
 };
 
@@ -18,7 +18,7 @@ const Blog = async () => {
       <div className="relative w-[100%] h-[180px] m-6 mt-10">
         <div className="absolute bottom-[20px] right-[20px] transform flex flex-col z-50">
           <span className="text-[30px] text-gray_bg italic font-black text-right leading-none z-50">
-            HINEN
+            HYUN JIN
           </span>
           <span className="text-14 text-gray_bg font-black text-right">
             WEB FRONTEND DEVELOPER
