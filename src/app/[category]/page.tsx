@@ -39,7 +39,7 @@ const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
   return (
     <>
       <div className="flex justify-start gap-x-[10px] w-[100%] mt-12 mb-12">
-        <Link className={selectTextStyle(!category)} href={"/post"}>
+        <Link className={selectTextStyle(!category)} href={"/"}>
           All({totalCount})
         </Link>
         {categories.map((item, i) => {
@@ -66,7 +66,7 @@ const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
               category={item.categoryPath}
               date={item.date}
               desc={item.desc}
-              path={`/post/${item.filePath}`}
+              path={`/${item.filePath}`}
               title={item.title}
             />
           );

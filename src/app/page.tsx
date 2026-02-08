@@ -1,67 +1,71 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 import { List } from "@/components";
-import { getPostList } from "@/lib/mdx";
+import { getMarkdownInfos, getPostList, getPostPaths } from "@/lib/mdx";
 
 export const metadata: Metadata = {
-  title: "zinnli.dev",
-  description: "배운 것을 기록하는 개발 블로그입니다.",
+  title: "POST | zinnli.dev",
+  description: "공부한 내용을 정리, 공유합니다.",
 };
 
-const Blog = async () => {
-  const post = await getPostList("");
+export function generateStaticParams() {
+  const categoryList = getPostPaths();
+  const paramList = categoryList.map((category) => ({ category }));
+  return paramList;
+}
+
+export const dynamicParams = false;
+
+const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
+  const { category } = await params;
+
+  const post = await getPostList(category);
+  const categories = await getMarkdownInfos();
+
+  const totalCount = categories.reduce((acc, curr) => acc + curr.count, 0);
+
+  const selectTextStyle = (isSelected: boolean) =>
+    `text-16 ${isSelected ? "font-bold text-black" : "font-normal text-black/80"}`;
 
   return (
     <>
-      <div className="relative w-[100%] h-[180px] m-6 mt-10">
-        <div className="absolute bottom-[20px] right-[20px] transform flex flex-col z-50">
-          <span className="text-[30px] text-gray_bg italic font-black text-right leading-none z-50">
-            HYUN JIN
-          </span>
-          <span className="text-14 text-gray_bg font-black text-right">
-            WEB FRONTEND DEVELOPER
-          </span>
-        </div>
-        {/* NOTE: bg 이미지 고민중 */}
-        <Image
-          className="w-[100%] h-[100%] bg-gray object-cover"
-          fill
-          src="/profile.jpeg"
-          alt="profile"
-          unoptimized
-        />
+      <div className="flex justify-start gap-x-[10px] w-[100%]  mt-12 mb-12">
+        <Link className={selectTextStyle(!category)} href={"/"}>
+          All({totalCount})
+        </Link>
+        {categories.map((item, i) => {
+          return (
+            <Link
+              className={selectTextStyle(item.category === category)}
+              key={i}
+              href={`/${item.category}`}
+            >
+              {item.category}({item.count})
+            </Link>
+          );
+        })}
       </div>
-      <Link
-        href="https://www.notion.so/1fafa40e612b80cda5c0d9f064b228bd"
-        className="hover:text-primary"
-      >
-        &gt; more about me
-      </Link>
-      <section className="w-[100%]">
-        <h1 className="flex justify-start gap-x-5 w-[100%] mt-7 my-5 mb-3 text-26 text-black sm:text-30">
-          <span>Recent</span>
-          <span className="font-black">Posts</span>
-        </h1>
-        <div className="flex flex-col gap-y-2">
-          {post.slice(0, 4).map((item) => {
-            return (
-              <List
-                key={item.filePath}
-                isPost={false}
-                category={item.categoryPath}
-                date={item.date}
-                desc={item.desc}
-                path={`/post/${item.filePath}`}
-                title={item.title}
-              />
-            );
-          })}
-        </div>
+      <section className="flex flex-col gap-y-2 w-[100%]">
+        {(category
+          ? post.filter((item) => item.categoryPath === category)
+          : post
+        ).map((item) => {
+          return (
+            <List
+              key={item.filePath}
+              isPost
+              category={item.categoryPath}
+              date={item.date}
+              desc={item.desc}
+              path={`/${item.filePath}`}
+              title={item.title}
+            />
+          );
+        })}
       </section>
     </>
   );
 };
 
-export default Blog;
+export default Post;
