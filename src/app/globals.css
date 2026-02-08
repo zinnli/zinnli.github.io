@@ -1,10 +1,145 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
 @plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
 @import "../styles/fonts.css";
+
+@theme {
+  /* Colors */
+  --color-primary: #409b13;
+  --color-primary_sub: #9bcd83;
+  --color-white: #fafaf8;
+  --color-gray_bg: #f2f2f2;
+  --color-black: #1a1a1a;
+  --color-gray: #6c757d;
+  --color-gray_sub: #b4b4b4;
+
+  /* Font sizes (--text-* → text-12, text-14, ...) */
+  --text-12: 12px;
+  --text-14: 14px;
+  --text-16: 16px;
+  --text-18: 18px;
+  --text-20: 20px;
+  --text-26: 26px;
+  --text-30: 30px;
+  --text-32: 32px;
+
+  /* Accordion animations (tailwindcss-animate / shadcn 호환) */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/* Typography(prose) 커스텀 - 기존 tailwind.config typography 확장 이전 */
+@utility prose {
+  & h1 {
+    font-size: 26px !important;
+  }
+  & h2 {
+    font-size: 22px !important;
+    scroll-margin-top: 2rem;
+  }
+  & h3 {
+    font-size: 20px !important;
+    scroll-margin-top: 2rem;
+  }
+  & h4 {
+    font-size: 17px !important;
+    scroll-margin-top: 2rem;
+  }
+  & p {
+    font-size: 14px;
+  }
+  & article {
+    width: 100%;
+  }
+  & .callout-contents > p {
+    margin: 0;
+  }
+  & code {
+    counter-reset: line;
+  }
+  & hr {
+    margin: 2rem 0 !important;
+    border-color: #b4b4b4;
+  }
+  & :not(pre) > code {
+    font-weight: inherit;
+    position: relative;
+    bottom: 1px;
+    margin: 0 3px;
+    color: #409b13;
+    background-color: rgba(155, 205, 131, 0.1);
+    font-family: D2Coding, "D2 coding", monospace;
+    border-radius: 3px;
+    padding: 0.2em 0.4em;
+    overflow-wrap: break-word;
+  }
+  & code::before,
+  & code::after {
+    content: none;
+  }
+  & code[data-line-numbers] > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1rem;
+    margin-right: 1.2rem;
+    text-align: right;
+    color: lightgrey;
+    font-size: 0.75rem;
+  }
+  & code[data-line-numbers-max-digits="2"] > [data-line]::before {
+    width: 1rem;
+  }
+  & code[data-line-numbers-max-digits="3"] > [data-line]::before {
+    width: 2rem;
+  }
+  & pre {
+    padding-right: 0;
+    padding-left: 0;
+    color: #1a1a1a;
+    background-color: #fafaf8;
+    border: 1px solid #b4b4b4;
+  }
+  & pre > code > span {
+    padding-left: 1.1rem;
+    padding-right: 1rem;
+    font-size: 0.75rem;
+  }
+  & pre code span {
+    color: var(--shiki-light);
+  }
+  & .project img {
+    margin-top: 0 !important;
+  }
+  & .project p,
+  & .project ul,
+  & .project li {
+    margin: 5px 0 !important;
+    font-size: 14px;
+  }
+  & u {
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    font-weight: 600;
+  }
+}
 
 :root {
   font-family: "SpoqaHanSansNeo", monospace;
@@ -14,7 +149,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
-
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
