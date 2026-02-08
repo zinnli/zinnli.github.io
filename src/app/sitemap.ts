@@ -1,25 +1,35 @@
 import { getPostList, getMarkdownInfos } from "@/lib/mdx";
 import type { MetadataRoute } from "next";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const markdownInfos = await getMarkdownInfos(); // 카테고리 목록 불러오기
+const BASE_URL = "https://zinnli.github.io";
 
-  // 각 카테고리별로 포스트 URL을 동적으로 생성
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const markdownInfos = await getMarkdownInfos();
+
+  // 고정 페이지 (홈, about, project, 카테고리 목록)
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE_URL}/project`, changeFrequency: "monthly", priority: 0.8 },
+    ...markdownInfos.map((info) => ({
+      url: `${BASE_URL}/${info.category}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+  ];
+
+  // 각 카테고리별 포스트 URL (lastModified 반영)
   const postUrls = await Promise.all(
     markdownInfos.map(async (info) => {
-      const posts = await getPostList(info.category); // 각 카테고리별로 포스트 목록을 가져옴
+      const posts = await getPostList(info.category);
       return posts.map((post) => ({
-        url: `https://zinnli.github.io/${post.filePath}`, // 카테고리와 slug를 합쳐서 URL 구성
-        lastModified: post.updatedDate.toISOString(),
+        url: `${BASE_URL}/${post.filePath}`,
+        lastModified: post.updatedDate,
         changeFrequency: "weekly" as const,
         priority: 0.7,
-        sitemapSize: 7000,
       }));
     })
   );
 
-  // flatMap으로 각 카테고리별 URL들을 하나의 배열로 합침
-  const allPostUrls = postUrls.flat();
-
-  return allPostUrls;
+  return [...staticPages, ...postUrls.flat()];
 }
