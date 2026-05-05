@@ -115,7 +115,7 @@ test("the best flavor is grapefruit", () => {
   test("rejects to octopus", () => {
     // make sure to add a return statement
     return expect(Promise.reject(new Error("octopus"))).rejects.toThrow(
-      "octopus"
+      "octopus",
     );
   });
   ```
@@ -125,7 +125,7 @@ test("the best flavor is grapefruit", () => {
   ```javascript
   test("rejects to octopus", async () => {
     await expect(Promise.reject(new Error("octopus"))).rejects.toThrow(
-      "octopus"
+      "octopus",
     );
   });
   ```
@@ -402,12 +402,12 @@ alias: `.nthReturnedWith(nthCall, value)`
     expect(houseForSale).toHaveProperty(["kitchen", "area"], 20);
     expect(houseForSale).toHaveProperty(
       ["kitchen", "amenities"],
-      ["oven", "stove", "washer"]
+      ["oven", "stove", "washer"],
     );
     expect(houseForSale).toHaveProperty(["kitchen", "amenities", 0], "oven");
     expect(houseForSale).toHaveProperty(
       "livingroom.amenities[0].couch[0][1].dimensions[0]",
-      20
+      20,
     );
     expect(houseForSale).toHaveProperty(["kitchen", "nice.oven"]);
     expect(houseForSale).not.toHaveProperty(["kitchen", "open"]);

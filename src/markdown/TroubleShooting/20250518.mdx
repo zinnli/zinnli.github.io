@@ -1,5 +1,5 @@
 ---
-title: React | Geolocation API
+title: TroubleShooting | Geolocation API
 date: 2025-05-18
 desc: Geolocation API를 사용하면서 겪은 이슈와 코드 정리
 ---
@@ -43,7 +43,7 @@ const getLocation = () => {
     },
     (err) => {
       console.log(err.code);
-    }
+    },
   );
 };
 ```
@@ -63,7 +63,7 @@ navigator.geolocation.watchPosition(
   },
   (err) => {
     console.error("위치 에러:", err);
-  }
+  },
 );
 ```
 
