@@ -1,5 +1,5 @@
 ---
-title: WIL | cdd와 tdd
+title: cdd와 tdd
 date: 2023-06-11
 desc: cdd와 tdd
 ---
@@ -17,7 +17,6 @@ desc: cdd와 tdd
 
 - **아토믹 디자인 패턴**<br/>
   ~~이전에 [wil에 간단하게 작성한 적이 있던 내용](https://zinnli.github.io/React/20230318)이었는데 다시 들어도 복잡하다.~~
-
   - atom : 인터페이스를 구성하는 가장 작은 단위(조합x)
   - molecule : atom을 조합하여 만든 더 복잡한 컴포넌트
   - organism : molecule을 조합하여 만든 더 복잡한 컴포넌트
@@ -58,7 +57,6 @@ desc: cdd와 tdd
   ```
 
 - **coverage** : 아래처럼 test는 제대로 진행됐지만, 실패하는 경우의 수가 있는 경우 아래처럼 테스트가 제대로 이루어지지 않은 부분의 라인(ex. 30-31)과 94.28%처럼 안된 부분 알려준다
-
   - `collectCoverage`: true로 세팅해주면 볼 수 있음
   - `jest --coverage` 입력시에도 확인할 수 있음
 
@@ -74,12 +72,10 @@ desc: cdd와 tdd
   ```
 
 - `package.json`
-
   - `"test": "jest --watch"` (git commit해야 제대로 작동됨)
   - `"test": "jest --watchAll"` (저장할 때마다 모든 test가 진행됨)
 
 - **각 테스트는 독립적으로 유지**되는 것이 중요함
-
   - 반복적으로 사용되는 객체의 경우 => 각 코드에 작성해도 되지만 코드 중복을 피하기 위해 `beforeEach()`를 사용함
   - `let`으로 선언 먼저 하고 매 테스트마다 초기화해줄 수 있도록 `beforeEach()`를 사용함([공식문서 참고](https://jestjs.io/docs/setup-teardown#repeating-setup))
 

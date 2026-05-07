@@ -1,5 +1,5 @@
 ---
-title: WIL | 스토리북과 heic2any 라이브러리
+title: 스토리북과 heic2any 라이브러리
 date: 2023-07-02
 desc: 스토리북과 heic2any 라이브러리
 ---
@@ -34,7 +34,6 @@ npx storybook@next automigrate
 (사실 Docs의 내용 순서대로 하면 정상적으로 동작한다. 뭔가 요약하기도 애매한 내용들.. 부분적으로 설치 코드가 다른 부분들이 있었는데 어디서 오류가 난 건지 제대로 파악하지 못해서 모두 정리해두지 못했다.. 다음에 공부할 때 같은 문제가 발생하면 정리해둬야할듯)
 
 - 아무튼 2주만에 배포 성공함 ([Chromatic 배포](https://649831a7e6f0ba299dc13b07-tiszkzpnkf.chromatic.com/?path=/story/inboxscreen--default))
-
   - 배포 시 생겼던 문제가 있었는데, 다시 확인해보니, 문제가 아니라 문제라고 착각했던 것 같다. error라고 떠있어서 오류라고 생각했던 것 같은데 크로마틱 확인해보니 전부 배포되어있었다
     ```bash
     ℹ For CI/CD use cases, this command failed with exit code 1
@@ -57,7 +56,6 @@ npx storybook@next automigrate
 - 기본적으로 `heic`파일은 아이폰 이미지에서 주로 사용되는 확장자명으로 대부분의 사이트에서 미리보기 적용이 되지 않는다.
 - 그리고 이때까지 진행했던 프로젝트의 경우, 기본적인 이미지 확장자인 jpg, jpeg, png 위주로만 올리고 있었는데, 이번에 heic도 업로드되어야할 것 같다고 전달받았고, 여러 사이트에서 어떻게 업로드가 되는지 확인 하던 중, 대부분의 사이트들이 미리보기는 적용되지 않지만, heic->png 등의 일반적인 이미지 확장자로 변환하여 업로드되는 것을 파악할 수 있었다.
 - 그래서 알게된 라이브러리인 `heic2any`
-
   - 생각보다 사용법은 간단했는데, 이미지 원본을 원하는 확장자로 변경해주는 코드만 짜주면 됐다.
 
     ```javascript
