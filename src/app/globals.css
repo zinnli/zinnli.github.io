@@ -62,7 +62,10 @@
     font-size: 17px !important;
     scroll-margin-top: 2rem;
   }
-  & p {
+  & p,
+  & ul,
+  & ol,
+  & li {
     font-size: 14px;
   }
   & article {
