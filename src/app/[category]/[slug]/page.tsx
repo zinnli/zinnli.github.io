@@ -29,7 +29,9 @@ export async function generateMetadata({
   return {
     title,
     description: post.desc,
-
+    alternates: {
+      canonical: `https://zinnli.github.io/${category}/${slug}`,
+    },
     openGraph: {
       title,
       description: post.desc,

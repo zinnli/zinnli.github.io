@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/lib",
     },
-    sitemap: "https://zinnli.github.io//sitemap.xml",
+    sitemap: "https://zinnli.github.io/sitemap.xml",
   };
 }

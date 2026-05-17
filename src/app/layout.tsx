@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         <meta
           name="google-site-verification"
