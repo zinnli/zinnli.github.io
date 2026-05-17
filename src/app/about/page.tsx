@@ -12,9 +12,16 @@ const About = () => {
         <div className="flex flex-col justify-start py-[5px] mb-10">
           <div className="flex gap-x-2 text-20 font-bold text-primary">
             <span>이현진</span>
-            <span>LEE HYUNJIN</span>
+            <span className="text-20 text-primary">Frontend developer</span>
           </div>
-          <span className="text-18 text-primary_sub">Frontend developer</span>
+          <a
+            href="https://www.notion.so/3504be9efc24806e8095ea6e59a32cd3"
+            target="_blank"
+          >
+            <span className="text-16 text-primary_sub hover:text-primary">
+              &gt; https://www.notion.so/3504be9efc24806e8095ea6e59a32cd3
+            </span>
+          </a>
         </div>
         <span>
           배우고, 기록하고, 나눕니다. 성장과 공유를 위한 개발 로그입니다.
