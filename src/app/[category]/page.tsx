@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { List } from "@/components";
@@ -25,11 +26,18 @@ export function generateStaticParams() {
   return paramList;
 }
 
+export const dynamicParams = false;
+
 const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
 
-  const post = await getPostList(category);
   const categories = await getMarkdownInfos();
+
+  if (!categories.some((item) => item.category === category)) {
+    notFound();
+  }
+
+  const post = await getPostList(category);
 
   const totalCount = categories.reduce((acc, curr) => acc + curr.count, 0);
 
