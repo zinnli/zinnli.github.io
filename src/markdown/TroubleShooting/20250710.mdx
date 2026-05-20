@@ -4,8 +4,6 @@ date: 2025-07-10
 desc: breakpoint 없이 반응형을 적용해보자
 ---
 
-### breakpoint 없이 반응형을 적용해보자
-
 > 회사 프로젝트에서 다양한 기종의 화면 크기를 모두 고려해 반응형을 처리하기엔 한계가 있었다.
 
 > 이에 사내 `React-native`에서 사용하는 **기준 width 기반의 비율(`ratio`) 계산 방식**을 도입했고,  
@@ -13,13 +11,13 @@ desc: breakpoint 없이 반응형을 적용해보자
 
 ---
 
-## 🚦 진행 방향
+## 진행 방향
 
 - 기준이 되는 화면 너비(`MAX_WIDTH`)를 기준으로 현재 `window.innerWidth`와의 비율을 계산(=`ratio`)
 - 전역 `ratio`를 `globalStyle`에 전달하여 전체 폰트 및 요소 크기를 비례해서 조절
 - 컴포넌트에서는 `rem` 단위로만 스타일 지정
 
-## 📖 구현 방법
+## 구현 방법
 
 ### 1. 전역 `ratio` 상태를 만든다.
 
@@ -98,11 +96,11 @@ export default globalStyles;
 
 ---
 
-## ✅ 결과
+## 결과
 
 이렇게 사용하면 화면은 아래와 같이 동작한다.
 
-### 📷 결과 이미지
+### 결과 이미지
 
 <div class="responsive-images">
   <img src="/images/20250710_반응형_01.png" alt="width 375 이상" />
