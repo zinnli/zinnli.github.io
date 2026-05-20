@@ -1,23 +1,24 @@
 ---
-title: Zod 마이그레이션 중 FormType 불일치를 검증하려 했던 방법
+title: Zod 마이그레이션 중 FormType 이중 관리 문제 해결하기
 date: 2026-05-17
-desc: yup에서 zod로 전환하는 과정에서 FormType과 schema 타입 불일치를 검증하려 했던 방식과 한계
+desc: yup에서 zod로 전환하는 과정에서 FormType과 schema가 어긋나는 문제를 z.infer 기반 구조로 정리한 기록
 ---
-
-# Zod 마이그레이션 중 FormType 불일치를 검증하려 했던 방법
 
 > 2025년 11월, yup → zod 마이그레이션 과정에서  
-> FormType과 schema 타입 불일치 문제를 겪었고  
-> 당시 적용했던 방식과 이후 회고를 함께 정리한 글입니다.
+> 기존 FormType과 zod schema의 추론 타입이 어긋나는 문제가 발생했고  
+> 이를 schema 기준 타입 추론 구조로 정리한 기록입니다.
 
-기존 프로젝트에서는 form 타입을 별도의 `FormType`으로 정의하고, 유효성 검사는 yup schema를 통해 관리하고 있었다.  
-이후 validation 라이브러리를 yup에서 zod로 전환하는 과정에서 기존 `FormType`을 그대로 유지한 채 zod schema를 추가하게 되었는데, 이때 한 가지 문제가 있었다.  
-`FormType`과 zod schema가 서로 다른 구조를 가져도, 기존 `zodResolver`만으로는 두 타입의 불일치를 직접적으로 확인하기 어려웠다.  
-즉, 런타임 유효성 검사는 동작하지만 컴파일 단계에서 form 타입과 schema 타입이 실제로 일치하는지 보장하기 어려운 상황이었다.
+기존 프로젝트에서는 form 타입을 별도의 `FormType`으로 정의하고, 유효성 검사는 yup schema로 관리하고 있었다.  
+이후 validation 라이브러리를 yup에서 zod로 전환하면서 기존 `FormType`은 유지한 채 zod schema를 추가했다.
+
+이때 `FormType`과 zod schema가 서로 다른 구조를 가져도, `zodResolver`만으로는 두 타입의 불일치를 직접 확인하기 어려웠다.  
+런타임 유효성 검사는 동작하지만, 컴파일 단계에서 form 타입과 schema 타입이 실제로 일치하는지 보장하기 어려운 상황이었다.
 
 ---
 
-## ⁉️ 기존 `FormType`을 유지한 채 zod schema를 추가했을 때의 문제
+## 마이그레이션 상황
+
+### 1. 문제 상황
 
 기존 form 코드는 대략 아래와 같은 구조였다.
 
@@ -42,15 +43,39 @@ type FormTypeImage = File | null;
 type SchemaImage = string | null;
 ```
 
-이처럼 form에서 사용하는 타입과 schema에서 추론되는 타입이 달라도 `zodResolver`는 두 타입의 일치 여부를 직접 비교하지 않는다.  
-문제는 이런 불일치가 바로 눈에 띄지 않는다는 점이었다.  
-form 코드가 적다면 직접 하나씩 확인할 수 있지만, 이미 여러 화면에서 form이 사용되고 있는 상태라면 모든 코드를 수동으로 검증하기 어렵다.
+이처럼 form에서 사용하는 타입과 schema에서 추론되는 타입이 달라도 `zodResolver`는 두 타입의 일치 여부를 비교하지 않는다.  
+문제는 이런 불일치가 바로 눈에 띄지 않는다는 점이었다.
 
----
+### 2. 재현 케이스
 
-## ⚠️ 기존 방식의 한계
+아래처럼 `useForm`에 기존 `FormType`을 전달하고, resolver에는 zod schema를 연결한다고 가정한다.
 
-### 1. FormType과 schema를 따로 관리하는 방식
+```tsx
+const form = useForm<FormType>({
+  resolver: zodResolver(schema),
+});
+```
+
+이 코드에서 `zodResolver(schema)`는 schema 기준으로 validation을 수행한다.  
+하지만 `useForm<FormType>`에 전달한 타입과 `z.infer<typeof schema>`가 같은지까지 확인하지는 않는다.
+
+```tsx
+type FormType = {
+  title: string;
+  image: File | null;
+};
+
+type SchemaType = {
+  title: string;
+  image: string | null;
+};
+```
+
+따라서 `image`처럼 서로 다른 타입이 섞여 있어도, form 코드가 많거나 구조가 깊으면 마이그레이션 중에 놓치기 쉬웠다.
+
+### 3. 원인 분석
+
+#### FormType과 schema의 이중 관리
 
 기존 구조에서는 form에서 사용하는 타입과 validation schema가 분리되어 있었다.
 
@@ -67,11 +92,11 @@ const schema = z.object({
 ```
 
 `FormType`은 form 데이터 타입을 표현하고, `schema`는 유효성 검사를 담당한다.  
-하지만 두 정의가 쉽게 어긋날 수 있고, 하나의 타입으로 표현할 수 있는 코드를 2가지의 범위로 관리해야 한다는 점이 불필요하다는 판단이 들었다.
+하지만 두 정의를 따로 관리하면 한쪽만 수정되었을 때 타입이 쉽게 어긋난다.
 
-### 2. zodResolver만 사용하는 방식
+#### zodResolver의 역할 범위
 
-zod를 사용하면 schema를 기반으로 유효성 검사를 처리할 수 있다.
+`zodResolver`는 zod schema를 기반으로 validation을 수행한다.
 
 ```tsx
 const form = useForm<FormType>({
@@ -79,7 +104,7 @@ const form = useForm<FormType>({
 });
 ```
 
-하지만 이 코드만으로는 `FormType`과 `schema`의 추론 타입이 같은지 확인할 수 없다.  
+하지만 이 코드만으로는 `FormType`과 schema의 추론 타입이 같은지 확인할 수 없다.  
 즉, 아래 두 타입이 실제로 일치하는지 보장되지 않는다.
 
 ```tsx
@@ -90,13 +115,12 @@ type FormType = {
 type SchemaType = z.infer<typeof schema>;
 ```
 
-zod schema는 런타임 validation에는 강하지만, 별도로 작성한 `FormType`과 자동으로 동기화되지는 않는다.  
-하지만 기존 코드에서는 schema와 `FormType`이 동일한 타입을 가질 것이라는 장담을 할 수 없는 상황이었기 때문에 마이그레이션에 문제가 생겼다.
+문제의 원인은 `zodResolver` 자체가 아니라, `FormType`과 schema를 별도로 관리하던 구조에 있었다.
 
-### 3. 모든 form을 직접 확인하는 방식
+#### 수동 검증의 한계
 
 가장 단순한 방법은 모든 form 코드를 직접 열어서 확인하는 것이다.  
-하지만 현실적으로 이 방법은 한계가 있었다.
+하지만 마이그레이션 상황에서는 이 방식에 한계가 있었다.
 
 - form 수가 많다.
 - 필드 구조가 깊은 객체도 있다.
@@ -107,32 +131,31 @@ zod schema는 런타임 validation에는 강하지만, 별도로 작성한 `Form
 
 ---
 
-## 🚦 해결 전략
+## 1차 해결 방안: strictZodResolver
 
-처음에는 `strictZodResolver`라는 함수를 만들어, `FormType`과 zod schema의 추론 타입을 컴파일 단계에서 비교하려고 했다.
+마이그레이션 당시에는 기존 `FormType`이 실제 form 값과 항상 일치한다고 확신하기 어려웠다.  
+그렇다고 모든 form 타입을 한 번에 schema 기준으로 바꾸기에는 영향 범위가 컸다.
 
-핵심 아이디어는 단순했다.
+그래서 먼저 기존 `FormType`을 유지한 상태에서 schema 타입과의 불일치를 컴파일 단계에서 확인하는 방법을 시도했다.  
+이를 위해 `strictZodResolver`라는 함수를 만들었다.
+
+핵심 아이디어는 아래와 같았다.
 
 - zod schema에서 `z.infer`로 타입을 추론한다.
 - 기존 `FormType`과 schema 추론 타입을 비교한다.
 - 두 타입이 다르면 타입 에러를 발생시킨다.
-- 실제 validation은 기존 `zodResolver`를 그대로 사용한다.
+- runtime validation은 기존 `zodResolver`를 그대로 사용한다.
 
-즉, resolver의 역할을 확장해서 런타임 validation뿐 아니라 타입 일치 여부까지 확인하고 싶었다.
+### 1. 도입 이유
 
----
+`strictZodResolver`는 기존 타입을 최종 구조로 확정하기 전에, `FormType`과 zod schema의 추론 타입이 어긋나는 지점을 먼저 드러내기 위한 임시 안전장치였다.  
+마이그레이션 초기에 이 과정을 거쳐 타입 불일치 지점을 정리한 뒤, 최종적으로는 일반 `zodResolver`로 교체하는 흐름을 의도했다.
 
-## 📖 구현 방법
+### 2. 타입 비교 유틸
 
-### 1. `IsEqualType` - 타입 비교
-
-먼저 두 타입이 완전히 동일한지 비교하는 타입 유틸리티를 작성했다.
+먼저 두 타입이 동일한지 비교하는 타입 유틸리티를 작성했다.
 
 ```tsx
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { Resolver } from "react-hook-form";
-import type * as z from "zod";
-
 type IsEqualType<A, B> = [A] extends [B]
   ? [B] extends [A]
     ? true
@@ -140,28 +163,12 @@ type IsEqualType<A, B> = [A] extends [B]
   : false;
 ```
 
-여기서 핵심은 비교 대상 타입을 튜플로 감싸는 것이다.
+비교 대상 타입을 튜플로 감싸서 union 타입이 분배 조건부 타입으로 나뉘지 않도록 했다.  
+`string | null` 같은 union 타입도 전체 타입을 하나의 비교 대상으로 다루기 위해서였다.
 
-```tsx
-[A] extends [B]
-```
+### 3. FormType과 schema 비교
 
-단순히 아래처럼 비교하면 union 타입에서 분배 조건부 타입이 발생할 수 있다.
-
-```tsx
-type IsEqualType<A, B> = A extends B ? (B extends A ? true : false) : false;
-```
-
-예를 들어 `string | null` 같은 union 타입을 비교할 때, 전체 타입을 하나로 비교하는 것이 아니라 union의 각 구성 요소를 나누어 비교할 수 있다.  
-이 경우 `null`, `undefined`, optional 여부가 의도와 다르게 비교될 수 있다.
-
-그래서 타입을 튜플로 감싸서 union이 분배되지 않도록 하고, 전체 타입을 하나의 비교 대상으로 다루도록 했다.
-
----
-
-### 2. `CheckTypeMatch` - 필드 타입 검사
-
-다음으로 각 필드의 타입이 일치하는지 확인하는 타입을 작성했다.
+각 필드의 타입이 일치하는지 확인하기 위해 `CheckTypeMatch`를 작성했다.
 
 ```tsx
 type CheckTypeMatch<K extends string, TForm, TZodInferred> =
@@ -174,49 +181,12 @@ type CheckTypeMatch<K extends string, TForm, TZodInferred> =
         : `Error: FormType와 Zod schema의 '${K}' 타입이 일치하지 않습니다.`;
 ```
 
-`CheckTypeMatch`는 `FormType`의 필드 타입과 zod schema에서 추론한 필드 타입을 비교한다.  
+이 타입은 `FormType`의 필드 타입과 schema에서 추론한 필드 타입을 비교한다.  
 두 타입이 완전히 동일하면 기존 `TForm` 타입을 그대로 반환하고, 다르면 에러 메시지 문자열 타입을 반환하도록 했다.
 
-예를 들어 아래와 같은 타입이 있다고 가정한다.
+key 누락도 함께 확인하기 위해 `CheckFormSchemaMatch`를 추가했다.
 
 ```tsx
-type FormType = {
-  password: string | undefined;
-};
-
-type SchemaType = {
-  password: string;
-};
-```
-
-이 경우 `password` 필드는 완전히 동일하지 않다.  
-`FormType`의 `password`는 `undefined`를 허용하지만, schema에서 추론된 `password`는 `string`만 허용한다.
-
-```tsx
-type FormPassword = string | undefined;
-
-type SchemaPassword = string;
-```
-
-이때 기대한 결과는 아래처럼 특정 필드의 타입 범위가 다르다는 것을 알려주는 것이었다.
-
-```txt
-Error: FormType의 'password'의 타입의 범위가 더 넓습니다!
-```
-
-즉, 단순히 “타입이 다르다”가 아니라, 어느 쪽의 타입 범위가 더 넓은지도 함께 확인하고 싶었다.
-
----
-
-### 3. `CheckFormSchemaMatch` - Form과 Schema 구조 검사
-
-필드 타입만 비교해서는 충분하지 않았다.  
-`FormType`에는 존재하는 key가 schema에는 없거나, 반대로 schema에는 존재하는 key가 `FormType`에는 없는 경우도 확인해야 했다.
-
-이를 위해 `CheckFormSchemaMatch` 타입을 작성했다.
-
-```tsx
-// 여기서는 object schema뿐 아니라 literal, union 등 다양한 zod schema를 받을 수 있도록 `z.ZodType<any, any, any>`로 제약을 열어둠
 type CheckFormSchemaMatch<TForm, TSchema extends z.ZodType<any, any, any>> =
   z.infer<TSchema> extends infer TZodInferred
     ? {
@@ -231,77 +201,9 @@ type CheckFormSchemaMatch<TForm, TSchema extends z.ZodType<any, any, any>> =
     : never;
 ```
 
-이 타입은 크게 두 방향으로 검사한다.
+이 타입은 `FormType → Schema`, `Schema → FormType` 양방향으로 key와 필드 타입을 비교한다.
 
-첫 번째는 `FormType → Schema` 방향이다.
-
-```tsx
-{
-  [K in keyof TForm]: K extends keyof TZodInferred
-    ? CheckTypeMatch<K & string, TForm[K], TZodInferred[K]>
-    : `Error: Zod schema의 '${K & string}' key 값이 누락되었습니다!`;
-}
-```
-
-`FormType`에 있는 key가 schema 추론 타입에도 존재하는지 확인한다.  
-존재한다면 `CheckTypeMatch`를 통해 내부 타입까지 비교하고, 존재하지 않는다면 schema에 해당 key가 누락되었다는 에러 메시지 타입을 반환한다.
-
-두 번째는 `Schema → FormType` 방향이다.
-
-```tsx
-{
-  [K in keyof TZodInferred]: K extends keyof TForm
-    ? TZodInferred[K]
-    : `Error: FormType의 '${K & string}' key 값이 누락되었습니다!`;
-}
-```
-
-schema 추론 타입에 있는 key가 `FormType`에도 존재하는지 확인한다.  
-이 검사는 schema에는 있는데 `FormType`에는 없는 key를 찾기 위한 교차 검증에 가깝다.
-
-예를 들어 아래와 같은 경우를 확인할 수 있다.
-
-```tsx
-type FormType = {
-  email: string;
-  password: string;
-};
-
-type SchemaType = {
-  password: string;
-};
-```
-
-이 경우 `email`은 `FormType`에는 있지만 schema에는 없다.
-
-따라서 의도한 에러는 아래와 같다.
-
-```txt
-Error: Zod schema의 'email' key 값이 누락되었습니다!
-```
-
-반대로 schema에만 존재하는 key도 확인할 수 있다.
-
-```tsx
-type FormType = {
-  password: string;
-};
-
-type SchemaType = {
-  email: string;
-  password: string;
-};
-```
-
-이 경우 의도한 에러는 아래와 같다.
-
-```txt
-Error: FormType의 'email' key 값이 누락되었습니다!
-```
-
----
-
-### 4. `strictZodResolver` - resolver 연결
+### 4. resolver 연결
 
 마지막으로 위 타입 유틸을 `zodResolver`에 연결했다.
 
@@ -316,13 +218,11 @@ export const strictZodResolver = <
 };
 ```
 
-이 함수의 runtime 동작은 기존 `zodResolver`와 동일하다.
+runtime 동작은 기존 `zodResolver`와 동일하다.
 
 ```tsx
 return zodResolver(schema);
 ```
-
-즉, 실제 유효성 검사는 `zodResolver`가 그대로 수행한다.
 
 차이는 compile-time에 있다.
 
@@ -330,7 +230,7 @@ return zodResolver(schema);
 TForm extends CheckFormSchemaMatch<TForm, TSchema>
 ```
 
-이 조건을 통해 TypeScript에게 `TForm`이 `CheckFormSchemaMatch<TForm, TSchema>` 조건을 만족해야 한다고 강제했다.
+이 조건을 통해 `TForm`이 schema 추론 타입과 일치해야 한다는 제약을 걸었다.
 
 사용 예시는 아래와 같다.
 
@@ -340,13 +240,9 @@ const form = useForm<FormType>({
 });
 ```
 
-의도는 `useForm`에 전달한 `FormType`과 schema에서 추론된 타입이 다를 경우, resolver를 사용하는 시점에서 타입 에러가 발생하도록 만드는 것이었다.
+### 5. 기대 동작
 
----
-
-### 5. 기대했던 동작
-
-예를 들어 아래와 같은 코드가 있다고 가정한다.
+기대한 동작은 resolver를 연결하는 시점에서 타입 불일치를 확인하는 것이었다.
 
 ```tsx
 type FormType = {
@@ -360,36 +256,16 @@ const schema = z.object({
 });
 ```
 
-schema에서 추론되는 타입은 아래와 비슷하다.
+위 코드에서 `FormType`의 `image`는 `File | null`이고, schema의 `image`는 `string | null`이다.  
+따라서 `strictZodResolver`를 사용하면 `image` 타입이 일치하지 않는다는 사실을 컴파일 단계에서 확인할 수 있을 것으로 기대했다.
 
-```tsx
-type SchemaType = {
-  title: string;
-  image: string | null;
-};
-```
+이 함수는 장기적으로 사용할 공통 resolver라기보다는, 마이그레이션 초기에 기존 `FormType`과 schema 사이의 타입 불일치를 확인하기 위한 임시 안전장치에 가까웠다.
 
-`FormType`의 `image`는 `File | null`이고, schema의 `image`는 `string | null`이다.
+### 6. 적용 결과와 한계
 
-```tsx
-type FormImage = File | null;
+#### 에러 메시지 복잡도
 
-type SchemaImage = string | null;
-```
-
-따라서 `strictZodResolver`를 사용하면 resolver를 연결하는 시점에서 `image` 타입이 일치하지 않는다는 것을 확인할 수 있을 것으로 기대했다.  
-즉, 이 함수는 장기적으로 사용할 공통 resolver라기보다는 마이그레이션 초기에 기존 `FormType`과 schema 사이의 타입 불일치를 확인하기 위한 임시 안전장치에 가까웠다.
-
-## ⚠️ `strictZodResolver` 실제 사용 중 발생한 문제
-
-하지만 실제로 적용해보니 기대만큼 깔끔하게 동작하지 않았다.  
-타입을 엄격하게 검증하려는 시도 자체는 의미가 있었지만, 실제 개발 경험은 좋지 않았다.
-
----
-
-### 1. 에러 폭주가 발생함
-
-`strictZodResolver`의 목적은 `FormType`과 zod schema의 추론 타입이 달라졌을 때, 불일치한 필드를 컴파일 단계에서 확인하는 것이었다.  
+`strictZodResolver`의 목적은 불일치한 필드를 컴파일 단계에서 확인하는 것이었다.  
 예상했던 에러는 아래처럼 특정 필드의 불일치 타입을 보여주는 형태였다.
 
 ```txt
@@ -407,26 +283,11 @@ Type instantiation is excessively deep and possibly infinite.
 ```
 
 타입 불일치를 잡아내는 것 자체는 의도한 동작이었다.  
-하지만 에러가 한 지점에서 깔끔하게 발생하지 않고, 타입 비교 과정의 여러 경로에서 반복적으로 드러나면서 실제 원인을 읽기 어려워졌다.  
-특히 `FormType → Schema`, `Schema → Form` 양방향 검사를 함께 수행했기 때문에 같은 불일치가 서로 다른 타입 경로에서 다시 드러나는 경우가 있었다.
+하지만 에러가 한 지점에서 깔끔하게 발생하지 않고, 타입 비교 과정의 여러 경로에서 반복적으로 드러나면서 실제 원인을 읽기 어려워졌다.
 
-```txt
-Type '{
-  option: "Error: FormType의 'option' 타입의 범위가 더 넓습니다!";
-}' is not assignable to type 'FormType'.
+#### 중첩 객체 추적 한계
 
-Type 'CheckFormSchemaMatch<FormType, typeof schema>' is not assignable to type '...'.
-
-Type 'Resolver<CheckFormSchemaMatch<...>>' is not assignable to type 'Resolver<FormType>'.
-```
-
-결과적으로 에러는 발생하지만, 보고 싶은 정보보다 타입 유틸 내부의 계산 과정이 더 크게 드러나는 문제가 있었다.  
-즉, 타입 안정성을 높이기 위한 장치가 오히려 에러 메시지를 복잡하게 만들었다.
-
-### 2. 깊은 객체 구조에서는 1 depth 수준까지만 추적됨
-
-또 다른 문제는 깊은 객체 구조에서 발생했다.  
-단순한 1 depth form이라면 불일치한 타입에 대한 정보가 명확하게 노출되었다.
+단순한 1 depth form이라면 불일치한 필드를 비교적 명확하게 확인할 수 있었다.
 
 ```tsx
 type FormType = {
@@ -440,101 +301,65 @@ const schema = z.object({
 });
 ```
 
-이 경우에는 `option`의 타입이 다르다는 것을 비교적 쉽게 확인할 수 있다.
+이 경우에는 `option` 필드의 타입 범위가 다르다는 것을 확인할 수 있다.
 
 ```txt
 Error: FormType의 'option' 타입의 범위가 더 넓습니다!
 ```
 
-하지만 실제 form은 항상 이렇게 단순하지 않다.
+하지만 실제 form에서는 `option`이 단순한 primitive 값이 아니라 객체 구조를 가지는 경우가 많았다.
 
 ```tsx
 type FormType = {
   option: {
-    basic: {
-      value: string | null;
-      label: string;
-    };
+    value: string | null;
+    key: number;
   };
 };
 
 const schema = z.object({
   option: z.object({
-    basic: z.object({
-      value: z.string(),
-      label: z.string(),
-    }),
+    value: z.string(),
+    key: z.number(),
   }),
 });
 ```
 
-위 코드에서 실제로 다른 부분은 아래 필드다.
-
-```tsx
-type FormValue = string | null;
-
-type SchemaValue = string;
-```
-
-즉, 문제 지점은 `option.basic.value`이다.
-
-하지만 타입 비교 결과는 깊은 필드까지 내려가기보다, 상위 객체인 `option` 단위에서 불일치가 발생한 것처럼 보일 수 있었다.
+위 코드에서 `option`이라는 key 자체는 양쪽에 모두 존재한다.  
+문제는 `option` 객체 내부의 `value` 타입이 다르다는 점이다.
 
 ```txt
-Error: FormType와 Zod schema의 'option' 타입이 일치하지 않습니다.
+option.value: string | null !== string
 ```
 
-이 메시지만 보면 `option` 내부의 어떤 필드가 문제인지 바로 알기 어렵다.  
-실제로 확인해야 하는 것은 아래처럼 더 구체적인 경로였다.
+하지만 `CheckFormSchemaMatch`는 1 depth 기준으로 key를 순회하는 구조였기 때문에, `option` 내부의 `value`까지 내려가서 차이를 보여주지 못했다.  
+결과적으로 `option` 객체에 타입 불일치가 있다는 사실은 알 수 있었지만, 실제 수정해야 하는 지점이 `option.value`라는 점은 다시 직접 확인해야 했다.
 
-```txt
-option.basic.value: string | null !== string
-```
+#### 수정 지점 파악 비용
 
-하지만 `CheckFormSchemaMatch`는 1 depth 기준으로 key를 순회하는 구조였기 때문에, 깊은 객체 내부의 불일치까지 사람이 읽기 좋은 형태로 추적하기 어려웠다.  
-결국 깊은 객체에서는 타입 불일치가 있다는 사실은 알 수 있지만, 정확히 어떤 하위 필드가 문제인지 다시 직접 확인해야 했다.
+`strictZodResolver`는 기존 `FormType`과 zod schema의 추론 타입이 어긋나는 상황을 확인하기 위한 임시 안전장치였다.  
+하지만 실제 적용 결과, 타입 에러는 발생했지만 수정 지점을 빠르게 파악하기 어려웠다.
 
-### 3. 결과적으로 개발자 경험이 좋지 않았음
-
-`strictZodResolver`는 기존 `FormType`과 zod schema의 추론 타입이 어긋나는 상황을 확인하기 위한 임시 안전장치였다.
-
-하지만 실제로 사용해보니 두 가지 문제가 컸다.
+문제는 크게 두 가지였다.
 
 - 타입 비교 과정에서 에러가 반복적으로 발생했다.
-- 깊은 객체 구조에서는 1 depth 수준의 key까지만 의미 있게 추적되었다.
+- 객체 구조에서는 1 depth 수준의 key까지만 의미 있게 추적되었다.
 
-그래서 타입 불일치를 감지하는 목적은 어느 정도 달성했지만, 실제 수정 지점을 빠르게 찾는 도구로는 부족했다.  
-타입 안정성을 높이려는 시도였지만, 에러 메시지를 해석하는 비용이 커졌고 실제 개발 경험은 좋지 않았다.  
-이후에는 `strictZodResolver`를 계속 유지하기보다, `FormType`을 별도로 작성하지 않고 zod schema에서 타입을 추론하는 방향으로 정리했다.
-
-```tsx
-export const formSchema = z.object({
-  name: z.string().trim().min(1, "필수값입니다."),
-  option: z.object({
-    basic: z.object({
-      value: z.string().nullable(),
-      label: z.string(),
-    }),
-  }),
-});
-
-export type FormType = z.infer<typeof formSchema>;
-```
-
-결국 이 문제의 핵심은 타입 비교 유틸을 더 정교하게 만드는 것이 아니라, `FormType`과 schema를 이중으로 관리하지 않는 구조로 바꾸는 것이었다.
-
-## ✅ 최종 방향
-
-결론적으로 `strictZodResolver` 함수는 장기적으로 유지하지 않기로 했다.  
-다만 초기 마이그레이션 단계에서는 기존 `FormType`과 schema 사이의 타입 불일치를 확인하기 위한 임시 안전장치로 사용했다.
-
-이후에는 schema 코드를 `useForm` 내부에 직접 두기보다 `schema.ts` 파일로 분리하고, schema에서 추론한 `FormType`을 함께 사용하도록 정리했다. 이를 통해 `useForm`, `resolver`, `defaultValue`가 같은 타입 기준을 바라볼 수 있게 되었다.
+따라서 타입 비교 유틸을 계속 정교하게 만드는 대신, 타입의 기준을 schema 하나로 줄이는 방식으로 변경하기로 했다.
 
 ---
 
-### 변경 전
+## 최종 결과: schema 기준 타입 추론
+
+최종적으로는 `strictZodResolver`를 유지하지 않고, schema를 타입의 기준으로 두는 방식으로 변경했다.  
+schema 코드를 `useForm` 내부에 직접 두기보다 `schema.ts` 파일로 분리하고, schema에서 추론한 `FormType`을 함께 사용하도록 정리했다.
+
+### 1. 비교
+
+기존에는 `FormType`과 `schema`를 각각 작성했다.
 
 ```tsx
+// 변경 전
 type FormType = {
   link: string;
   image: string | File | null;
@@ -549,7 +374,49 @@ export const schema = z.object({
 이 구조에서는 `FormType`과 `schema`가 계속 따로 관리된다.  
 따라서 둘 중 하나만 수정되면 타입 불일치가 다시 발생할 수 있다.
 
-### 변경 후
+그래서 schema를 먼저 정의하고, `FormType`은 schema에서 추론하도록 바꿨다.
+
+```tsx
+// 변경 후
+export const schema = z.object({
+  link: z.string().trim().min(1, "필수값입니다."),
+  image: z.union([z.string(), z.instanceof(File), z.null()]),
+});
+
+export type FormType = z.infer<typeof schema>;
+```
+
+schema를 기준으로 타입을 추론하면 `FormType`과 schema가 어긋날 가능성이 줄어든다.
+
+### 2. 적용 방식
+
+form에서는 schema에서 추론한 `FormType`을 사용한다.
+
+```tsx
+const form = useForm<FormType>({
+  resolver: zodResolver(schema),
+});
+```
+
+이렇게 하면 `useForm`, `resolver`, `defaultValue`가 같은 타입 기준을 바라보게 된다.  
+최종적으로 form 타입과 validation schema의 기준을 하나로 모은 뒤, resolver도 일반 `zodResolver`로 교체했다.
+
+### 3. 결과
+
+이번 이슈를 통해 확인한 내용은 아래와 같다.
+
+- `zodResolver`는 validation을 수행하지만, 별도로 작성한 `FormType`과 schema 추론 타입을 비교하지 않는다.
+- `FormType`과 schema를 따로 관리하면 마이그레이션 중 타입 불일치가 발생할 수 있다.
+- 타입 비교를 강제하는 resolver를 만들 수는 있지만, 복잡한 form 구조에서는 에러 메시지가 과도하게 복잡해질 수 있다.
+- 장기적으로는 schema를 기준으로 `z.infer` 타입을 사용하는 방식이 더 단순했다.
+
+### 4. 정리
+
+이번 이슈의 원인은 `zodResolver` 자체가 아니라, `FormType`과 schema를 별도로 관리하던 구조에 있었다.
+
+`strictZodResolver`를 통해 타입 불일치를 컴파일 단계에서 감지하려 했지만, 복잡한 form 구조에서는 에러 메시지가 과도하게 복잡해졌고 실제 수정 지점을 빠르게 파악하기 어려웠다.
+
+따라서 최종적으로는 schema를 기준으로 `FormType`을 추론하도록 변경했다.
 
 ```tsx
 export const schema = z.object({
@@ -560,42 +427,11 @@ export const schema = z.object({
 export type FormType = z.infer<typeof schema>;
 ```
 
-schema를 기준으로 타입을 추론하면 `FormType`과 schema가 어긋날 가능성이 줄어든다.  
-form에서는 아래처럼 사용한다.
-
-```tsx
-const form = useForm<FormType>({
-  resolver: zodResolver(schema),
-});
-```
-
-이렇게 하면 form 타입과 validation schema의 기준이 하나로 모인다.  
-이 과정을 통해 문제의 본질이 resolver가 아니라 `FormType`과 schema를 이중으로 관리하는 구조에 있다는 것을 확인했다.
-
-정리하면 다음과 같다.
-
-- `zodResolver`는 validation을 수행하지만, 별도로 작성한 `FormType`과 schema 추론 타입을 비교하지 않는다.
-- FormType과 schema를 따로 관리하면 타입 불일치가 발생할 수 있다.
-- 타입 비교를 강제하는 resolver를 만들 수는 있지만, 복잡한 타입에서는 에러 메시지가 과도하게 복잡해질 수 있다.
-- 장기적으로는 schema를 기준으로 `z.infer` 타입을 사용하는 것이 더 단순하고 안전하다.
-
-form 타입과 validation schema의 기준을 하나로 합치면 중복 관리로 인한 불일치를 줄일 수 있다.
+이후 `useForm`, `resolver`, `defaultValue`가 같은 타입 기준을 바라보게 되면서, `FormType`과 schema의 불일치 가능성을 줄일 수 있었다.
 
 ---
 
-## 💭 회고
-
-처음에는 타입을 더 강하게 잡아주는 방식이 좋은 해결책이라고 생각했다.  
-하지만 실제로 사용해보니 타입 에러가 무조건 많이 발생한다고 좋은 것은 아니었다.  
-중요한 것은 에러가 발생하는 것 자체가 아니라, 그 에러를 보고 개발자가 빠르게 원인을 이해하고 수정할 수 있는가였다.  
-`strictZodResolver`는 타입 불일치를 잡기 위한 시도였지만, 실제 사용성 측면에서는 아쉬움이 있었다.  
-이 경험을 통해 타입 안정성을 높이는 방법도 결국 유지보수성과 개발 경험 안에서 판단해야 한다는 것을 배웠다.  
-지금 다시 같은 상황을 마주한다면, 처음부터 `FormType`을 별도로 작성하기보다는 schema를 기준으로 타입을 추론하는 구조를 우선 고려할 것 같다.  
-타입을 더 많이 작성하는 것보다, 타입의 출처를 하나로 줄이는 것이 더 나은 해결책일 때가 있다.
-
----
-
-## 🔗 참고
+## 참고
 
 - https://zod.dev/api
 - https://zod.dev/v4/changelog
