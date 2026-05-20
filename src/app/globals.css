@@ -52,15 +52,15 @@
   }
   & h2 {
     font-size: 22px !important;
-    scroll-margin-top: 2rem;
+    scroll-margin-top: 4rem;
   }
   & h3 {
     font-size: 20px !important;
-    scroll-margin-top: 2rem;
+    scroll-margin-top: 4rem;
   }
   & h4 {
     font-size: 17px !important;
-    scroll-margin-top: 2rem;
+    scroll-margin-top: 4rem;
   }
   & p,
   & ul,
