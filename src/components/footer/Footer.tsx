@@ -6,7 +6,7 @@ import GithubIcon from "../../assets/icons/ic_github.svg";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col justify-center gap-y-2 w-[100%] text-black text-14 mt-2 p-5">
+    <footer className="flex flex-col justify-center gap-y-2 w-full text-black text-14 mt-2 p-5">
       <div className="flex justify-center gap-x-2">
         <Link
           className="hover:fill-primary"

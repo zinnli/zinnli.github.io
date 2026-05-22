@@ -46,7 +46,7 @@ const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
 
   return (
     <>
-      <div className="flex justify-start gap-x-[10px] w-[100%] mt-12 mb-12">
+      <div className="flex justify-start gap-x-[10px] w-full mt-12 mb-12">
         <Link className={selectTextStyle(!category)} href={"/"}>
           All({totalCount})
         </Link>
@@ -62,7 +62,7 @@ const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
           );
         })}
       </div>
-      <section className="flex flex-col gap-y-2 w-[100%]">
+      <section className="flex flex-col gap-y-2 w-full">
         {(category
           ? post.filter((item) => item.categoryPath === category)
           : post

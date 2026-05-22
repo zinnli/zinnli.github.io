@@ -17,7 +17,7 @@ const List = ({ isPost, title, desc, date, category, path }: ListProps) => {
   return (
     <Link
       href={path}
-      className={`flex flex-col ${isPost ? "py-3" : "py-5 pt-3"} px-4  border-b w-[100%] border-b-gray_sub/30  hover:text-primary`}
+      className={`flex flex-col ${isPost ? "py-3" : "py-5 pt-3"} px-4  border-b w-full border-b-gray_sub/30  hover:text-primary`}
     >
       <h3
         className={`text-18 sm:text-20 ${isPost ? "mb-1" : "mb-2"} font-bold text-black hover:text-primary`}

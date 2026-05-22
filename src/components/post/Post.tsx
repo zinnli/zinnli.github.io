@@ -21,7 +21,7 @@ const Post = ({ post }: Props) => {
   }
 
   return (
-    <article className="w-[100%] max-w-[800px] mb-10 prose prose-lg prose-slate">
+    <article className="w-full max-w-[800px] mb-10 prose prose-lg prose-slate">
       <MDXRemote
         source={post.content}
         options={{

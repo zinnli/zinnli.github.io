@@ -36,7 +36,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         />
       </head>
       <body className="flex flex-col items-center justify-between h-[100vh] bg-gray_bg">
-        <main className="flex flex-col items-center w-[100%] max-w-[800px] px-7">
+        <main className="flex flex-col items-center w-full max-w-[800px] px-7">
           <Header />
           {children}
         </main>

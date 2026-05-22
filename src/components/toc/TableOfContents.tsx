@@ -54,27 +54,30 @@ const TableOfContents = ({ headings, variant }: Props) => {
 
   if (variant === "mobile") {
     return (
-      <nav className="w-full mb-8 rounded-md px-4 py-3 xl:hidden">
-        <span className="flex text-26 font-semibold text-black pb-4 uppercase tracking-wider">
-          목차
-        </span>
-        <ul className="flex flex-col gap-y-1">
-          {headings.map(({ id, text, level }) => (
-            <li key={id} className={indentClass(level)}>
-              <a
-                href={`#${id}`}
-                className="text-13 text-black hover:text-primary transition-colors leading-relaxed"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToHeading(id);
-                }}
-              >
-                {text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <>
+        <nav className="w-full mb-8 rounded-md pl-2 py-3 xl:hidden">
+          <span className="flex text-20 font-semibold text-black pb-4 tracking-wider">
+            INDEX
+          </span>
+          <ul className="flex flex-col gap-y-1">
+            {headings.map(({ id, text, level }) => (
+              <li key={id} className={indentClass(level)}>
+                <a
+                  href={`#${id}`}
+                  className="text-14 text-gray-sub underline hover:text-primary transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHeading(id);
+                  }}
+                >
+                  {text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        {/* <hr className="my-2 border-gray_sub" /> */}
+      </>
     );
   }
 
