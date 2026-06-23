@@ -27,17 +27,19 @@ export async function generateMetadata({
   const post = await getPostDetail(category, slug);
 
   const title = post.title;
+  const url = `https://zinnli.github.io/${category}/${slug}`;
 
   return {
     title,
     description: post.desc,
     alternates: {
-      canonical: `https://zinnli.github.io/${category}/${slug}`,
+      canonical: url,
     },
     openGraph: {
       title,
       description: post.desc,
       type: "article",
+      url,
       publishedTime: post.date,
     },
   };
@@ -53,13 +55,37 @@ const PostDetail = async ({
   const { category, slug } = await params;
   const post = await getPostDetail(category, slug);
   const headings = extractHeadings(post.content);
+  const url = `https://zinnli.github.io/${category}/${slug}`;
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.desc,
+    datePublished: post.date,
+    dateModified: post.updatedDate.toISOString(),
+    url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    author: {
+      "@type": "Person",
+      name: "Hyunjin Lee",
+      url: "https://zinnli.github.io/about",
+    },
+  }).replace(/</g, "\\u003c");
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
       <section className="flex flex-col w-full max-w-[800px] px-4 py-10">
-        <h2 className="flex justify-center w-full text-primary text-26 sm:text-30 font-bold mb-10">
+        <h1 className="flex justify-center w-full text-primary text-26 sm:text-30 font-bold mb-10">
           {post.title}
-        </h2>
+        </h1>
         <span className="mb-8 text-right">{post.date}</span>
         <TableOfContents headings={headings} variant="mobile" />
         <Post post={post} />
