@@ -9,7 +9,6 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <rect x="4" y="4" width="16" height="16" rx="4.5" />
-  <circle cx="12" cy="12" r="3.9" />
-  <circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none" />
+  <circle cx="12" cy="7.4" r="3.65" />
+  <rect x="4.8" y="14.2" width="14.4" height="6.3" rx="1.8" />
 </svg>
