@@ -22,7 +22,7 @@ const cleanText = (raw: string): string =>
 
 export const extractHeadings = (content: string): Heading[] => {
   const stripped = content.replace(/```[\s\S]*?```/g, "");
-  const headingRegex = /^(#{1,3})\s+(.+)$/gm;
+  const headingRegex = /^(#{1,2})\s+(.+)$/gm;
   const headings: Heading[] = [];
   let match;
 
