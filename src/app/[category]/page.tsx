@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import { List } from "@/components";
+import { CategoryNav, List } from "@/components";
 import {
   getMarkdownInfos,
   getPostList,
@@ -41,27 +40,13 @@ const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
 
   const totalCount = categories.reduce((acc, curr) => acc + curr.count, 0);
 
-  const selectTextStyle = (isSelected: boolean) =>
-    `text-14 sm:text-16 ${isSelected ? "font-bold text-black" : "font-normal text-black/80"}`;
-
   return (
     <>
-      <div className="flex justify-start gap-x-[10px] w-full mt-12 mb-12">
-        <Link className={selectTextStyle(!category)} href={"/"}>
-          All({totalCount})
-        </Link>
-        {categories.map((item, i) => {
-          return (
-            <Link
-              className={selectTextStyle(item.category === category)}
-              key={i}
-              href={`${item.category}`}
-            >
-              {item.category}({item.count})
-            </Link>
-          );
-        })}
-      </div>
+      <CategoryNav
+        categories={categories}
+        totalCount={totalCount}
+        currentCategory={category}
+      />
       <section className="flex flex-col gap-y-2 w-full">
         {(category
           ? post.filter((item) => item.categoryPath === category)

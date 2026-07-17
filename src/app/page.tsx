@@ -1,7 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 
-import { List } from "@/components";
+import { CategoryNav, List } from "@/components";
 import { getMarkdownInfos, getPostList, getPostPaths } from "@/lib/mdx";
 
 export const metadata: Metadata = {
@@ -25,27 +24,13 @@ const Post = async ({ params }: { params: Promise<{ category: string }> }) => {
 
   const totalCount = categories.reduce((acc, curr) => acc + curr.count, 0);
 
-  const selectTextStyle = (isSelected: boolean) =>
-    `text-16 ${isSelected ? "font-bold text-black" : "font-normal text-black/80"}`;
-
   return (
     <>
-      <div className="flex justify-start flex-wrap gap-[10px] my-10">
-        <Link className={selectTextStyle(!category)} href={"/"}>
-          All({totalCount})
-        </Link>
-        {categories.map((item, i) => {
-          return (
-            <Link
-              className={selectTextStyle(item.category === category)}
-              key={i}
-              href={`/${item.category}`}
-            >
-              {item.category}({item.count})
-            </Link>
-          );
-        })}
-      </div>
+      <CategoryNav
+        categories={categories}
+        totalCount={totalCount}
+        currentCategory={category}
+      />
       <section className="flex flex-col gap-y-2 w-full">
         {(category
           ? post.filter((item) => item.categoryPath === category)
