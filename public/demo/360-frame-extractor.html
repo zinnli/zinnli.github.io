@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>360도 영상 프레임 분할 데모</title>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#18181b; --muted:#71717a; --line:#e4e4e7;
+    --card:#fafafa; --accent:#2563eb; --accent-fg:#ffffff;
+    --warn:#b45309; --warn-bg:#fffbeb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b0b0e; --fg:#ececf1; --muted:#9a9aa5; --line:#26262c;
+      --card:#131318; --accent:#60a5fa; --accent-fg:#0b0b0e;
+      --warn:#fbbf24; --warn-bg:#1c1707;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Segoe UI",Roboto,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:40px 20px 80px}
+  h1{font-size:1.5rem; margin:0 0 8px; letter-spacing:-.02em}
+  h2{font-size:1.05rem; margin:40px 0 12px; letter-spacing:-.01em}
+  p{margin:0 0 12px}
+  .lead{color:var(--muted); font-size:.94rem; margin-bottom:20px}
+  .notice{
+    background:var(--warn-bg); border:1px solid var(--line); border-left:3px solid var(--warn);
+    padding:12px 14px; border-radius:6px; font-size:.87rem; color:var(--fg); margin:0 0 28px;
+  }
+  .notice b{color:var(--warn)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px}
+  label.field{display:block; font-size:.82rem; color:var(--muted); margin-bottom:6px}
+  input[type=file]{
+    width:100%; font-size:.87rem; padding:10px; background:var(--bg);
+    border:1px dashed var(--line); border-radius:8px; color:var(--fg); cursor:pointer;
+  }
+  .samplerow{margin:10px 0 0; font-size:.83rem; color:var(--muted)}
+  .linkbtn{
+    background:none; border:none; padding:0; margin-left:4px; font:inherit;
+    color:var(--accent); text-decoration:underline; text-underline-offset:3px; cursor:pointer;
+  }
+  .linkbtn[disabled]{opacity:.45; cursor:not-allowed}
+  .fileinfo{
+    margin-top:10px; font-size:.82rem; color:var(--muted); display:none;
+    background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:10px 12px;
+  }
+  .fileinfo.on{display:block}
+  .fileinfo b{color:var(--fg); font-weight:600}
+  .fileinfo .sep{opacity:.4; margin:0 7px}
+  .frames{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px}
+  .frames button{
+    flex:1 1 92px; padding:10px 8px; border-radius:8px; cursor:pointer;
+    border:1px solid var(--line); background:var(--bg); color:var(--fg);
+    font-size:.9rem; font-weight:600; font-family:inherit; transition:.12s;
+  }
+  .frames button small{display:block; font-weight:400; font-size:.72rem; color:var(--muted); margin-top:2px}
+  .frames button[aria-pressed=true]{border-color:var(--accent); background:var(--accent); color:var(--accent-fg)}
+  .frames button[aria-pressed=true] small{color:var(--accent-fg); opacity:.8}
+  .row{display:flex; gap:10px; align-items:center; margin-top:16px; flex-wrap:wrap}
+  .btn{
+    padding:11px 20px; border-radius:8px; border:1px solid var(--accent);
+    background:var(--accent); color:var(--accent-fg); font-size:.9rem; font-weight:600;
+    cursor:pointer; font-family:inherit;
+  }
+  .btn[disabled]{opacity:.45; cursor:not-allowed}
+  .btn.ghost{background:transparent; color:var(--fg); border-color:var(--line); font-weight:500}
+  .status{font-size:.85rem; color:var(--muted); flex:1 1 160px}
+  .bar{height:4px; background:var(--line); border-radius:99px; overflow:hidden; margin-top:14px; display:none}
+  .bar.on{display:block}
+  .bar > i{display:block; height:100%; width:0; background:var(--accent); transition:width .08s linear}
+  .tabs{display:flex; gap:6px; margin:0 0 14px; flex-wrap:wrap}
+  .tabs button{
+    padding:7px 14px; border-radius:99px; border:1px solid var(--line);
+    background:var(--bg); color:var(--muted); font-size:.84rem; cursor:pointer; font-family:inherit;
+  }
+  .tabs button[aria-pressed=true]{border-color:var(--accent); color:var(--accent); font-weight:600}
+  .dragmode{
+    display:flex; align-items:center; gap:7px; margin:0 0 12px;
+    font-size:.82rem; color:var(--muted); cursor:pointer; user-select:none;
+  }
+  .dragmode input{accent-color:var(--accent); cursor:pointer; margin:0}
+  .dragnote{font-size:.79rem; color:var(--muted); margin:10px 0 0; line-height:1.5}
+  .viewer{
+    position:relative; aspect-ratio:16/10; background:var(--card); border:1px solid var(--line);
+    border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center;
+    cursor:grab; touch-action:none; user-select:none;
+  }
+  .viewer.grabbing{cursor:grabbing}
+  .viewer img{max-width:100%; max-height:100%; display:block; pointer-events:none; -webkit-user-drag:none}
+  .viewer .hint{
+    position:absolute; bottom:12px; left:50%; transform:translateX(-50%);
+    background:rgba(0,0,0,.62); color:#fff; font-size:.78rem; padding:5px 12px; border-radius:99px;
+    pointer-events:none; transition:opacity .25s;
+  }
+  .viewer .idx{
+    position:absolute; top:10px; right:12px; font-size:.75rem; color:var(--muted);
+    font-variant-numeric:tabular-nums; background:var(--bg); padding:3px 8px; border-radius:6px;
+    border:1px solid var(--line);
+  }
+  table{width:100%; border-collapse:collapse; font-size:.86rem; margin-top:16px}
+  th,td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line)}
+  th{color:var(--muted); font-weight:500; width:46%}
+  td{font-variant-numeric:tabular-nums}
+  td b{font-weight:600}
+  .flag{color:var(--warn); font-weight:600}
+  .empty{color:var(--muted); font-size:.88rem; padding:28px 0; text-align:center}
+  footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); font-size:.84rem; color:var(--muted)}
+  footer a{color:var(--accent)}
+  code{background:var(--card); border:1px solid var(--line); padding:1px 5px; border-radius:4px; font-size:.85em}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>360도 영상 프레임 분할 데모</h1>
+  <p class="lead">
+    차량 주위를 한 바퀴 돌며 촬영한 영상을 넣으면, <code>video</code> + <code>canvas</code>로 프레임을 잘라
+    드래그해 돌려볼 수 있는 회전 이미지로 만듭니다. 36 / 72 / 144프레임을 각각 만들어 비교해볼 수 있습니다.
+    블로그 글에서 설명한 추출 방식을 같은 순서로 재현했습니다.
+  </p>
+
+  <p class="notice">
+    <b>선택하신 영상은 업로드되지 않습니다.</b>
+    영상은 브라우저 안에서만 처리되며 어디로도 전송되지 않습니다. 탭을 닫으면 모든 데이터가 사라집니다.
+    이 페이지가 하는 네트워크 요청은 예시 영상을 내려받을 때 한 번뿐입니다.
+  </p>
+
+  <div class="card">
+    <label class="field" for="file">1. 360도 촬영 영상 선택</label>
+    <input id="file" type="file" accept="video/*" />
+    <div class="fileinfo" id="fileinfo"></div>
+    <p class="samplerow" id="samplerow" hidden>
+      360도 촬영 영상이 없으신가요?
+      <button type="button" class="linkbtn" id="sample">예시 영상으로 해보기<span id="samplesize"></span></button>
+    </p>
+
+    <label class="field" style="margin-top:18px">2. 프레임 수</label>
+    <div class="frames" id="frames"></div>
+
+    <div class="row">
+      <button class="btn" id="run" disabled>프레임 추출</button>
+      <span class="status" id="status">영상을 선택해 주세요.</span>
+    </div>
+    <div class="bar" id="bar"><i></i></div>
+  </div>
+
+  <div id="results" class="hidden">
+    <h2>결과</h2>
+    <div class="tabs" id="tabs"></div>
+    <label class="dragmode">
+      <input type="checkbox" id="normalize" checked />
+      회전 속도 통일 — 프레임 수와 상관없이 한 바퀴에 같은 드래그 거리가 걸리도록 맞춥니다
+    </label>
+    <div class="viewer" id="viewer">
+      <img id="frame" alt="" />
+      <span class="idx" id="idx"></span>
+      <span class="hint" id="hint">좌우로 드래그해 돌려보세요</span>
+    </div>
+    <p class="dragnote" id="dragnote"></p>
+    <table id="stats"></table>
+  </div>
+
+  <div id="placeholder" class="empty">
+    아직 추출한 결과가 없습니다.
+  </div>
+
+  <footer>
+    이 페이지는 블로그 글
+    <a href="/Engineering/20260825" target="_blank" rel="noopener">
+      「영상 하나로 만드는 차량 360도 회전 뷰」</a>
+    에서 설명한 프레임 추출 방식을 다시 구현한 것입니다.
+    <br /><br />
+    실제 서비스 코드는 React 폼·업로드 계층과 함께 있었고, 여기서는 추출 부분만 떼어내
+    브라우저에서 바로 돌아가도록 옮겼습니다. seek 순서와 캔버스 크기, 인코딩 방식은 원본과 같지만,
+    <b>seek 타임아웃과 오류 처리는 이 페이지가 멈추지 않도록 추가한 것으로 원본에는 없습니다.</b>
+    <br /><br />
+    측정값은 이 페이지를 여는 기기와 브라우저, 넣은 영상에 따라 달라집니다.
+  </footer>
+
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const FRAME_OPTIONS = [36, 72, 144];
+  // 원본 화면은 360도 이미지 외에 일반 사진(외부 6 + 내부 4)과 내부 360도 1장을 함께 저장했다.
+  const FIXED_PHOTO_COUNT = 11;
+  // 파일 1장당 presigned 발급 1회 + S3 전송 1회.
+  const REQUESTS_PER_FILE = 2;
+  const SEEK_TIMEOUT_MS = 3000;
+  // 원본 갤러리는 프레임 수와 무관하게 10px마다 한 칸씩 넘겼다.
+  // 그래서 프레임이 적을수록 같은 거리를 끌어도 더 많이 회전한다.
+  const DRAG_THRESHOLD_PX = 10;
+  // 비교할 때는 한 바퀴에 걸리는 드래그 거리를 맞춰야 부드러움만 남는다.
+  const TURN_PX = 720;
+
+  const $ = (id) => document.getElementById(id);
+  const el = {
+    file: $("file"), frames: $("frames"), run: $("run"), status: $("status"),
+    bar: $("bar"), barFill: $("bar").firstElementChild,
+    fileinfo: $("fileinfo"),
+    sampleRow: $("samplerow"), sample: $("sample"), sampleSize: $("samplesize"),
+    results: $("results"), tabs: $("tabs"), viewer: $("viewer"),
+    frame: $("frame"), idx: $("idx"), hint: $("hint"),
+    stats: $("stats"), placeholder: $("placeholder"),
+    normalize: $("normalize"), dragnote: $("dragnote"),
+  };
+
+  let selectedFile = null;
+  let frameCount = 72;
+  let busy = false;
+  const runs = new Map();   // frameCount -> run
+  let active = null;
+
+  // ---------- 프레임 수 선택 ----------
+  FRAME_OPTIONS.forEach((n) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = n + "프레임<small>" + (360 / n) + "도 간격</small>";
+    b.setAttribute("aria-pressed", String(n === frameCount));
+    b.addEventListener("click", () => {
+      if (busy) return;
+      frameCount = n;
+      [...el.frames.children].forEach((c, i) =>
+        c.setAttribute("aria-pressed", String(FRAME_OPTIONS[i] === n)));
+      syncRunButton();
+    });
+    el.frames.appendChild(b);
+  });
+
+  let fileMeta = null;
+
+  // 예시 영상. 파일이 실제로 있을 때만 버튼을 노출한다.
+  // (없으면 조용히 감춰지므로, 나중에 파일만 넣으면 자동으로 켜진다)
+  const SAMPLE_URL = "360_rotation.mp4";
+
+  (async function initSample() {
+    try {
+      const res = await fetch(SAMPLE_URL, { method: "HEAD" });
+      if (!res.ok) return;
+      const len = Number(res.headers.get("content-length"));
+      if (len > 0) el.sampleSize.textContent = " (" + mb(len) + ")";
+      el.sampleRow.hidden = false;
+    } catch (_) {
+      // 파일이 없거나 file:// 로 열어 fetch가 막힌 경우. 버튼을 띄우지 않는다.
+    }
+  })();
+
+  el.sample.addEventListener("click", async () => {
+    if (busy) return;
+    busy = true;
+    syncRunButton();
+    el.status.textContent = "예시 영상을 불러오는 중…";
+    try {
+      const res = await fetch(SAMPLE_URL);
+      if (!res.ok) throw new Error("예시 영상을 불러오지 못했습니다.");
+      const blob = await res.blob();
+      selectedFile = new File([blob], "360_rotation.mp4", { type: blob.type || "video/mp4" });
+      el.file.value = "";
+      clearRuns();
+      await describeFile();
+    } catch (err) {
+      selectedFile = null;
+      el.status.textContent = err.message;
+      busy = false;
+      el.run.disabled = true;
+      el.sample.disabled = false;
+      return;
+    }
+    busy = false;
+    syncRunButton();
+  });
+
+  el.file.addEventListener("change", async (e) => {
+    selectedFile = e.target.files && e.target.files[0] ? e.target.files[0] : null;
+    clearRuns();
+    await describeFile();
+    syncRunButton();
+  });
+
+  // 추출 전에 영상의 규격을 먼저 읽어 보여준다.
+  // 길이와 해상도가 그대로 추출 시간·용량으로 이어지기 때문이다.
+  async function describeFile() {
+    fileMeta = null;
+    if (!selectedFile) { el.fileinfo.classList.remove("on"); return; }
+
+    el.fileinfo.classList.add("on");
+    el.fileinfo.innerHTML = "영상 정보를 읽는 중…";
+
+    try {
+      const meta = await probe(selectedFile);
+      fileMeta = meta;
+      el.fileinfo.innerHTML =
+        "<b>" + escapeHtml(selectedFile.name) + "</b>" +
+        "<span class='sep'>·</span>" + mb(selectedFile.size) +
+        "<span class='sep'>·</span>" + meta.width + " × " + meta.height +
+        "<span class='sep'>·</span>" + meta.duration.toFixed(1) + "초";
+    } catch (err) {
+      el.fileinfo.innerHTML =
+        "<b>" + escapeHtml(selectedFile.name) + "</b>" +
+        "<span class='sep'>·</span>" + mb(selectedFile.size) +
+        "<span class='sep'>·</span><span class='flag'>" + escapeHtml(err.message) + "</span>";
+    }
+  }
+
+  function probe(file) {
+    return new Promise((resolve, reject) => {
+      const v = document.createElement("video");
+      const url = URL.createObjectURL(file);
+      const done = (fn) => (arg) => { URL.revokeObjectURL(url); v.removeAttribute("src"); fn(arg); };
+      v.preload = "metadata";
+      v.muted = true;
+      v.addEventListener("loadedmetadata", done(() => resolve({
+        width: v.videoWidth, height: v.videoHeight, duration: v.duration,
+      })), { once: true });
+      v.addEventListener("error", done(() =>
+        reject(new Error("이 브라우저가 열 수 없는 형식입니다"))), { once: true });
+      setTimeout(done(() => reject(new Error("정보를 읽지 못했습니다"))), 10000);
+      v.src = url;
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function syncRunButton() {
+    el.run.disabled = busy || !selectedFile;
+    el.sample.disabled = busy;
+    if (busy) return;
+    if (!selectedFile) { el.status.textContent = "영상을 선택해 주세요."; return; }
+    el.status.textContent = runs.has(frameCount)
+      ? frameCount + "프레임은 이미 추출했습니다. 다시 실행하면 새로 만듭니다."
+      : frameCount + "프레임으로 추출할 준비가 됐습니다.";
+  }
+
+  // ---------- 추출 ----------
+  // 원본 구현과 같은 순서를 지킨다.
+  //   currentTime 설정 → seeked 대기 → canvas에 그리기 → toBlob → 다음 프레임
+  // video 엘리먼트는 재생 위치가 하나뿐인 단일 자원이라 병렬로 돌릴 수 없다.
+  async function extract(file, count, onProgress) {
+    const video = document.createElement("video");
+    const srcUrl = URL.createObjectURL(file);
+    video.src = srcUrl;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
+
+    try {
+      await new Promise((resolve, reject) => {
+        video.addEventListener("loadeddata", resolve, { once: true });
+        video.addEventListener("error", () => reject(
+          new Error("이 브라우저가 디코딩할 수 없는 영상입니다. 코덱을 확인해 주세요.")), { once: true });
+        setTimeout(() => reject(new Error("영상을 여는 데 실패했습니다. (loadeddata 미발생)")), 15000);
+      });
+
+      const duration = video.duration;
+      if (!isFinite(duration) || duration <= 0) {
+        throw new Error("영상 길이를 읽을 수 없습니다. (duration = " + duration + ")");
+      }
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("canvas 2d 컨텍스트를 만들 수 없습니다.");
+
+      // 원본과 동일하게 가로·세로를 절반으로 줄인다. 픽셀 수 기준으로는 1/4.
+      canvas.width = Math.max(1, Math.floor(video.videoWidth / 2));
+      canvas.height = Math.max(1, Math.floor(video.videoHeight / 2));
+
+      const interval = duration / count;
+      const blobs = [];
+      let timeouts = 0;
+      const t0 = performance.now();
+
+      for (let i = 0; i < count; i++) {
+        video.currentTime = i * interval;
+
+        await new Promise((resolve) => {
+          let done = false;
+          const finish = () => { if (!done) { done = true; clearTimeout(timer); resolve(); } };
+
+          // 원본에는 없는 안전장치. seeked가 오지 않는 경우를 세어 결과에 표시한다.
+          const timer = setTimeout(() => {
+            video.removeEventListener("seeked", onSeeked);
+            timeouts++;
+            finish();
+          }, SEEK_TIMEOUT_MS);
+
+          function onSeeked() {
+            video.removeEventListener("seeked", onSeeked);
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+              if (blob) blobs.push(blob);   // null이면 그 프레임은 조용히 빠진다
+              finish();
+            }, "image/jpeg");
+          }
+
+          video.addEventListener("seeked", onSeeked);
+        });
+
+        onProgress(i + 1, count);
+      }
+
+      const extractMs = performance.now() - t0;
+      const urls = blobs.map((b) => URL.createObjectURL(b));
+
+      // 상세 화면과 동일하게 전량을 미리 로드한 뒤에야 회전을 시작한다.
+      const p0 = performance.now();
+      await Promise.all(urls.map((u) => new Promise((res) => {
+        const img = new Image();
+        img.onload = img.onerror = res;
+        img.src = u;
+      })));
+      const preloadMs = performance.now() - p0;
+
+      return {
+        count, urls,
+        sourceName: file.name,
+        sourceBytes: file.size,
+        bytes: blobs.reduce((s, b) => s + b.size, 0),
+        width: canvas.width, height: canvas.height,
+        sourceWidth: video.videoWidth, sourceHeight: video.videoHeight,
+        duration, extractMs, preloadMs,
+        dropped: count - blobs.length,
+        timeouts,
+      };
+    } finally {
+      URL.revokeObjectURL(srcUrl);
+      video.removeAttribute("src");
+      video.load();
+    }
+  }
+
+  el.run.addEventListener("click", async () => {
+    if (!selectedFile || busy) return;
+    busy = true;
+    el.run.disabled = true;
+    el.bar.classList.add("on");
+    el.barFill.style.width = "0%";
+
+    const target = frameCount;
+    try {
+      const run = await extract(selectedFile, target, (done, total) => {
+        el.status.textContent = "추출 중 " + done + " / " + total;
+        el.barFill.style.width = (done / total * 100) + "%";
+      });
+      disposeRun(runs.get(target));
+      runs.set(target, run);
+      renderTabs();
+      show(target);
+      el.status.textContent = target + "프레임 추출 완료";
+    } catch (err) {
+      el.status.textContent = "실패: " + err.message;
+    } finally {
+      busy = false;
+      el.bar.classList.remove("on");
+      syncRunButton();
+    }
+  });
+
+  function disposeRun(run) {
+    if (run) run.urls.forEach((u) => URL.revokeObjectURL(u));
+  }
+
+  function clearRuns() {
+    runs.forEach(disposeRun);
+    runs.clear();
+    active = null;
+    el.results.classList.add("hidden");
+    el.placeholder.classList.remove("hidden");
+  }
+
+  // ---------- 결과 표시 ----------
+  function renderTabs() {
+    el.tabs.innerHTML = "";
+    [...runs.keys()].sort((a, b) => a - b).forEach((n) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = n + "프레임";
+      b.setAttribute("aria-pressed", String(active && active.count === n));
+      b.addEventListener("click", () => show(n));
+      el.tabs.appendChild(b);
+    });
+  }
+
+  function show(n) {
+    const run = runs.get(n);
+    if (!run) return;
+    active = run;
+    index = 0;
+    el.results.classList.remove("hidden");
+    el.placeholder.classList.add("hidden");
+    el.hint.style.opacity = "1";
+    renderTabs();
+    renderStats(run);
+    renderDragNote();
+    paint();
+  }
+
+  function mb(b) { return (b / 1048576).toFixed(2) + " MB"; }
+  function kb(b) { return (b / 1024).toFixed(0) + " KB"; }
+  function sec(ms) { return (ms / 1000).toFixed(2) + "초"; }
+
+  function renderStats(r) {
+    const requests = (r.count + FIXED_PHOTO_COUNT) * REQUESTS_PER_FILE;
+    const rows = [
+      ["원본 영상", escapeHtml(r.sourceName) + " <span style='color:var(--muted)'>(" + mb(r.sourceBytes) + ")</span>"],
+      ["회전 각도 간격", "<b>" + (360 / r.count) + "도</b> (" + r.count + "프레임)"],
+      ["원본 해상도", r.sourceWidth + " × " + r.sourceHeight + " · " + r.duration.toFixed(1) + "초"],
+      ["출력 해상도", r.width + " × " + r.height + " <span style='color:var(--muted)'>(픽셀 수 1/4)</span>"],
+      ["추출 소요 시간", "<b>" + sec(r.extractMs) + "</b> · 장당 " + (r.extractMs / r.count).toFixed(0) + "ms"],
+      ["전체 용량", "<b>" + mb(r.bytes) + "</b> · 장당 " + kb(r.bytes / r.urls.length)],
+      ["전량 선로딩 시간", sec(r.preloadMs) + " <span style='color:var(--muted)'>(회전 시작 전 대기)</span>"],
+      ["업로드 요청 수", requests + "건 <span style='color:var(--muted)'>(사진 " +
+        FIXED_PHOTO_COUNT + "장 포함 · 파일당 " + REQUESTS_PER_FILE + "회)</span>"],
+      ["누락된 프레임", r.dropped > 0
+        ? "<span class='flag'>" + r.dropped + "장</span> — 각도 간격이 어긋납니다"
+        : "0장"],
+      ["seek 타임아웃", r.timeouts > 0
+        ? "<span class='flag'>" + r.timeouts + "회</span> — seeked 이벤트가 오지 않았습니다"
+        : "0회"],
+    ];
+    el.stats.innerHTML = rows.map(([k, v]) => "<tr><th>" + k + "</th><td>" + v + "</td></tr>").join("");
+  }
+
+  // ---------- 드래그 회전 ----------
+  // 원본 갤러리와 같은 방식. 이동 거리가 임계값을 넘을 때마다 인덱스를 하나씩 옮긴다.
+  let index = 0, startX = null, dragging = false;
+
+  function stepPx() {
+    if (!active) return DRAG_THRESHOLD_PX;
+    return el.normalize.checked ? TURN_PX / active.urls.length : DRAG_THRESHOLD_PX;
+  }
+
+  function renderDragNote() {
+    if (!active) return;
+    const n = active.urls.length;
+    const step = stepPx();
+    el.dragnote.innerHTML = el.normalize.checked
+      ? "한 바퀴에 " + TURN_PX + "px (" + step.toFixed(1) + "px마다 " + (360 / n) +
+        "도). 세 결과의 회전 속도가 같으므로 <b>부드러움만 비교됩니다.</b>"
+      : "원본과 같은 10px 고정. 한 바퀴에 " + (n * DRAG_THRESHOLD_PX) +
+        "px이 걸려 <b>프레임이 적을수록 빠르게 돕니다.</b> 부드러움과 회전 속도가 함께 달라집니다.";
+  }
+
+  el.normalize.addEventListener("change", renderDragNote);
+
+  function paint() {
+    if (!active || !active.urls.length) return;
+    el.frame.src = active.urls[index];
+    el.idx.textContent = (index + 1) + " / " + active.urls.length +
+      " · " + Math.round(index * (360 / active.urls.length)) + "°";
+  }
+
+  function down(x) {
+    if (!active) return;
+    startX = x; dragging = true;
+    el.viewer.classList.add("grabbing");
+    el.hint.style.opacity = "0";
+  }
+
+  function move(x) {
+    if (!dragging || startX === null || !active) return;
+    const delta = x - startX;
+    const len = active.urls.length;
+    const step = stepPx();
+    if (delta > step) {
+      index = (index + 1) % len; startX = x; paint();
+    } else if (delta < -step) {
+      index = (index - 1 + len) % len; startX = x; paint();
+    }
+  }
+
+  function up() { dragging = false; startX = null; el.viewer.classList.remove("grabbing"); }
+
+  el.viewer.addEventListener("mousedown", (e) => { e.preventDefault(); down(e.clientX); });
+  document.addEventListener("mousemove", (e) => move(e.clientX));
+  document.addEventListener("mouseup", up);
+  el.viewer.addEventListener("touchstart", (e) => down(e.touches[0].clientX), { passive: true });
+  el.viewer.addEventListener("touchmove", (e) => { e.preventDefault(); move(e.touches[0].clientX); }, { passive: false });
+  el.viewer.addEventListener("touchend", up);
+
+  window.addEventListener("beforeunload", () => runs.forEach(disposeRun));
+  syncRunButton();
+})();
+</script>
+</body>
+</html>
