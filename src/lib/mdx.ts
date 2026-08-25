@@ -78,17 +78,20 @@ export const getPostList = async (
 type MarkdownInfosType = { count: number; category: string };
 
 export const getMarkdownInfos = async (): Promise<MarkdownInfosType[]> => {
-  const markdownInfos = fs.readdirSync(POSTS_PATH).map((folder) => {
-    const folderPath = path.join(POSTS_PATH, folder);
-    const files = fs
-      .readdirSync(folderPath)
-      .filter((file) => file.endsWith(".mdx"));
+  const markdownInfos = fs
+    .readdirSync(POSTS_PATH, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => {
+      const folderPath = path.join(POSTS_PATH, entry.name);
+      const files = fs
+        .readdirSync(folderPath)
+        .filter((file) => file.endsWith(".mdx"));
 
-    return {
-      category: folder,
-      count: files.length,
-    };
-  });
+      return {
+        category: entry.name,
+        count: files.length,
+      };
+    });
 
   return markdownInfos;
 };
