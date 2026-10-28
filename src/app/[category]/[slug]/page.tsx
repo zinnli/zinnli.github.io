@@ -87,12 +87,11 @@ const PostDetail = async ({
           {post.title}
         </h1>
         <span className="mb-8 text-right">{post.date}</span>
-        <TableOfContents headings={headings} variant="mobile" />
         <Post post={post} />
         <Comment />
       </section>
       <div className="fixed top-24 left-[calc(50%+430px)] hidden xl:block">
-        <TableOfContents headings={headings} variant="desktop" />
+        <TableOfContents headings={headings} />
       </div>
     </>
   );
